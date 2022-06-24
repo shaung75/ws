@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PianoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,15 +28,16 @@ Route::middleware('auth')->group(function() {
 	    return view('dashboard', ['title' => 'Dashboard']);
 	});
 
-	Route::get('/clients/', [ClientController::class, 'index']);
+	// Clients
+	Route::get('/clients', [ClientController::class, 'index']);
 	Route::post('/clients', [ClientController::class, 'store']);
 	Route::get('/clients/create', [ClientController::class, 'create']);
 	Route::get('/clients/{client}', [ClientController::class, 'show']);
 	Route::put('/clients/{client}', [ClientController::class, 'update']);
 	Route::get('/clients/{client}/edit', [ClientController::class, 'edit']);
 
-	
-	
+	// Pianos
+	Route::get('/pianos', [PianoController::class, 'index']);
 
 	Route::post('/logout', [UserController::class, 'logout']);
 });
