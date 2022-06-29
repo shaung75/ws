@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Client;
 use App\Models\Manufacturer;
 use App\Models\Piano;
+use App\Models\Setting;
+use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -54,5 +56,34 @@ class DatabaseSeeder extends Seeder
          * Add some pianos
          */
         Piano::factory(10)->create();
+
+        /**
+         * Create service types
+         */
+        Type::factory()->create([
+            'type' => 'Initial service'
+        ]);
+        Type::factory()->create([
+            'type' => 'Tuning'
+        ]);
+        Type::factory()->create([
+            'type' => 'Repair'
+        ]);
+
+        /**
+         * Default settings
+         */
+        Setting::factory()->create([
+            'business_name' => 'White & Sentance',
+            'business_address1' => 'The Temple',
+            'business_address2' => 'East Gate',
+            'business_town' => 'Sleaford',
+            'business_county' => 'Lincolnshire',
+            'business_postcode' => 'NG34 7DR',
+            'business_telephone' => '01529 302037',
+            'business_email' => 'enquiries@wspianos.co.uk',
+            'tax_rate' => 20,
+            'invoice_prefix' => 'WS-'
+        ]);
     }
 }

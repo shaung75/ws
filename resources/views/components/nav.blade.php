@@ -132,15 +132,75 @@
       >
         <ul class="submenu-list list-unstyled">
           <li class="submenu-item">
-            <a class="submenu-link" href="/pianos">List pianos</a>
+            <a class="submenu-link" href="/pianos">List pianos (All)</a>
           </li>
           <li class="submenu-item">
-            <a class="submenu-link" href="/pianos/add">Add piano</a>
+            <a class="submenu-link" href="/pianos/assigned">List pianos (Assigned)</a>
           </li>
+          <li class="submenu-item">
+            <a class="submenu-link" href="/pianos/unassigned">List pianos (Unassigned)</a>
+          </li>
+          <li class="submenu-item">
+            <a class="submenu-link" href="/manufacturers">Manufacturers</a>
+          </li>
+          <li class="submenu-item">
+            <a class="submenu-link" href="/pianos/create"><strong>Add piano</strong></a>
+          </li>          
         </ul>
       </div>
     </li>
     <!--//nav-item-->
+    <li class="nav-item has-submenu">
+      <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+      <a
+        class="nav-link submenu-toggle"
+        href="#"
+        data-bs-toggle="collapse"
+        data-bs-target="#submenu-services"
+        aria-expanded="false"
+        aria-controls="submenu-services"
+      >
+        <span class="nav-icon">
+          <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wrench" viewBox="0 0 16 16">
+            <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+          </svg>
+        </span>
+        <span class="nav-link-text">Services</span>
+        <span class="submenu-arrow">
+          <svg
+            width="1em"
+            height="1em"
+            viewBox="0 0 16 16"
+            class="bi bi-chevron-down"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+            />
+          </svg> </span
+        ><!--//submenu-arrow--> </a
+      ><!--//nav-link-->
+      <div
+        id="submenu-services"
+        class="collapse submenu submenu-services"
+        data-bs-parent="#menu-accordion"
+      >
+        <ul class="submenu-list list-unstyled">
+          <li class="submenu-item">
+            <a class="submenu-link" href="/services">List services</a>
+          </li>
+          <li class="submenu-item">
+            <a class="submenu-link" href="/types">Service types</a>
+          </li>
+          <li class="submenu-item">
+            <a class="submenu-link" href="/services/create">Add service</a>
+          </li>
+        </ul>
+      </div>
+    </li>
     <li class="nav-item has-submenu">
       <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
       <a

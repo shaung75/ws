@@ -2,7 +2,7 @@
 
 @section('content')
 
-  <h1 class="app-page-title">Account #{{$client->id}}</h1>
+  <h1 class="app-page-title">Invoice #{{$invoice->id}}</h1>
   <div class="row gy-4">
     <div class="col-12 col-lg-6">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
@@ -18,7 +18,7 @@
             </div>
             <!--//col-->
             <div class="col-auto">
-              <h4 class="app-card-title">Client Details</h4>
+              <h4 class="app-card-title">Invoice Details</h4>
             </div>
             <!--//col-->
           </div>
@@ -30,12 +30,12 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <div class="item-label"><strong>Name</strong></div>
-                <div class="item-data">{{$client->first_name}} {{$client->surname}}</div>
+                <div class="item-label"><strong>Invoice Date</strong></div>
+                <div class="item-data">{{$invoice->invoice_date}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
-                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
               </div>
               <!--//col-->
             </div>
@@ -45,12 +45,12 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <div class="item-label"><strong>Email</strong></div>
-                <div class="item-data">{{$client->email}}</div>
+                <div class="item-label"><strong>Due Date</strong></div>
+                <div class="item-data">{{$invoice->due_date}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
-                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
               </div>
               <!--//col-->
             </div>
@@ -60,58 +60,12 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <div class="item-label"><strong>Telephone</strong></div>
-                <div class="item-data">{{$client->telephone}}</div>
+                <div class="item-label"><strong>Paid</strong></div>
+                <div class="item-data">{{$invoice->paid ? 'Paid' : 'Unpaid'}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
-                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
-              </div>
-              <!--//col-->
-            </div>
-            <!--//row-->
-          </div>
-          <!--//item-->
-          <div class="item border-bottom py-3">
-            <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
-                <div class="item-label"><strong>Address</strong></div>
-                <div class="item-data">
-                  @if($client->address1)
-                    {{$client->address1}}<br>
-                  @endif
-                  @if($client->address2)
-                    {{$client->address2}}<br>
-                  @endif
-                  @if($client->town)
-                    {{$client->town}}<br>
-                  @endif
-                  @if($client->county)
-                    {{$client->county}}<br>
-                  @endif
-                  @if($client->postcode)
-                    {{$client->postcode}}<br>
-                  @endif
-                </div>
-              </div>
-              <!--//col-->
-              <div class="col text-end">
-                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
-              </div>
-              <!--//col-->
-            </div>
-            <!--//row-->
-          </div>
-          <!--//item-->
-          <div class="item border-bottom py-3">
-            <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
-                <div class="item-label"><strong>Notes</strong></div>
-                <div class="item-data">{{$client->notes}}</div>
-              </div>
-              <!--//col-->
-              <div class="col text-end">
-                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
               </div>
               <!--//col-->
             </div>
@@ -121,13 +75,14 @@
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
-          <a class="btn app-btn-secondary" href="/clients/{{$client->id}}/edit">Edit Client</a>
+          <a class="btn app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Edit Invoice</a>
         </div>
         <!--//app-card-footer-->
       </div>
       <!--//app-card-->
     </div>
     <!--//col-->
+
     <div class="col-12 col-lg-6">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
         <div class="app-card-header p-3 border-bottom-0">
@@ -143,7 +98,7 @@
             </div>
             <!--//col-->
             <div class="col-auto">
-              <h4 class="app-card-title">Location</h4>
+              <h4 class="app-card-title">Client</h4>
             </div>
             <!--//col-->
           </div>
@@ -151,18 +106,40 @@
         </div>
         <!--//app-card-header-->
         <div class="app-card-body px-4 w-100">
-          <div class="item py-3">
+          <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <h4>Google map here</h4>
+                <div class="item-label"><strong>{{$invoice->client->first_name}} {{$invoice->client->surname}}</strong></div>
+                <div class="item-data">
+                  @if($invoice->client->address1)
+                    {{$invoice->client->address1}}<br>
+                  @endif
+                  @if($invoice->client->address2)
+                    {{$invoice->client->address2}}<br>
+                  @endif
+                  @if($invoice->client->town)
+                    {{$invoice->client->town}}<br>
+                  @endif
+                  @if($invoice->client->county)
+                    {{$invoice->client->county}}<br>
+                  @endif
+                  @if($invoice->client->postcode)
+                    {{$invoice->client->postcode}}<br>
+                  @endif
+                </div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                
               </div>
               <!--//col-->
             </div>
             <!--//row-->
           </div>
+          <!--//item-->
         </div>
         <div class="app-card-footer p-4 mt-auto">
-          <a class="btn app-btn-secondary" href="/clients/{{$client->id}}/edit">Set Location</a>
+          
         </div>
       </div>
       <!--//app-card-->
@@ -185,7 +162,7 @@
             </div>
             <!--//col-->
             <div class="col-auto">
-              <h4 class="app-card-title">Pianos</h4>
+              <h4 class="app-card-title">Items</h4>
             </div>
             <!--//col-->
           </div>
@@ -201,29 +178,32 @@
                   <table class="table app-table-hover mb-0 text-left">
                     <thead>
                       <tr>
-                        <th class="cell">Stock #</th>
-                        <th class="cell">Make</th>
-                        <th class="cell">Model</th>
-                        <th class="cell">Colour</th>
-                        <th class="cell">Serial #</th>
-                        <th class="cell">Service</th>
+                        <th class="cell">Qty</th>
+                        <th class="cell">Description</th>
+                        <th class="cell">Unit Price</th>
+                        <th class="cell">Total Price</th>
                         <th class="cell"></th>
                       </tr>
                     </thead>
                     <tbody>
                     
-                      @unless(count($client->pianos) == 0)
+                      @unless(count($invoice->items) == 0)
 
-                        @foreach($client->pianos as $piano)
+                        @foreach($invoice->items as $item)
 
                           <tr>
-                            <td class="cell">{{$piano->stock_number}}</td>
-                            <td class="cell" class="text-center">{{$piano->manufacturer->manufacturer}}</td>
-                            <td class="cell">{{$piano->model}}</td>
-                            <td class="cell">{{$piano->colour}}</td>
-                            <td class="cell">{{$piano->serial_number}}</td>
-                            <td class="cell"><span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></td>
-                            <td class="cell"><a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a></td>
+                            <td class="cell">{{$item->qty}}</td>
+                            <td class="cell">{{$item->description}}</td>
+                            <td class="cell">&pound;{{$item->unit_price}}</td>
+                            <td class="cell">&pound;{{$item->unit_price * $item->qty}}</td>
+                            <td class="cell text-end">
+                              <form action="/invoice-items/{{$item->id}}" method="POST">
+                                @csrf
+                                @method('delete')
+
+                                <button type="submit" class="btn app-btn-secondary py-0">Delete</button>
+                              </form>
+                            </td>
                           </tr>
 
                         @endforeach
@@ -231,13 +211,14 @@
                       @else
 
                         <tr>
-                          <td class="cell" colspan="4">No pianos found</td>
+                          <td class="cell" colspan="4">No items found</td>
                         </tr>
 
                       @endunless                    
                       
                     </tbody>
                   </table>
+
                 </div><!--//table-responsive--> 
               </div>
               <!--//col-->
@@ -250,36 +231,65 @@
         <div class="app-card-footer p-4 mt-auto">
           
           <!-- Button trigger modal -->
-          <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#assignPiano">
-            Assign a piano to client
+          <button type="button" class="btn app-btn-primary" data-bs-toggle="modal" data-bs-target="#assignItem">
+            Add item to invoice
           </button>
 
           <!-- Modal -->
-          <div class="modal fade" id="assignPiano" tabindex="-1" aria-labelledby="assignPianoLabel" aria-hidden="true">
-            <form action="/pianos/assign-client" method="POST">
+          <div class="modal fade" id="assignItem" tabindex="-1" aria-labelledby="assignItemLabel" aria-hidden="true">
+            <form action="/invoice-items/create/{{$invoice->id}}" method="POST">
               @csrf
-              @method('put')
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="assignPianoLabel">Assign a piano to client</h5>
+                    <h5 class="modal-title" id="assignPianoLabel">Add item to invoice</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    @unless(count($availablePianos) == 0)
-                      <select class="form-select" name="piano_id">
-                        @foreach($availablePianos as $availablePiano)
-                          <option value="{{$availablePiano->id}}">#{{$availablePiano->stock_number}} - {{$availablePiano->manufacturer->manufacturer}} {{$availablePiano->model}}</option>
-                        @endforeach
-                      </select>
-                      <input type="hidden" value="{{$client->id}}" name="client_id">
-                    @else
-                      <p>No available pianos to assign to the client</p>
-                    @endunless
+
+                    <div class="mb-3">
+                      <label for="setting-input-1" class="form-label">
+                        <strong>Qty</strong>
+                      </label>
+                      <input type="number" class="form-control" id="qty" name="qty" value="{{old('qty')}}" required>
+
+                      @error('qty')
+                        <div class="alert alert-danger mt-3" role="alert">
+                          <small>{{$message}}</small>
+                        </div>
+                      @enderror
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="setting-input-1" class="form-label">
+                        <strong>Description</strong>
+                      </label>
+                      <input type="text" class="form-control" id="description" name="description" value="{{old('description')}}" required>
+
+                      @error('description')
+                        <div class="alert alert-danger mt-3" role="alert">
+                          <small>{{$message}}</small>
+                        </div>
+                      @enderror
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="setting-input-1" class="form-label">
+                        <strong>Unit price</strong>
+                      </label>
+                      <input type="number" min="0" step=".01" class="form-control" id="unit_price" name="unit_price" value="{{old('unit_price')}}" required value="0.00">
+
+                      @error('unit_price')
+                        <div class="alert alert-danger mt-3" role="alert">
+                          <small>{{$message}}</small>
+                        </div>
+                      @enderror
+                    </div>
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn app-btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn app-btn-primary">Assign piano</button>
+                    <button type="submit" class="btn app-btn-primary">Add item</button>
                   </div>
                 </div>
               </div>
@@ -289,33 +299,34 @@
       </div>
       <!--//app-card-->
     </div>
-    <div class="col-12">
+
+    <div class="col-4 offset-8">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
-        <div class="app-card-header p-3 border-bottom-0">
-          <div class="row align-items-center gx-3">
-            <div class="col-auto">
-              <div class="app-icon-holder">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-credit-card" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
-                  <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
-                </svg>
-              </div>
-              <!--//icon-holder-->
-            </div>
-            <!--//col-->
-            <div class="col-auto">
-              <h4 class="app-card-title">Invoices</h4>
-            </div>
-            <!--//col-->
-          </div>
-          <!--//row-->
-        </div>
-        <!--//app-card-header-->
+        
         <div class="app-card-body px-4 w-100">
           <div class="item border-bottom py-3">
-            <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
-                INVOICE INFO HERE
+            <div class="row ">
+              <div class="col">
+                <div class="table-responsive">
+                        
+                  <table class="table app-table-hover mb-0 text-end">
+                    <tbody>
+                      <tr>
+                        <th class="cell">SUB-TOTAL</th>
+                        <td class="cell">&pound;{{$invoice->total()->gross}}</td>
+                      </tr>
+                      <tr>
+                        <th class="cell">VAT</th>
+                        <td class="cell">&pound;{{$invoice->total()->vat}}</td>
+                      </tr>
+                      <tr>
+                        <th class="cell">TOTAL</th>
+                        <td class="cell">&pound;{{$invoice->total()->net}}</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <!--//col-->
             </div>
@@ -324,16 +335,11 @@
           <!--//item-->
         </div>
         <!--//app-card-body-->
-        <div class="app-card-footer p-4 mt-auto">
-          <form action="/invoices/create/{{$client->id}}" method="POST">
-            @csrf
-            <button type="submit" class="btn app-btn-secondary">Add Invoice</button>
-          </form>
-        </div>
-        <!--//app-card-footer-->
+        
       </div>
       <!--//app-card-->
     </div>
+
   </div>
   <!--//row-->
 

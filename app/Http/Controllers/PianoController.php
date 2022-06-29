@@ -2,24 +2,142 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manufacturer;
 use App\Models\Piano;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\Rule;
 
 class PianoController extends Controller
 {
-		/**
-		 * Show all pianos
-		 * @param  Request $request [description]
-		 * @return [type]           [description]
-		 */
+	/**
+	 * Show all pianos
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
     public function index(Request $request) {
+    	
+    	if($request->route()->uri == 'pianos') {
+    		$pianos = $this->paginate(Piano::get()->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos']);
+    		$list = 'all';
+    	} elseif ($request->route()->uri == 'pianos/assigned') {
+    		$pianos = $this->paginate(Piano::get()->where('client_id', '!=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos/assigned']);
+    		$list = 'assigned';
+    	} elseif ($request->route()->uri == 'pianos/unassigned') {
+    		$pianos = $this->paginate(Piano::get()->where('client_id', '=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos/assigned']);
+    		$list = 'unassigned';
+    	}    	
+
     	return view('pianos.index', [
-    		//'pianos' => Piano::paginate(),
-    		'pianos' => $this->paginate(Piano::get()->sortBy('stock_number'), 5, $request->page, ['path' => 'pianos'])
+    		'pianos' => $pianos,
+    		'list' => $list
     	]);
+    }
+
+    /**
+     * Show single piano
+     * @param  Piano  $piano [description]
+     * @return [type]        [description]
+     */
+    public function show(Piano $piano) {
+    	return view('pianos.show', [
+    		'piano' => $piano,
+    	]);
+    }
+
+    /**
+     * Create a new piano
+     * @return [type] [description]
+     */
+    public function create() {
+        return view('pianos.create', [
+            'manufacturers' => Manufacturer::get()->sortBy('manufacturer')
+        ]);
+    }
+
+    /**
+     * Show edit form
+     * @param  Client $piano [description]
+     * @return [type]         [description]
+     */
+    public function edit(Piano $piano) {
+        return view('pianos.edit', [
+            'piano' => $piano,
+            'manufacturers' => Manufacturer::all()
+        ]);
+    }
+
+    /**
+     * Store a new piano
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function store(Request $request) {
+        $formFields = $request->validate([
+            'manufacturer_id' => 'required',
+            'model' => 'required',
+            'colour' => 'required',
+            'finish' => 'required',
+            'serial_number' => ['required', Rule::unique('pianos','serial_number')],
+            'stock_number'=> ['required', Rule::unique('pianos', 'stock_number')],
+            'year_of_manufacture' => 'required'
+        ]);
+
+        $piano = Piano::create($formFields);
+
+        return redirect('/pianos/'.$piano->id)->with('message', 'Created successfully');
+    }
+
+    /**
+     * Update piano
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function update(Request $request, Piano $piano) {
+        $formFields = $request->validate([
+            'manufacturer_id' => 'required',
+            'model' => 'required',
+            'colour' => 'required',
+            'finish' => 'required',
+            'serial_number' => ['required', ($piano->serial_number != $request->serial_number ? Rule::unique('pianos','serial_number') : '' )],
+            'stock_number'=> ['required', ($piano->stock_number != $request->stock_number ? Rule::unique('pianos','stock_number') : '' )],
+            'year_of_manufacture' => 'required'
+        ]);
+
+        $piano->update($formFields);
+
+        return redirect('/pianos/'.$piano->id)->with('message', 'Updated successfully');
+    }
+
+    /**
+     * Assign piano to client
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function assignClient(Request $request) {
+        $formFields = $request->validate([
+            'piano_id' => 'required',
+            'client_id' => 'required'
+        ]);
+
+        $piano = Piano::find($request->piano_id);
+
+        $formFields['client_id'] = $request->client_id;
+
+        $piano->update($formFields);
+
+        $today = date('Y-m-d', time());
+
+        // Create the initial service
+        $piano->services()->create([
+            'type_id' => 1,
+            'service_date' => $today,
+            'due_date' => date('Y-m-d', strtotime($today . "+3 months" ) )
+        ]);
+
+        return redirect()->back()->with('message', 'Piano assigned to client');
     }
 
     /**
@@ -34,5 +152,5 @@ class PianoController extends Controller
 	    $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 	    $items = $items instanceof Collection ? $items : Collection::make($items);
 	    return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-		}
+	}
 }

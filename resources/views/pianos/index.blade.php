@@ -42,6 +42,10 @@
               <th class="cell">Finish</th>
               <th class="cell">Year of Manufacture</th>
               <th class="cell">Service</th>
+
+              @if($list == 'assigned')
+                <th class="cell">Assigned to</th>
+              @endif
               <th class="cell"></th>
             </tr>
           </thead>
@@ -58,7 +62,14 @@
                   <td class="cell">{{$piano->colour}}</td>
                   <td class="cell">{{$piano->finish}}</td>
                   <td class="cell">{{$piano->year_of_manufacture}}</td>
-                  <td class="cell"><span class="badge bg-success">OK</span></td>
+                  <td class="cell"><span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></td>
+
+                  @if($list == 'assigned')
+                    <td class="cell">
+                      <a href="/clients/{{$piano->client->id}}" >
+                        {{$piano->client->first_name}} {{$piano->client->surname}}</td>
+                      </a>
+                  @endif
                   <td class="cell"><a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a></td>
                 </tr>
 

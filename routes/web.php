@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PianoController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +44,47 @@ Route::middleware('auth')->group(function() {
 
 	// Pianos
 	Route::get('/pianos', [PianoController::class, 'index']);
+	Route::post('/pianos', [PianoController::class, 'store']);
+	Route::get('/pianos/assigned', [PianoController::class, 'index']);
+	Route::get('/pianos/unassigned', [PianoController::class, 'index']);
+	Route::put('/pianos/assign-client', [PianoController::class, 'assignClient']);
+	Route::get('/pianos/create', [PianoController::class, 'create']);
+	Route::get('/pianos/{piano}', [PianoController::class, 'show']);
+	Route::put('/pianos/{piano}', [PianoController::class, 'update']);
+	Route::get('/pianos/{piano}/edit', [PianoController::class, 'edit']);
+
+	// Manufacturers
+	Route::get('/manufacturers', [ManufacturerController::class, 'index']);
+	Route::post('/manufacturers', [ManufacturerController::class, 'store']);
+	Route::put('/manufacturers', [ManufacturerController::class, 'update']);
+	Route::get('/manufacturers/{manufacturer}/delete', [ManufacturerController::class, 'destroy']);
+
+	// Service Types
+	Route::get('/types', [TypeController::class, 'index']);
+	Route::post('/types', [TypeController::class, 'store']);
+	Route::put('/types', [TypeController::class, 'update']);
+	Route::get('/types/{type}/delete', [TypeController::class, 'destroy']);
+
+	// Services
+	Route::get('/services', [ServiceController::class, 'index']);
+	Route::post('/services', [ServiceController::class, 'store']);
+	Route::get('/services/{service}', [ServiceController::class, 'show']);
+	Route::put('/services/{service}', [ServiceController::class, 'update']);
+	Route::get('/services/{service}/edit', [ServiceController::class, 'edit']);
+	Route::get('/services/create', [ServiceController::class, 'create']);
+	Route::get('/services/create/{piano}', [ServiceController::class, 'create']);
+
+	// Invoices
+	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
+	Route::post('/invoices/create/{client}', [InvoiceController::class, 'store']);
+
+	// Invoice items
+	Route::delete('/invoice-items/{item}', [ItemController::class, 'destroy']);
+	Route::post('/invoice-items/create/{invoice}', [ItemController::class, 'store']);	
+
+	// Settings page
+	Route::get('/settings', [SettingController::class, 'show']);
+	Route::put('/settings', [SettingController::class, 'update']);
 
 	Route::post('/logout', [UserController::class, 'logout']);
 });

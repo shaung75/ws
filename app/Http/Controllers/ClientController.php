@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Piano;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -25,8 +26,9 @@ class ClientController extends Controller
      * @return [type]         [description]
      */
     public function show(Client $client) {
-    	return view('clients.show', [
+        return view('clients.show', [
     		'client' => $client,
+            'availablePianos' => Piano::where('client_id', null)->orderByRaw('CONVERT(stock_number, SIGNED)')->get()
     	]);
     }
 

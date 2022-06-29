@@ -9,6 +9,8 @@ class Manufacturer extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['manufacturer'];
+
     /**
      * Relationship to pianos
      * @return [type] [description]
