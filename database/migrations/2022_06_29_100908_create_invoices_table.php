@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->date('invoice_date');
             $table->date('due_date');
-            $table->boolean('paid')->default(0);
+            $table->boolean('paid')->default(0)->nullable();
             $table->timestamps();
         });
     }

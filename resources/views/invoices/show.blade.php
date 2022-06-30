@@ -2,7 +2,39 @@
 
 @section('content')
 
-  <h1 class="app-page-title">Invoice #{{$invoice->id}}</h1>
+<div class="row g-3 mb-4 align-items-center justify-content-between">
+  <div class="col-auto">
+    <h1 class="app-page-title mb-0">Invoice #{{$invoice->id}}</h1>
+  </div>
+  <div class="col-auto">
+    <div class="page-utilities">
+      <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+        <div class="col-auto">
+          <a class="btn app-btn-secondary" href="/invoices/{{$invoice->id}}/pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+              <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+            </svg>
+            Download Invoice
+          </a>
+        </div>
+        <div class="col-auto">
+          <a class="btn app-btn-primary" href="/invoices/{{$invoice->id}}/mail">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+            </svg>
+            Email to Client
+          </a>
+        </div>
+      </div>
+      <!--//row-->
+    </div>
+    <!--//table-utilities-->
+  </div>
+  <!--//col-auto-->
+</div>
+<!--//row-->
+
   <div class="row gy-4">
     <div class="col-12 col-lg-6">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
@@ -109,7 +141,11 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <div class="item-label"><strong>{{$invoice->client->first_name}} {{$invoice->client->surname}}</strong></div>
+                <div class="item-label">
+                  <a href="/clients/{{$invoice->client->id}}">
+                    <strong>{{$invoice->client->first_name}} {{$invoice->client->surname}}</strong>
+                  </a>
+                </div>
                 <div class="item-data">
                   @if($invoice->client->address1)
                     {{$invoice->client->address1}}<br>

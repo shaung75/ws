@@ -60,4 +60,20 @@ class Invoice extends Model
 
         return $totals;
     }
+
+    /**
+     * Returns payment status
+     * @return [type] [description]
+     */
+    public function paymentStatus() {
+        if($this->paid == 1) {
+            $status = 'Paid';
+        } else {
+            $date = date('Y-m-d', time());
+
+            $status = $date > $this->due_date ? 'Overdue' : 'Pending';
+        }
+
+        return $status;
+    }
 }

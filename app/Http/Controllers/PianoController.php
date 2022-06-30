@@ -85,6 +85,8 @@ class PianoController extends Controller
             'year_of_manufacture' => 'required'
         ]);
 
+        $formFields['ivory_keys'] = $request->ivory_keys;
+
         $piano = Piano::create($formFields);
 
         return redirect('/pianos/'.$piano->id)->with('message', 'Created successfully');
@@ -106,6 +108,8 @@ class PianoController extends Controller
             'year_of_manufacture' => 'required'
         ]);
 
+        $formFields['ivory_keys'] = $request->ivory_keys;
+        
         $piano->update($formFields);
 
         return redirect('/pianos/'.$piano->id)->with('message', 'Updated successfully');

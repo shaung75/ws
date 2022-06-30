@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('tax_rate');
             $table->string('invoice_prefix')->nullable();
             $table->string('invoice_suffix')->nullable();
+            $table->string('invoice_footer')->nullable();
+            $table->string('invoice_payment_details')->nullable();
             $table->timestamps();
         });
     }

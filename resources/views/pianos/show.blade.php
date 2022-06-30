@@ -27,6 +27,20 @@
         <!--//app-card-header-->
         <div class="app-card-body px-4 w-100">
           <!--//item-->
+          @if($piano->client)
+            <div class="item border-bottom py-3">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                  <div class="item-label"><strong>Assigned to</strong></div>
+                  <div class="item-data">
+                    <a href="/clients/{{$piano->id}}">
+                      {{$piano->client->first_name}} {{$piano->client->surname}} (#{{$piano->client->id}})
+                    </a>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          @endif
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
@@ -47,6 +61,21 @@
               <div class="col-auto">
                 <div class="item-label"><strong>Model</strong></div>
                 <div class="item-data">{{$piano->model}}</div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <div class="item-label"><strong>Ivory keys</strong></div>
+                <div class="item-data">{{$piano->ivory_keys == 1 ? 'Yes' : 'No'}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">

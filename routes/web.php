@@ -75,7 +75,11 @@ Route::middleware('auth')->group(function() {
 	Route::get('/services/create/{piano}', [ServiceController::class, 'create']);
 
 	// Invoices
+	Route::get('/invoices', [InvoiceController::class, 'index']);
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
+	Route::put('/invoices/{invoice}/payment', [InvoiceController::class, 'updatePayment']);
+	Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf']);
+	Route::get('/invoices/{invoice}/mail', [InvoiceController::class, 'sendInvoice']);
 	Route::post('/invoices/create/{client}', [InvoiceController::class, 'store']);
 
 	// Invoice items

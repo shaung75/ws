@@ -42,6 +42,8 @@ class SettingController extends Controller
     $formFields['business_address2'] = $request->business_address2;
     $formFields['invoice_prefix'] = $request->invoice_prefix;
     $formFields['invoice_suffix'] = $request->invoice_suffix;
+    $formFields['invoice_footer'] = $request->invoice_footer;
+    $formFields['invoice_payment_details'] = $request->invoice_payment_details;
 
     $settings->update($formFields);
 

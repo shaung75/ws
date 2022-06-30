@@ -149,6 +149,22 @@
 								</div>
 							</div>
 
+							<div class="row mb-3">
+								<div class="col-3">
+									<label for="year_of_manufacture" class="form-label">Piano has ivory keys</label>		
+								</div>
+								<div class="col-9">
+									<div class="form-check">
+                    <input class="form-check-input" name="ivory_keys" type="checkbox" value="1" id="settings-checkbox-1" {{old('ivory_keys') == 1 ? 'checked' : ''}}>
+                  </div>	
+
+									@error('ivory_keys')
+										<div class="alert alert-danger mt-3" role="alert">
+											<small>{{$message}}</small>
+										</div>
+									@enderror
+								</div>
+							</div>
 						
 		        </div>
 		        <!--//app-card-body-->

@@ -12,7 +12,17 @@ class Piano extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['manufacturer_id', 'client_id', 'model', 'colour', 'finish', 'serial_number', 'stock_number', 'year_of_manufacture'];
+    protected $fillable = [
+        'manufacturer_id', 
+        'client_id', 
+        'model', 
+        'colour', 
+        'finish', 
+        'serial_number', 
+        'stock_number', 
+        'year_of_manufacture',
+        'ivory_keys'
+    ];
 
     /**
      * Relationship to client

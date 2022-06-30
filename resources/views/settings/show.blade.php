@@ -150,6 +150,31 @@
             @enderror
 
           </div>
+
+          <div class="mb-3">
+            <label for="invoice_payment_details" class="form-label">Payment details</label>
+            <textarea class="form-control" name="invoice_payment_details" style="height:150px;">{{$settings->invoice_payment_details}}</textarea>
+
+            @error('invoice_payment_details')
+              <div class="alert alert-danger mt-3" role="alert">
+                <small>{{$message}}</small>
+              </div>
+            @enderror
+
+          </div>
+
+          <div class="mb-3">
+            <label for="invoice_footer" class="form-label">Invoice footer</label>
+            <textarea class="form-control" name="invoice_footer" style="height:150px;">{{$settings->invoice_footer}}</textarea>
+
+            @error('invoice_footer')
+              <div class="alert alert-danger mt-3" role="alert">
+                <small>{{$message}}</small>
+              </div>
+            @enderror
+
+          </div>
+
           <button type="submit" class="btn app-btn-primary" >Save Changes</button>
         
         </div>

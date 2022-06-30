@@ -20,7 +20,9 @@ class Setting extends Model
     	'business_telephone',
     	'tax_rate',
     	'invoice_prefix',
-    	'invoice_suffix'
+    	'invoice_suffix',
+        'invoice_footer',
+        'invoice_payment_details'
     ];
 
     public function fetch() {

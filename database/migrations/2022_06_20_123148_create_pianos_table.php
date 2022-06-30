@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('serial_number')->unique();
             $table->string('stock_number')->unique();
             $table->string('year_of_manufacture');
+            $table->boolean('ivory_keys')->default(0)->nullable();
             $table->timestamps();
         });
     }

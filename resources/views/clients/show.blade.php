@@ -314,8 +314,74 @@
         <div class="app-card-body px-4 w-100">
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
-                INVOICE INFO HERE
+              <div class="col">
+                <div class="table-responsive">
+                        
+                  <table class="table app-table-hover mb-0 text-left">
+                    <thead>
+                      <tr>
+                        <th class="cell">Invoice #</th>
+                        <th class="cell">Date</th>
+                        <th class="cell">Due Date</th>
+                        <th class="cell">Value (inc VAT)</th>
+                        <th class="cell">Status</th>
+                        <th class="cell">Paid</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                      @unless(count($client->invoices) == 0)
+
+                        @foreach($client->invoices as $invoice)
+
+                          <tr>
+                            <td class="cell">{{$invoice->id}}</td>
+                            <td class="cell">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
+                            <td class="cell">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>
+                            <td class="cell">{{$invoice->total()->net}}</td>
+                            <td class="cell">
+                              @if($invoice->paymentStatus() == 'Paid')
+                                <span class="badge bg-success">
+                                  {{$invoice->paymentStatus()}}
+                                </span>
+                              @elseif($invoice->paymentStatus() == 'Pending')
+                                <span class="badge bg-warning">
+                                  {{$invoice->paymentStatus()}}
+                                </span>
+                              @else
+                                <span class="badge bg-danger">
+                                  {{$invoice->paymentStatus()}}
+                                </span>
+                              @endif
+                            </td>
+                            <td class="cell">
+                              
+                              <form action="/invoices/{{$invoice->id}}/payment" method="POST">
+                                @csrf
+                                @method('put')
+
+                                <div class="form-check">
+                                  <input class="form-check-input" name="paid" type="checkbox" value="1" id="settings-checkbox-1" onChange="this.form.submit()" {{$invoice->paid == 1 ? 'checked' : ''}}>
+                                </div>
+
+                              </form>
+
+                            </td>
+                          </tr>
+
+                        @endforeach
+                              
+                      @else
+
+                        <tr>
+                          <td class="cell" colspan="4">No invoices found</td>
+                        </tr>
+
+                      @endunless                    
+                      
+                    </tbody>
+                  </table>
+                </div><!--//table-responsive--> 
               </div>
               <!--//col-->
             </div>
@@ -327,7 +393,7 @@
         <div class="app-card-footer p-4 mt-auto">
           <form action="/invoices/create/{{$client->id}}" method="POST">
             @csrf
-            <button type="submit" class="btn app-btn-secondary">Add Invoice</button>
+            <button type="submit" class="btn app-btn-primary">Add Invoice</button>
           </form>
         </div>
         <!--//app-card-footer-->
