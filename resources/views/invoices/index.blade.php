@@ -42,6 +42,7 @@
               <th class="cell">Value (inc VAT)</th>
               <th class="cell">Status</th>
               <th class="cell">Paid</th>
+              <th class="cell"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,6 +86,9 @@
 
                     </form>
 
+                  </td>
+                  <td class="cell text-end">
+                    <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}">View</a>
                   </td>
                 </tr>
 

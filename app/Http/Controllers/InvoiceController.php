@@ -25,8 +25,8 @@ class InvoiceController extends Controller
 	 * @param  Client $client [description]
 	 * @return [type]         [description]
 	 */
-    public function store(Client $client) {
-    	$fields['client_id'] = $client->id;
+    public function store(Request $request, Client $client) {
+    	$fields['client_id'] = $request->id ? $request->id : $client->id; // If coming from /invoices/create or client screen
     	$fields['invoice_date'] = date("Y-m-d");
     	$fields['due_date'] = date('Y-m-d', strtotime($fields['invoice_date'] . "+1 month" ));
 
@@ -99,5 +99,15 @@ class InvoiceController extends Controller
         $invoice->update($formFields);
 
         return redirect()->back()->with('message', 'Payment updated for invoice #'.$invoice->id);
+    }
+
+    /**
+     * Shows the customer select form for creating an invoice
+     * @return [type] [description]
+     */
+    public function create() {
+        return view('invoices.create', [
+            'clients' => Client::all()
+        ]);
     }
 }

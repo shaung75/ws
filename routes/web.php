@@ -76,6 +76,8 @@ Route::middleware('auth')->group(function() {
 
 	// Invoices
 	Route::get('/invoices', [InvoiceController::class, 'index']);
+	Route::get('/invoices/create', [InvoiceController::class, 'create']);
+	Route::post('/invoices/add', [InvoiceController::class, 'store']);
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
 	Route::put('/invoices/{invoice}/payment', [InvoiceController::class, 'updatePayment']);
 	Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf']);

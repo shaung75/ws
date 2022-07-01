@@ -294,7 +294,7 @@
             <a class="submenu-link" href="/invoices">List invoices</a>
           </li>
           <li class="submenu-item">
-            <a class="submenu-link" href="/invoices/add">Add invoice</a>
+            <a class="submenu-link" href="/invoices/create">Add invoice</a>
           </li>
         </ul>
       </div>
