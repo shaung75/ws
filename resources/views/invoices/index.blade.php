@@ -88,7 +88,9 @@
 
                   </td>
                   <td class="cell text-end">
+
                     <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}">View</a>
+                    
                   </td>
                 </tr>
 
