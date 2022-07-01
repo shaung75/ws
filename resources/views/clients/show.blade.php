@@ -153,8 +153,27 @@
         <div class="app-card-body px-4 w-100">
           <div class="item py-3">
             <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
-                <h4>Google map here</h4>
+              <div class="col">
+                <div id="map"></div>
+                <script>
+                  // Initialize and add the map
+                  function initMap() {
+                    // The location of Uluru
+                    const uluru = { lat: {{$client->lat}}, lng: {{$client->long}} };
+                    // The map, centered at Uluru
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                      zoom: 17,
+                      center: uluru,
+                    });
+                    // The marker, positioned at Uluru
+                    const marker = new google.maps.Marker({
+                      position: uluru,
+                      map: map,
+                    });
+                  }
+
+                  window.initMap = initMap;
+                </script>
               </div>
               <!--//col-->
             </div>

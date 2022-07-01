@@ -7,6 +7,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PianoController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -91,6 +92,8 @@ Route::middleware('auth')->group(function() {
 	// Settings page
 	Route::get('/settings', [SettingController::class, 'show']);
 	Route::put('/settings', [SettingController::class, 'update']);
+
+	Route::get('/maps', [TestController::class, 'index']);
 
 	Route::post('/logout', [UserController::class, 'logout']);
 });

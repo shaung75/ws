@@ -41,6 +41,7 @@
         $('.datePick').datepicker({});
       </script>
 
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaZwaFP3kfe3w5AG7MgYcgV12PT-Q4JFg&callback=initMap&v=weekly" defer></script>
     @endauth
 
 	</body>

@@ -195,7 +195,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+        Custom providers
+         */
         Barryvdh\DomPDF\ServiceProvider::class,
+        GoogleMaps\ServiceProvider\GoogleMapsServiceProvider::class,
 
     ],
 
@@ -214,6 +218,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'GoogleMaps' => GoogleMaps\Facade\GoogleMapsFacade::class,
     ])->toArray(),
 
 ];

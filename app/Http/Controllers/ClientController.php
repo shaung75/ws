@@ -61,9 +61,19 @@ class ClientController extends Controller
 
         $formFields['notes'] = $request->notes;
 
+        $geoResponse = json_decode(\GoogleMaps::load('geocoding')
+            ->setParam (['address' => $request->postcode])
+            ->get()
+        );
+
+        $coords = $geoResponse->results[0]->geometry->location;
+
+        $formFields['lat'] = $coords->lat;        
+        $formFields['long'] = $coords->lng;
+
         $client->update($formFields);
 
-        return redirect()->back()->with('message', 'Updated successfully');
+        return redirect('/clients/'.$client->id)->with('message', 'Updated successfully');
     }
 
     /**
