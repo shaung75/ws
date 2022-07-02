@@ -212,8 +212,75 @@
 	        <div class="app-card-body px-4 w-100">
 	          <div class="item py-3">
 	            <div class="row justify-content-between align-items-center">
-	              <div class="col-auto">
-	                <h4>Google map here</h4>
+	              <div class="col">
+	                <p><strong>Instructions: </strong>Use the map to set the exact location of the client, otherwise the postcode will be used (you can set the exact location at a later date if required).</p>
+
+	              	<input id="delete-markers" type="button" value="Delete Marker" class="btn app-btn-primary" />
+
+	              	<hr>
+							    
+							    <div id="map"></div>
+	                <script>
+	                	var markers = [];
+
+	                  function initMap() {
+	                  	const start = { lat: 53.000224, lng: -0.407004 };
+	                    
+	                    const map = new google.maps.Map(document.getElementById("map"), {
+	                      zoom: 17,
+	                      center: start,
+	                    });
+	                    
+	                    map.addListener("click", (e) => {
+										    placeMarkerAndPanTo(e.latLng, map);
+										  });
+
+	                    // Add listener to delete marker button
+	                    document.getElementById("delete-markers").addEventListener("click", deleteMarkers);
+
+										  @if($client->lat != '')
+										  	var oldLatLng = { lat: {{$client->lat}}, lng: {{$client->long}} };
+												var marker = new google.maps.Marker({
+											    position: oldLatLng,
+											    map: map,
+											  });
+											  map.panTo(oldLatLng);
+
+											  markers.push(marker);
+											@endif
+	                  }
+
+	                  function placeMarkerAndPanTo(latLng, map) {
+	                  	deleteMarkers();
+
+										  var marker = new google.maps.Marker({
+										    position: latLng,
+										    map: map,
+										  });
+										  map.panTo(latLng);
+
+										  markers.push(marker);
+
+										  document.getElementById("lat").value = latLng.lat(function(){});
+										  document.getElementById("long").value = latLng.lng(function(){});
+										}
+
+										function deleteMarkers() {
+											document.getElementById("lat").value = '';
+											document.getElementById("long").value = '';
+
+											//Loop through all the markers and remove
+											for (var i = 0; i < markers.length; i++) {
+												markers[i].setMap(null);
+											}
+											markers = [];
+										};
+
+	                  window.initMap = initMap;
+	                </script>
+
+	                <input type="text" id="lat" name="lat" value="{{$client->lat}}">
+	                <input type="text" id="long" name="long" value="{{$client->long}}">
 	              </div>
 	              <!--//col-->
 	            </div>

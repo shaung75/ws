@@ -174,6 +174,7 @@
 
                   window.initMap = initMap;
                 </script>
+
               </div>
               <!--//col-->
             </div>

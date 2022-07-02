@@ -61,15 +61,32 @@ class ClientController extends Controller
 
         $formFields['notes'] = $request->notes;
 
-        $geoResponse = json_decode(\GoogleMaps::load('geocoding')
-            ->setParam (['address' => $request->postcode])
-            ->get()
-        );
+        // If check if the postcode or coords have changed
+        if($request->postcode != $client->postcode) {
 
-        $coords = $geoResponse->results[0]->geometry->location;
+            // Check if the coords have changed as well
+            if($request->lat != $client->lat || $request->long != $client->long) {
+                // Coord have chaged, use set values
+                $formFields['lat'] = $request->lat;        
+                $formFields['long'] = $request->long; 
+            } else {
+                // Geocode the postcode
+                $geoResponse = json_decode(\GoogleMaps::load('geocoding')
+                    ->setParam (['address' => $request->postcode])
+                    ->get()
+                );
 
-        $formFields['lat'] = $coords->lat;        
-        $formFields['long'] = $coords->lng;
+                $coords = $geoResponse->results[0]->geometry->location;
+
+                $formFields['lat'] = $coords->lat;        
+                $formFields['long'] = $coords->lng;    
+            }
+
+        // Only the coords have changed so use them            
+        } elseif($request->lat != $client->lat || $request->long != $client->long) {
+            $formFields['lat'] = $request->lat;        
+            $formFields['long'] = $request->long;
+        }
 
         $client->update($formFields);
 
@@ -102,6 +119,22 @@ class ClientController extends Controller
         ]);
 
         $formFields['notes'] = $request->notes;
+
+        // If lat/long values have been set then use those, otherwise geocode postcode
+        if($request->lat == '' || $request->long == '') {
+            $geoResponse = json_decode(\GoogleMaps::load('geocoding')
+                ->setParam (['address' => $request->postcode])
+                ->get()
+            );
+
+            $coords = $geoResponse->results[0]->geometry->location;
+
+            $formFields['lat'] = $coords->lat;        
+            $formFields['long'] = $coords->lng;    
+        } else {
+            $formFields['lat'] = $request->lat;        
+            $formFields['long'] = $request->long;    
+        }
 
         $client = Client::create($formFields);
 
