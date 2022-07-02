@@ -83,9 +83,20 @@ class ClientController extends Controller
             }
 
         // Only the coords have changed so use them            
-        } elseif($request->lat != $client->lat || $request->long != $client->long) {
+        } elseif($request->lat != $client->lat && $request->lat != null || $request->long != $client->long && $request->lat != null) {
             $formFields['lat'] = $request->lat;        
             $formFields['long'] = $request->long;
+        } else {
+            // Geocode the postcode
+            $geoResponse = json_decode(\GoogleMaps::load('geocoding')
+                ->setParam (['address' => $request->postcode])
+                ->get()
+            );
+
+            $coords = $geoResponse->results[0]->geometry->location;
+
+            $formFields['lat'] = $coords->lat;        
+            $formFields['long'] = $coords->lng;
         }
 
         $client->update($formFields);

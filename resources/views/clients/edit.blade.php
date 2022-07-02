@@ -279,8 +279,8 @@
 	                  window.initMap = initMap;
 	                </script>
 
-	                <input type="text" id="lat" name="lat" value="{{$client->lat}}">
-	                <input type="text" id="long" name="long" value="{{$client->long}}">
+	                <input type="hidden" id="lat" name="lat" value="{{$client->lat}}">
+	                <input type="hidden" id="long" name="long" value="{{$client->long}}">
 	              </div>
 	              <!--//col-->
 	            </div>
