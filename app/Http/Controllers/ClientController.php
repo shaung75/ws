@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Manufacturer;
 use App\Models\Piano;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -92,7 +93,7 @@ class ClientController extends Controller
                 ->setParam (['address' => $request->postcode])
                 ->get()
             );
-
+            
             $coords = $geoResponse->results[0]->geometry->location;
 
             $formFields['lat'] = $coords->lat;        
@@ -109,7 +110,9 @@ class ClientController extends Controller
      * @return [type] [description]
      */
     public function create() {
-        return view('clients.create');
+        return view('clients.create', [
+            'manufacturers' => Manufacturer::get()->sortBy('manufacturer')
+        ]);
     }
 
     /**
@@ -148,6 +151,24 @@ class ClientController extends Controller
         }
 
         $client = Client::create($formFields);
+
+        // If we're creating a new piano as well, validate and create
+        if($request->create_piano) {
+            $pianoFormFields = $request->validate([
+                'manufacturer_id' => 'required',
+                'model' => 'required',
+                'colour' => 'required',
+                'finish' => 'required',
+                'serial_number' => ['required', Rule::unique('pianos','serial_number')],
+                'year_of_manufacture' => 'required'
+            ]);
+
+            $pianoFormFields['ivory_keys'] = $request->ivory_keys;
+            $pianoFormFields['stock_number'] = $request->stock_number;
+            $pianoFormFields['client_id'] = $client->id;
+
+            $piano = Piano::create($pianoFormFields);
+        }        
 
         return redirect('/clients/'.$client->id)->with('message', 'Created successfully');
     }

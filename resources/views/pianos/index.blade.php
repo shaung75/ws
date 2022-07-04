@@ -70,7 +70,10 @@
                         {{$piano->client->first_name}} {{$piano->client->surname}}</td>
                       </a>
                   @endif
-                  <td class="cell"><a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a></td>
+                  <td class="cell">
+                    <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/duplicate">Duplicate</a>
+                    <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a>
+                  </td>
                 </tr>
 
               @endforeach

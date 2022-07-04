@@ -19,12 +19,12 @@ gulp.task('sass', function () {
 
 gulp.task('js', function() {
     return gulp.src([
-        './src/js/**/*.js'
+        './js/bsb/**/*.js'
     	])
       .pipe(sourcemaps.init())
       .pipe(concat('scripts.js'))
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest("./assets/js"))
+      .pipe(gulp.dest("../public/assets/js"))
       .pipe(livereload());
 });
 

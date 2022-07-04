@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('colour');
             $table->string('finish');
             $table->string('serial_number')->unique();
-            $table->string('stock_number')->unique();
+            $table->string('stock_number')->nullable();
             $table->string('year_of_manufacture');
             $table->boolean('ivory_keys')->default(0)->nullable();
             $table->timestamps();

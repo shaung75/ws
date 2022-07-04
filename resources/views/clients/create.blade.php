@@ -175,6 +175,160 @@
 								@enderror
 							</div>
 						</div>
+
+						<hr class="mb-3">
+
+						<div class="row mb-3">
+							<div class="col">
+								<div class="form-check form-switch mb-3">
+									<input class="form-check-input" type="checkbox" id="create_piano" name="create_piano" {{old('create_piano') ? 'checked' : ''}}>
+									<label class="form-check-label" for="settings-switch-1">Create and assign new piano as well</label>
+								</div>
+							</div>
+						</div>
+
+						<div id="create_piano_form" {!! old('create_piano') ? '' : 'style="display:none;"' !!}>
+							
+							@unless(count($manufacturers) == 0)
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="manufacturer_id" class="form-label">Manufacturer</label>
+									</div>
+									<div class="col-9">
+										<select class="form-select" id="manufacturer" name="manufacturer_id">
+											<option>Select manufacturer</option>
+											@foreach($manufacturers as $manufacturer)
+												<option value="{{$manufacturer->id}}" {{old('manufacturer_id') == $manufacturer->id ? 'selected' : ''}}>{{$manufacturer->manufacturer}}</option>
+											@endforeach
+										</select>
+
+										@error('manufacturer_id')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="model" class="form-label">Model</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="model" name="model" value="{{old('model')}}">		
+
+										@error('model')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<hr class="mb-3">
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="colour" class="form-label">Colour</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="colour" name="colour" value="{{old('colour')}}">		
+
+										@error('colour')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="finish" class="form-label">Finish</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="finish" name="finish" value="{{old('finish')}}" >		
+
+										@error('finish')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="serial_number" class="form-label">Serial Number</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="serial_number" name="serial_number" value="{{old('serial_number')}}">		
+
+										@error('serial_number')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="stock_number" class="form-label">Stock Number</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="stock_number" name="stock_number" value="{{old('stock_number')}}">		
+
+										@error('stock_number')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="year_of_manufacture" class="form-label">Year of Manufacture</label>		
+									</div>
+									<div class="col-9">
+										<input type="text" class="form-control" id="year_of_manufacture" name="year_of_manufacture" value="{{old('year_of_manufacture')}}">		
+
+										@error('year_of_manufacture')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-3">
+										<label for="year_of_manufacture" class="form-label">Piano has ivory keys</label>		
+									</div>
+									<div class="col-9">
+										<div class="form-check">
+	                    <input class="form-check-input" name="ivory_keys" type="checkbox" value="1" id="settings-checkbox-1" {{old('ivory_keys') == 1 ? 'checked' : ''}}>
+	                  </div>	
+
+										@error('ivory_keys')
+											<div class="alert alert-danger mt-3" role="alert">
+												<small>{{$message}}</small>
+											</div>
+										@enderror
+									</div>
+								</div>
+
+							@else
+
+								<p>You need to add some manufacturers first! <a href="/manufacturers">Do that here</a></p>
+
+							@endunless								
+
+						</div>
+
+
 	        </div>
 	        <!--//app-card-body-->
 	        <div class="app-card-footer p-4 mt-auto">
@@ -287,7 +441,7 @@
 	          </div>
 	        </div>
 	        <div class="app-card-footer p-4 mt-auto"> 
-	         	<p>Lat: <span class="lat">0.1655</span>, Long: <span class="long">54.24545</span></p>          
+	         	
 	        </div>
 	      </div>
 	      <!--//app-card-->

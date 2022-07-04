@@ -1,0 +1,1 @@
+{"version":3,"sources":["scripts.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA","file":"scripts.js","sourcesContent":["\n$( document ).ready(function() {\n    $('#create_piano').change(function() {\n    \t$('#create_piano_form').toggle();\n    });\n});"]}

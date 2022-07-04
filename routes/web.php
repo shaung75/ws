@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function() {
 	Route::put('/pianos/assign-client', [PianoController::class, 'assignClient']);
 	Route::get('/pianos/create', [PianoController::class, 'create']);
 	Route::get('/pianos/{piano}', [PianoController::class, 'show']);
+	Route::get('/pianos/{piano}/duplicate', [PianoController::class, 'duplicate']);
 	Route::put('/pianos/{piano}', [PianoController::class, 'update']);
 	Route::get('/pianos/{piano}/edit', [PianoController::class, 'edit']);
 

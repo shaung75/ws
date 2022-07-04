@@ -58,6 +58,17 @@ class PianoController extends Controller
     }
 
     /**
+     * Create a duplicate a piano
+     * @return [type] [description]
+     */
+    public function duplicate(Piano $piano) {
+        return view('pianos.duplicate', [
+            'manufacturers' => Manufacturer::get()->sortBy('manufacturer'),
+            'piano' => $piano
+        ]);
+    }
+
+    /**
      * Show edit form
      * @param  Client $piano [description]
      * @return [type]         [description]
@@ -81,11 +92,11 @@ class PianoController extends Controller
             'colour' => 'required',
             'finish' => 'required',
             'serial_number' => ['required', Rule::unique('pianos','serial_number')],
-            'stock_number'=> ['required', Rule::unique('pianos', 'stock_number')],
             'year_of_manufacture' => 'required'
         ]);
 
         $formFields['ivory_keys'] = $request->ivory_keys;
+        $formFields['stock_number'] = $request->stock_number;
 
         $piano = Piano::create($formFields);
 
@@ -104,11 +115,11 @@ class PianoController extends Controller
             'colour' => 'required',
             'finish' => 'required',
             'serial_number' => ['required', ($piano->serial_number != $request->serial_number ? Rule::unique('pianos','serial_number') : '' )],
-            'stock_number'=> ['required', ($piano->stock_number != $request->stock_number ? Rule::unique('pianos','stock_number') : '' )],
             'year_of_manufacture' => 'required'
         ]);
 
         $formFields['ivory_keys'] = $request->ivory_keys;
+        $formFields['stock_number'] = $request->stock_number;
         
         $piano->update($formFields);
 
