@@ -2,14 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    /**
+     * Show the account screen
+     * @return [type] [description]
+     */
+    public function index() {
+        return view('users.index');
+    }
+
+    /**
+     * Update account details
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function update(Request $request) {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+        
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("message", "Password changed successfully!");
+    }
+
 	// Show login form
     public function login() {
     	return view('users.login');

@@ -76,4 +76,16 @@ class Invoice extends Model
 
         return $status;
     }
+
+    /**
+     * Return overdue invoices
+     * @return [type] [description]
+     */
+    public static function overdue() {
+        $date = date('Y-m-d', time());
+
+        return static::all()
+            ->where('due_date', '<', $date)
+            ->where('paid', null);
+    }
 }

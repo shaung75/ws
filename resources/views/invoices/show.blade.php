@@ -63,7 +63,7 @@
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
                 <div class="item-label"><strong>Invoice Date</strong></div>
-                <div class="item-data">{{$invoice->invoice_date}}</div>
+                <div class="item-data">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
@@ -78,7 +78,7 @@
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
                 <div class="item-label"><strong>Due Date</strong></div>
-                <div class="item-data">{{$invoice->due_date}}</div>
+                <div class="item-data">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
@@ -230,8 +230,8 @@
                           <tr>
                             <td class="cell">{{$item->qty}}</td>
                             <td class="cell">{{$item->description}}</td>
-                            <td class="cell">&pound;{{$item->unit_price}}</td>
-                            <td class="cell">&pound;{{$item->unit_price * $item->qty}}</td>
+                            <td class="cell">&pound;{{number_format($item->unit_price,2)}}</td>
+                            <td class="cell">&pound;{{number_format($item->unit_price * $item->qty,2)}}</td>
                             <td class="cell text-end">
                               <form action="/invoice-items/{{$item->id}}" method="POST">
                                 @csrf
@@ -349,15 +349,15 @@
                     <tbody>
                       <tr>
                         <th class="cell">SUB-TOTAL</th>
-                        <td class="cell">&pound;{{$invoice->total()->gross}}</td>
+                        <td class="cell">&pound;{{number_format($invoice->total()->gross,2)}}</td>
                       </tr>
                       <tr>
                         <th class="cell">VAT</th>
-                        <td class="cell">&pound;{{$invoice->total()->vat}}</td>
+                        <td class="cell">&pound;{{number_format($invoice->total()->vat,2)}}</td>
                       </tr>
                       <tr>
                         <th class="cell">TOTAL</th>
-                        <td class="cell">&pound;{{$invoice->total()->net}}</td>
+                        <td class="cell">&pound;{{number_format($invoice->total()->net,2)}}</td>
                       </tr>
                       
                     </tbody>

@@ -91,7 +91,7 @@
               /></a>
               <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                 <li>
-                  <a class="dropdown-item" href="account.html">Account</a>
+                  <a class="dropdown-item" href="/account">Account</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="/settings">Settings</a>

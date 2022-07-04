@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ManufacturerController;
@@ -31,9 +32,7 @@ Route::get('/reset-password/{token}', [UserController::class, 'passwordReset'])-
 Route::post('/reset-password', [UserController::class, 'passwordUpdate'])->middleware('guest')->name('password.update');
 
 Route::middleware('auth')->group(function() {
-	Route::get('/', function () {
-	    return view('dashboard', ['title' => 'Dashboard']);
-	});
+	Route::get('/', [DashboardController::class, 'index']);
 
 	// Clients
 	Route::get('/clients', [ClientController::class, 'index']);
@@ -80,6 +79,7 @@ Route::middleware('auth')->group(function() {
 	Route::get('/invoices/create', [InvoiceController::class, 'create']);
 	Route::post('/invoices/add', [InvoiceController::class, 'store']);
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
+	Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit']);
 	Route::put('/invoices/{invoice}/payment', [InvoiceController::class, 'updatePayment']);
 	Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf']);
 	Route::get('/invoices/{invoice}/mail', [InvoiceController::class, 'sendInvoice']);
@@ -95,5 +95,7 @@ Route::middleware('auth')->group(function() {
 
 	Route::get('/maps', [TestController::class, 'index']);
 
+	Route::get('/account',[ UserController::class, 'index']);
+	Route::put('/account',[ UserController::class, 'update']);
 	Route::post('/logout', [UserController::class, 'logout']);
 });

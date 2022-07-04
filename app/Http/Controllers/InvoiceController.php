@@ -47,6 +47,18 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Show the edit form for invoice
+     * @param  Invoice $invoice [description]
+     * @return [type]           [description]
+     */
+    public function edit(Invoice $invoice) {
+        return view('invoices.edit', [
+            'invoice' => $invoice,
+            'clients' => Client::all()
+        ]);
+    }
+
+    /**
      * Show the PDF invoice
      * @param  Invoice $invoice [description]
      * @return [type]           [description]
