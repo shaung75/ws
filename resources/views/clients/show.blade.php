@@ -289,7 +289,7 @@
                     @unless(count($availablePianos) == 0)
                       <select class="form-select" name="piano_id">
                         @foreach($availablePianos as $availablePiano)
-                          <option value="{{$availablePiano->id}}">#{{$availablePiano->stock_number}} - {{$availablePiano->manufacturer->manufacturer}} {{$availablePiano->model}}</option>
+                          <option value="{{$availablePiano->id}}">{{$availablePiano->manufacturer->manufacturer}} {{$availablePiano->model}} (s/n: {{$availablePiano->serial_number}})</option>
                         @endforeach
                       </select>
                       <input type="hidden" value="{{$client->id}}" name="client_id">
