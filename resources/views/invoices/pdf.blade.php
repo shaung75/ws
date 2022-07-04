@@ -9,7 +9,8 @@
       content="CRM for White &amp; Sentance"
       />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link id="theme-style" rel="stylesheet" href="/var/www/html/whitesentance/public/assets/css/invoice.css" />
+    
+    <link id="theme-style" rel="stylesheet" href="../public/assets/css/invoice.css" />
   </head>
   <body>
     <div class="container-fluid">
@@ -21,7 +22,7 @@
               <div class="invoice-title">
                 <div class="row">
                   <div class="col-xs-12 text-center py-3" style="background: #000;">
-                    <img src="/var/www/html/whitesentance/public/assets/images/logo.png" alt="" height="60">
+                    <img src="../public/assets/images/logo.png" alt="" height="60">
                   </div>
                 </div>
                 <br>

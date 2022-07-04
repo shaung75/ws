@@ -59,6 +59,25 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Updates invoice
+     * @param  Request $request [description]
+     * @param  Invoice $invoice [description]
+     * @return [type]           [description]
+     */
+    public function update(Request $request, Invoice $invoice) {
+        $formFields = $request->validate([
+            'invoice_date' => 'required',
+            'due_date' => 'required'
+        ]);
+
+        $formFields['paid'] = $request->paid;
+
+        $invoice->update($formFields);
+
+        return redirect('/invoices/'.$invoice->id)->with('message', 'Invoice updated');
+    }
+
+    /**
      * Show the PDF invoice
      * @param  Invoice $invoice [description]
      * @return [type]           [description]
@@ -70,7 +89,6 @@ class InvoiceController extends Controller
             'invoice' => $invoice,
             'settings' => $settings->fetch()
         ]);
-        
         return $pdf->download($invoice->id.'-'.$invoice->client->surname.'-invoice.pdf');
     }
 

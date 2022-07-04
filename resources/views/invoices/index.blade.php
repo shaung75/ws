@@ -58,7 +58,7 @@
                   </td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>
-                  <td class="cell">{{$invoice->total()->net}}</td>
+                  <td class="cell">&pound;{{number_format($invoice->total()->net,2)}}</td>
                   <td class="cell">
                     @if($invoice->paymentStatus() == 'Paid')
                       <span class="badge bg-success">
