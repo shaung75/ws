@@ -243,7 +243,10 @@
                             <td class="cell">{{$piano->colour}}</td>
                             <td class="cell">{{$piano->serial_number}}</td>
                             <td class="cell"><span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></td>
-                            <td class="cell"><a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a></td>
+                            <td class="cell">
+                              <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a>
+                              <a class="btn-sm app-btn-secondary" href="/pianos/unassign/{{$piano->id}}">Unassign</a>
+                            </td>
                           </tr>
 
                         @endforeach

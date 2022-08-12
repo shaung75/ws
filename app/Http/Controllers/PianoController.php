@@ -156,6 +156,19 @@ class PianoController extends Controller
     }
 
     /**
+     * Unnasign piano from client
+     * @param  Piano  $piano [description]
+     * @return [type]        [description]
+     */
+    public function unassign(Piano $piano) {
+        $formFields['client_id'] = null;
+
+        $piano->update($formFields);
+
+        return redirect()->back()->with('message', 'Piano unassigned from client');
+    }
+
+    /**
      * Paginate collection results
      * @param  [type]  $items   [description]
      * @param  integer $perPage [description]
