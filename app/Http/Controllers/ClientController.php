@@ -52,7 +52,7 @@ class ClientController extends Controller
         $formFields = $request->validate([
             'first_name' => 'required',
             'surname' => 'required',
-            'email' => ['required', 'email', ($client->email != $request->email ? Rule::unique('clients','email') : '' )],
+            'email' => ['nullable', 'email', ($client->email != $request->email ? Rule::unique('clients','email') : '' )],
             'telephone'=> 'required',
             'address1' => 'required',
             'town' => 'required',
@@ -124,7 +124,7 @@ class ClientController extends Controller
         $formFields = $request->validate([
             'first_name' => 'required',
             'surname' => 'required',
-            'email' => ['required', 'email', Rule::unique('clients','email')],
+            'email' => ['nullable', 'email', Rule::unique('clients','email')],
             'telephone'=> ['required', Rule::unique('clients', 'telephone')],
             'address1' => 'required',
             'town' => 'required',
