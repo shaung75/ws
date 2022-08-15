@@ -91,12 +91,13 @@ class PianoController extends Controller
             'model' => 'required',
             'colour' => 'required',
             'finish' => 'required',
-            'serial_number' => ['required', Rule::unique('pianos','serial_number')],
+            'serial_number' => ['required', ($request->serial_number != '?' ? Rule::unique('pianos','serial_number') : '') ],
             'year_of_manufacture' => 'required'
         ]);
 
         $formFields['ivory_keys'] = $request->ivory_keys;
         $formFields['stock_number'] = $request->stock_number;
+        $formFields['notes'] = $request->notes;
 
         $piano = Piano::create($formFields);
 
@@ -114,12 +115,13 @@ class PianoController extends Controller
             'model' => 'required',
             'colour' => 'required',
             'finish' => 'required',
-            'serial_number' => ['required', ($piano->serial_number != $request->serial_number ? Rule::unique('pianos','serial_number') : '' )],
+            'serial_number' => ['required', ($piano->serial_number != $request->serial_number && $request->serial_number != '?' ? Rule::unique('pianos','serial_number') : '' )],
             'year_of_manufacture' => 'required'
         ]);
 
         $formFields['ivory_keys'] = $request->ivory_keys;
         $formFields['stock_number'] = $request->stock_number;
+        $formFields['notes'] = $request->notes;
         
         $piano->update($formFields);
 

@@ -165,6 +165,23 @@
 									@enderror
 								</div>
 							</div>
+
+							<hr class="mb-3">
+
+							<div class="row mb-3">
+								<div class="col-3">
+									<label for="notes" class="form-label">Notes</label>		
+								</div>
+								<div class="col-9">
+									<textarea class="form-control" id="notes" rows="10" name="notes" style="height:100px;">{{$piano->notes}}</textarea>	
+
+									@error('notes')
+										<div class="alert alert-danger mt-3" role="alert">
+											<small>{{$message}}</small>
+										</div>
+									@enderror
+								</div>
+							</div>
 						
 		        </div>
 		        <!--//app-card-body-->

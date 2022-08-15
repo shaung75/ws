@@ -161,6 +161,21 @@
             <!--//row-->
           </div>
           <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <div class="item-label"><strong>Notes</strong></div>
+                <div class="item-data">{{$piano->notes}}</div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
@@ -204,7 +219,7 @@
               <div class="col">
                 <div class="table-responsive">
 
-                  <p><strong>Next service due: {{\Carbon\Carbon::parse($piano->service_status()->due)->format('d/m/Y')}} <span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></strong></p>
+                  <p><strong>Next service due: {{\Carbon\Carbon::parse($piano->service_status()->due)->format('d/m/Y')}} <span class="badge bg-{{$piano->service_status()->warning}}">{{$piano->service_status()->status}}</span></strong></p>
 
                   <div class="table-responsive">
                           

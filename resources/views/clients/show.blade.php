@@ -60,8 +60,9 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
-                <div class="item-label"><strong>Telephone</strong></div>
+                <div class="item-label"><strong>Telephone(s)</strong></div>
                 <div class="item-data">{{$client->telephone}}</div>
+                <div class="item-data">{{$client->telephone_secondary}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
@@ -242,7 +243,7 @@
                             <td class="cell">{{$piano->model}}</td>
                             <td class="cell">{{$piano->colour}}</td>
                             <td class="cell">{{$piano->serial_number}}</td>
-                            <td class="cell"><span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></td>
+                            <td class="cell"><span class="badge bg-{{$piano->service_status()->warning}}">{{$piano->service_status()->status}}</span></td>
                             <td class="cell">
                               <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a>
                               <a class="btn-sm app-btn-secondary" href="/pianos/unassign/{{$piano->id}}">Unassign</a>

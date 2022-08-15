@@ -21,7 +21,8 @@ class Piano extends Model
         'serial_number', 
         'stock_number', 
         'year_of_manufacture',
-        'ivory_keys'
+        'ivory_keys',
+        'notes'
     ];
 
     /**
@@ -55,11 +56,25 @@ class Piano extends Model
         $service = $this->services()->orderBy('due_date', 'desc')->first();
 
         if($service) {
+            $datediff = (strtotime($service->due_date) - strtotime($date)) / (60 * 60 * 24);
+            
+            //$due_soon = ($datediff > 0 && $datediff <= 30) ? 'soon' : 'ok';
+            
             $status->due = $service->due_date;
+
+            if($datediff > 0 && $datediff <= 30) {
+                $status->warning = 'warning';
+            } elseif ($date > $status->due) {
+                $status->warning = 'danger';
+            } else {
+                $status->warning = 'success';
+            }
+            
             $status->status = $date > $status->due ? 'Overdue' : 'OK';
         } else {
             $status->due = $date;
             $status->status = 'Overdue';
+            $status->warning = 'danger';
         }
 
         return $status;

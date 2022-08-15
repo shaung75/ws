@@ -134,8 +134,14 @@
 						<hr class="mb-3">
 
 						<div class="row mb-3">
+							<div class="col-12">
+								<strong>Telephone</strong>
+							</div>
+						</div>
+
+						<div class="row mb-3">
 							<div class="col-3">
-								<label for="telephone" class="form-label">Telephone</label>		
+								<label for="telephone" class="form-label">Primary</label>		
 							</div>
 							<div class="col-9">
 								<input type="text" class="form-control" id="telephone" name="telephone" value="{{$client->telephone}}">		
@@ -147,6 +153,23 @@
 								@enderror
 							</div>
 						</div>
+						<div class="row mb-3">
+							<div class="col-3">
+								<label for="telephone_secondary" class="form-label">Secondary</label>		
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control" id="telephone_secondary" name="telephone_secondary" value="{{$client->telephone_secondary}}">		
+
+								@error('telephone_secondary')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<hr class="mb-3">
+
 						<div class="row mb-3">
 							<div class="col-3">
 								<label for="email" class="form-label">Email</label>		

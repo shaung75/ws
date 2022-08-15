@@ -40,7 +40,7 @@ class ServiceController extends Controller
 
 		$service = Service::create($formFields);
 
-		return redirect('/services/'.$service->id)->with('message', 'Created successfully');
+		return redirect('/pianos/'.$request->piano_id)->with('message', 'Created successfully');
 	}
 
   /**
@@ -96,6 +96,6 @@ class ServiceController extends Controller
 
 		$service->update($formFields);
 
-		return redirect('/services/'.$service->id)->with('message', 'Updated successfully');
+		return redirect('/pianos/'.$request->piano_id)->with('message', 'Updated successfully');
 	}
 }

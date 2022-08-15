@@ -62,7 +62,7 @@
                   <td class="cell">{{$piano->colour}}</td>
                   <td class="cell">{{$piano->finish}}</td>
                   <td class="cell">{{$piano->year_of_manufacture}}</td>
-                  <td class="cell"><span class="badge {{$piano->service_status()->status == 'OK' ? 'bg-success' : 'bg-danger'}}">{{$piano->service_status()->status}}</span></td>
+                  <td class="cell"><span class="badge bg-{{$piano->service_status()->warning}}">{{$piano->service_status()->status}}</span></td>
 
                   @if($list == 'assigned')
                     <td class="cell">

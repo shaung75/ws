@@ -43,6 +43,18 @@
 						</thead>
 						<tbody>
 						
+							<tr>
+								<form action="/manufacturers" method="POST">
+	    						@csrf
+									<td class="cell">
+										<input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Add manufacturer">		
+									</td>
+									<td class="cell">
+										<button type="submit" class="btn app-btn-primary">Add new manufacturer</button>
+									</td>
+								</form>
+							</tr>	
+														
 							@unless(count($manufacturers) == 0)
 
 								@foreach($manufacturers as $manufacturer)
@@ -93,18 +105,6 @@
 								</tr>
 
 							@endunless
-
-							<tr>
-								<form action="/manufacturers" method="POST">
-	    						@csrf
-									<td class="cell">
-										<input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Add manufacturer">		
-									</td>
-									<td class="cell">
-										<button type="submit" class="btn app-btn-primary">Add new manufacturer</button>
-									</td>
-								</form>
-							</tr>	
 							
 						</tbody>
 					</table>

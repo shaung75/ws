@@ -61,6 +61,7 @@ class ClientController extends Controller
         ]);
 
         $formFields['notes'] = $request->notes;
+        $formFields['telephone_secondary'] = $request->telephone_secondary;
 
         // If check if the postcode or coords have changed
         if($request->postcode != $client->postcode) {
@@ -133,6 +134,7 @@ class ClientController extends Controller
         ]);
 
         $formFields['notes'] = $request->notes;
+        $formFields['telephone_secondary'] = $request->telephone_secondary;
 
         // If lat/long values have been set then use those, otherwise geocode postcode
         if($request->lat == '' || $request->long == '') {

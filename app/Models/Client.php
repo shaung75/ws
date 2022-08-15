@@ -16,7 +16,8 @@ class Client extends Model
 			'town', 
 			'county', 
 			'postcode', 
-			'telephone', 
+			'telephone',
+            'telephone_secondary', 
 			'email', 
 			'notes', 
 			'lat', 
@@ -39,5 +40,43 @@ class Client extends Model
      */
     public function invoices() {
     	return $this->hasMany(Invoice::class, 'client_id');
+    }
+
+    public function service_status() {
+    	$status = new \stdClass();
+    	$pianos = $this->pianos()->get();
+
+    	$ok = 0;
+    	$overdue = 0;
+    	$due_soon = 0;
+
+    	foreach ($pianos as $piano) {
+    		if($piano->service_status()->warning == 'success') $ok++;
+    		if($piano->service_status()->warning == 'warning') $due_soon++;
+    		if($piano->service_status()->warning == 'danger') $overdue++;
+    	}
+
+    	if($overdue > 0) {
+    		$status->status = 'Overdue';
+    		$status->warning = 'danger';
+    		return $status;
+    	}
+    	
+    	if($due_soon > 0) {
+    		$status->status = 'OK';
+    		$status->warning = 'warning';
+    		return $status;
+    	}
+    	
+    	if($ok > 0) {
+    		$status->status = 'OK';
+    		$status->warning = 'success';
+    		return $status;
+    	}
+
+    	$status->status = '';
+    	$status->warning = '';
+
+    	return $status;
     }
 }
