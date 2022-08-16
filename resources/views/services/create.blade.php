@@ -96,6 +96,25 @@
 								</div>
 							</div>
 
+							<div class="row mb-3">
+								<div class="col-3">
+									<label for="price" class="form-label">Price</label>		
+								</div>
+								<div class="col-9">
+
+									<div class="input-group mb-3 w-25">
+										<span class="input-group-text" id="basic-addon1">&pound;</span>
+										<input type="number" min="0" step=".01" class="form-control" id="price" name="price" value="{{old('price')}}" value="0.00">
+									</div>
+
+									@error('price')
+										<div class="alert alert-danger mt-3" role="alert">
+											<small>{{$message}}</small>
+										</div>
+									@enderror
+								</div>
+							</div>
+
 							<hr class="mb-3">
 
 							<div class="row mb-3">

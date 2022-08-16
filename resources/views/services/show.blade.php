@@ -60,6 +60,27 @@
         <div class="item border-bottom py-3">
           <div class="row justify-content-between align-items-center">
             <div class="col-auto">
+              <div class="item-label"><strong>Price</strong></div>
+              <div class="item-data">
+                @if($service->price)
+                  &pound;{{$service->price}}
+                @else
+                  N/A
+                @endif
+              </div>
+            </div>
+            <!--//col-->
+            <div class="col text-end">
+              <a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}/edit">Change</a>
+            </div>
+            <!--//col-->
+          </div>
+          <!--//row-->
+        </div>
+        <!--//item-->
+        <div class="item border-bottom py-3">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto">
               <div class="item-label"><strong>Technician</strong></div>
               <div class="item-data">{{$service->technician}}</div>
             </div>

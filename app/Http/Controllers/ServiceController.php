@@ -37,6 +37,7 @@ class ServiceController extends Controller
 		$formFields['due_date'] = $due_date;
 		$formFields['notes'] = $request->notes;
 		$formFields['technician'] = $request->technician;
+		$formFields['price'] = $request->price;
 
 		$service = Service::create($formFields);
 
@@ -93,6 +94,7 @@ class ServiceController extends Controller
 		$formFields['due_date'] = $due_date;
 		$formFields['notes'] = $request->notes;
 		$formFields['technician'] = $request->technician;
+		$formFields['price'] = $request->price;
 
 		$service->update($formFields);
 
