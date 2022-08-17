@@ -152,8 +152,6 @@ class ClientController extends Controller
             $formFields['long'] = $request->long;    
         }
 
-        $client = Client::create($formFields);
-
         // If we're creating a new piano as well, validate and create
         if($request->create_piano) {
             $pianoFormFields = $request->validate([
@@ -165,12 +163,16 @@ class ClientController extends Controller
                 'year_of_manufacture' => 'required'
             ]);
 
+            $client = Client::create($formFields);
+
             $pianoFormFields['ivory_keys'] = $request->ivory_keys;
             $pianoFormFields['stock_number'] = $request->stock_number;
             $pianoFormFields['client_id'] = $client->id;
 
             $piano = Piano::create($pianoFormFields);
-        }        
+        } else {
+            $client = Client::create($formFields);
+        }     
 
         return redirect('/clients/'.$client->id)->with('message', 'Created successfully');
     }
