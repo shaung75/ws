@@ -236,7 +236,7 @@
                       
                         @unless(count($piano->services) == 0)
 
-                          @foreach($piano->services as $service)
+                          @foreach($piano->services->sortBy('service_date') as $service)
 
                             <tr>
                               <td class="cell">{{\Carbon\Carbon::parse($service->service_date)->format('d/m/Y')}}</td>
