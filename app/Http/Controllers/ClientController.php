@@ -176,4 +176,28 @@ class ClientController extends Controller
 
         return redirect('/clients/'.$client->id)->with('message', 'Created successfully');
     }
+
+    /**
+     * Show the delete confirm page
+     * @param  Client $client [description]
+     * @return [type]         [description]
+     */
+    public function delete(Client $client) {
+        return view('clients.delete', [
+            'client' => $client
+        ]);
+    }
+
+    /**
+     * Delete the client
+     * @param  Client $client [description]
+     * @return [type]         [description]
+     */
+    public function destroy(Client $client) {
+        // Unassign any pianos
+        Piano::where('client_id', '=', $client->id)->update(['client_id' => null]);
+
+        $client->delete();
+        return redirect('/clients')->with('message', 'Client deleted');
+    }
 }

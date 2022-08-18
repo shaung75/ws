@@ -100,4 +100,28 @@ class ServiceController extends Controller
 
 		return redirect('/pianos/'.$request->piano_id)->with('message', 'Updated successfully');
 	}
+
+	/**
+	 * Show the delete confirmation page
+	 * @param  Service $service [description]
+	 * @return [type]           [description]
+	 */
+	public function delete(Service $service) {
+    return view('services.delete', [
+      'service' => $service
+    ]);
+  }
+
+  /**
+   * Delete the service record
+   * @param  Service $service [description]
+   * @return [type]           [description]
+   */
+  public function destroy(Service $service) {
+  	$piano = $service->piano;
+
+  	$service->delete();
+
+  	return redirect('/pianos/'.$piano->id)->with('message', 'Service record deleted');
+  }
 }

@@ -73,6 +73,7 @@
                   <td class="cell">
                     <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/duplicate">Duplicate</a>
                     <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}">View</a>
+                    <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/delete">Delete</a>
                   </td>
                 </tr>
 

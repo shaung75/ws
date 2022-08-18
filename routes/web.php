@@ -40,7 +40,10 @@ Route::middleware('auth')->group(function() {
 	Route::get('/clients/create', [ClientController::class, 'create']);
 	Route::get('/clients/{client}', [ClientController::class, 'show']);
 	Route::put('/clients/{client}', [ClientController::class, 'update']);
+	Route::delete('/clients/{client}', [ClientController::class, 'destroy']);
 	Route::get('/clients/{client}/edit', [ClientController::class, 'edit']);
+	Route::get('/clients/{client}/edit', [ClientController::class, 'edit']);
+	Route::get('/clients/{client}/delete', [ClientController::class, 'delete']);
 
 	// Pianos
 	Route::get('/pianos', [PianoController::class, 'index']);
@@ -51,9 +54,11 @@ Route::middleware('auth')->group(function() {
 	Route::put('/pianos/assign-client', [PianoController::class, 'assignClient']);
 	Route::get('/pianos/create', [PianoController::class, 'create']);
 	Route::get('/pianos/{piano}', [PianoController::class, 'show']);
+	Route::delete('/pianos/{piano}', [PianoController::class, 'destroy']);
 	Route::get('/pianos/{piano}/duplicate', [PianoController::class, 'duplicate']);
 	Route::put('/pianos/{piano}', [PianoController::class, 'update']);
 	Route::get('/pianos/{piano}/edit', [PianoController::class, 'edit']);
+	Route::get('/pianos/{piano}/delete', [PianoController::class, 'delete']);
 
 	// Manufacturers
 	Route::get('/manufacturers', [ManufacturerController::class, 'index']);
@@ -72,7 +77,9 @@ Route::middleware('auth')->group(function() {
 	Route::post('/services', [ServiceController::class, 'store']);
 	Route::get('/services/{service}', [ServiceController::class, 'show']);
 	Route::put('/services/{service}', [ServiceController::class, 'update']);
+	Route::delete('/services/{service}', [ServiceController::class, 'destroy']);
 	Route::get('/services/{service}/edit', [ServiceController::class, 'edit']);
+	Route::get('/services/{service}/delete', [ServiceController::class, 'delete']);
 	Route::get('/services/create', [ServiceController::class, 'create']);
 	Route::get('/services/create/{piano}', [ServiceController::class, 'create']);
 

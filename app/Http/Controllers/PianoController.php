@@ -183,4 +183,26 @@ class PianoController extends Controller
 	    $items = $items instanceof Collection ? $items : Collection::make($items);
 	    return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
 	}
+
+    /**
+     * Show the delete confirmation page
+     * @param  Piano  $piano [description]
+     * @return [type]        [description]
+     */
+    public function delete(Piano $piano) {
+        return view('pianos.delete', [
+            'piano' => $piano,
+        ]);
+    }
+
+    /**
+     * Delete the piano
+     * @param  Piano  $piano [description]
+     * @return [type]        [description]
+     */
+    public function destroy(Piano $piano) {
+        $piano->delete();
+
+        return redirect('/pianos')->with('message', 'Piano deleted');
+    }
 }

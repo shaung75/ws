@@ -55,7 +55,10 @@
 									<td class="cell">{{$client['first_name']}}</td>
 									<td class="cell">{{count($client->pianos)}}</td>
 									<td class="cell"><span class="badge bg-{{$client->service_status()->warning}}">{{$client->service_status()->status}}</span></td>
-									<td class="cell"><a class="btn-sm app-btn-secondary" href="/clients/{{$client['id']}}">View</a></td>
+									<td class="cell">
+										<a class="btn-sm app-btn-secondary" href="/clients/{{$client['id']}}">View</a>
+										<a class="btn-sm app-btn-secondary" href="/clients/{{$client['id']}}/delete">Delete</a>
+									</td>
 								</tr>
 
 							@endforeach

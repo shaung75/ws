@@ -242,7 +242,10 @@
                               <td class="cell">{{\Carbon\Carbon::parse($service->service_date)->format('d/m/Y')}}</td>
                               <td class="cell">{{$service->type->type}}</td>
                               <td class="cell">{{$service->technician}}</td>
-                              <td class="cell"><a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}">View</a></td>
+                              <td class="cell">
+                                <a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}">View</a>
+                                <a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}/delete">Delete</a>
+                              </td>
                             </tr>
 
                           @endforeach
