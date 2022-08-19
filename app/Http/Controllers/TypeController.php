@@ -42,8 +42,10 @@ class TypeController extends Controller
      * @return [type]                     [description]
      */
     public function update(Request $request) {
+        $type = Type::find($request->id);
+
         $formFields = $request->validate([
-            'type' => ['required', Rule::unique('types','type')],
+            'type' => ['required', ($request->type != $type->type ? Rule::unique('types','type') : '')],
             'id' => 'required',
             'duration' => ['required', 'numeric']
         ]);
