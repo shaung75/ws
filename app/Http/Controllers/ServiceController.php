@@ -60,7 +60,7 @@ class ServiceController extends Controller
     return view('services.create', [
       'pianos' => Piano::get()->sortBy('stock_number'),
       'p' => $piano,
-      'types' => Type::get(),
+      'types' => Type::orderBy('type')->get(),
     ]);
   }
 
