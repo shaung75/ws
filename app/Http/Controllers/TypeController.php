@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TypeController extends Controller
 {
@@ -24,7 +25,7 @@ class TypeController extends Controller
      */
     public function store(Request $request) {
     	$formFields = $request->validate([
-          'type' => 'required',
+          'type' => ['required', Rule::unique('types','type')],
           'duration' => ['required', 'numeric']
       ]);
 
@@ -42,7 +43,7 @@ class TypeController extends Controller
      */
     public function update(Request $request) {
         $formFields = $request->validate([
-            'type' => 'required',
+            'type' => ['required', Rule::unique('types','type')],
             'id' => 'required',
             'duration' => ['required', 'numeric']
         ]);
