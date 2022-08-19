@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Appointment;
 use App\Models\Piano;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,14 @@ class Client extends Model
      */
     public function invoices() {
     	return $this->hasMany(Invoice::class, 'client_id');
+    }
+
+    /**
+     * Relationship to appointments
+     * @return [type] [description]
+     */
+    public function appointments() {
+        return $this->hasMany(Appointment::class, 'client_id');
     }
 
     public function service_status() {

@@ -145,6 +145,9 @@ class PianoController extends Controller
 
         $piano->update($formFields);
 
+        /** 
+        Old creation of initial service
+        
         $today = date('Y-m-d', time());
 
         // Create the initial service
@@ -153,6 +156,7 @@ class PianoController extends Controller
             'service_date' => $today,
             'due_date' => date('Y-m-d', strtotime($today . "+3 months" ) )
         ]);
+        **/
 
         return redirect()->back()->with('message', 'Piano assigned to client');
     }

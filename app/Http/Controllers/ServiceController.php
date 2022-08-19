@@ -30,9 +30,17 @@ class ServiceController extends Controller
 		  'service_date' => 'required',
 		]);
 
+		$type = Type::where('id',$request->type_id)->first();
+
+		// Give default 12 months to null values
+		if($type->duration == null) {
+			$type->duration = 12;
+		}
+
 		$service_date = date('Y-m-d', strtotime($request->service_date) );
-		$due_date = date('Y-m-d', strtotime($service_date . ($request->type_id == 1 ? "+3 months" : "+12 months") ) );
-		
+
+		$due_date = date('Y-m-d', strtotime($service_date . "+".$type->duration." months"));
+
 		$formFields['service_date'] = $service_date;
 		$formFields['due_date'] = $due_date;
 		$formFields['notes'] = $request->notes;
@@ -87,8 +95,16 @@ class ServiceController extends Controller
 		  'service_date' => 'required',
 		]);
 
+		$type = Type::where('id',$request->type_id)->first();
+
+		// Give default 12 months to null values
+		if($type->duration == null) {
+			$type->duration = 12;
+		}
+
 		$service_date = date('Y-m-d', strtotime($request->service_date) );
-		$due_date = date('Y-m-d', strtotime($service_date . ($request->type_id == 1 ? "+3 months" : "+12 months") ) );
+		
+		$due_date = date('Y-m-d', strtotime($service_date . "+".$type->duration." months"));
 		
 		$formFields['service_date'] = $service_date;
 		$formFields['due_date'] = $due_date;

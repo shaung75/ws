@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -33,6 +34,9 @@ Route::post('/reset-password', [UserController::class, 'passwordUpdate'])->middl
 
 Route::middleware('auth')->group(function() {
 	Route::get('/', [DashboardController::class, 'index']);
+
+	// Appointments
+	Route::get('/appointments/create', [AppointmentController::class, 'create']);
 
 	// Clients
 	Route::get('/clients', [ClientController::class, 'index']);

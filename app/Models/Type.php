@@ -10,7 +10,10 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type'];
+    protected $fillable = [
+    	'type',
+    	'duration'
+    ];
 
     /**
      * Define relationship to services 

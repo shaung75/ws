@@ -24,7 +24,8 @@ class TypeController extends Controller
      */
     public function store(Request $request) {
     	$formFields = $request->validate([
-          'type' => 'required'
+          'type' => 'required',
+          'duration' => ['required', 'numeric']
       ]);
 
       $formFields['type'] = $request->type;
@@ -42,7 +43,8 @@ class TypeController extends Controller
     public function update(Request $request) {
         $formFields = $request->validate([
             'type' => 'required',
-            'id' => 'required'
+            'id' => 'required',
+            'duration' => ['required', 'numeric']
         ]);
 
         $type = Type::find($request->id);
