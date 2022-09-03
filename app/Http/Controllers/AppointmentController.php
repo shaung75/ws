@@ -48,6 +48,12 @@ class AppointmentController extends Controller
                         return Carbon::parse($q->date)->format('j');
                       });
 
+    $incomplete = Appointment::query()
+                      ->where('complete','=', null)
+                      ->whereDate('date', '<', Carbon::today())
+                      ->orderBy('date', 'asc')
+                      ->get();
+
     return view('appointments.index', [
     	'month' => $month,
     	'year' => $year,
@@ -57,7 +63,8 @@ class AppointmentController extends Controller
     	'yearPrev' => $yearPrev,
     	'monthName' => $this->getMonthName($month),
       'daysInMonth' => $daysInMonth,
-      'appointments' => $appointments
+      'appointments' => $appointments,
+      'incomplete' => $incomplete
     ]);
   }
 

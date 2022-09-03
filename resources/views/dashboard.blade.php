@@ -26,12 +26,48 @@
           <!--//row-->
         </div>
         <!--//app-card-header-->
-        <div class="app-card-body px-4 w-100">
-          APPTS TO GO HERE
+        <div class="app-card-body app-card-orders-table px-4 w-100">
+          <div class="table-responsive">
+            <table class="table app-table-hover mb-0 text-left">
+              <thead>
+                <tr>
+                  <th class="cell">Date</th>
+                  <th class="cell">Client</th>
+                  <th class="cell"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                @foreach($appointments as $keyYear => $year)
+                  @foreach($year as $keyMonth => $month)
+                    @foreach($month as $keyDay => $day)
+                      <tr>
+                        <td class="cell">{{$keyDay}}/{{$keyMonth}}/{{$keyYear}}</td>
+                        <td class="cell">
+                          @foreach($day as $appt)
+                            <a href="/appointments/{{$appt->id}}">
+                              {{$appt->client->first_name}} {{$appt->client->surname}}
+                            </a><br>
+                          @endforeach
+                        </td>
+                        <td class="cell">
+                          @foreach($day as $appt)
+                            {{$appt->client->town}}<br>
+                          @endforeach
+                        </td>
+                      </tr>
+                    @endforeach              
+                  @endforeach            
+                @endforeach
+
+              </tbody>
+            </table>
+          </div>
+
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
-          <a class="btn app-btn-primary" href="#">View appointments</a>
+          <a class="btn app-btn-primary" href="/appointments">View appointments</a>
         </div>
         <!--//app-card-footer-->
       </div>

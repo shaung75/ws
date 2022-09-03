@@ -26,7 +26,7 @@
           <!--//row-->
         </div>
         <!--//app-card-header-->
-        <div class="app-card-body px-4 w-100">
+        <div class="app-card-body app-card-orders-table px-4 w-100">
           <table class="table app-table-hover mb-0 text-left">
             <thead>
               <tr>
@@ -82,16 +82,16 @@
           <div class="row align-items-center gx-3">
             <div class="col-auto">
               <div class="app-icon-holder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-                  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-                  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                 </svg>
               </div>
               <!--//icon-holder-->
             </div>
             <!--//col-->
             <div class="col-auto">
-              <h4 class="app-card-title">Overdue invoices</h4>
+              <h4 class="app-card-title">Incomplete appointments</h4>
             </div>
             <!--//col-->
           </div>
@@ -106,17 +106,20 @@
             <table class="table app-table-hover mb-0 text-left">
               <thead>
                 <tr>
-                  <th class="cell">#</th>
+                  <th class="cell">Date Booked</th>
                   <th class="cell">Client</th>
-                  <th class="cell">Due Date</th>
-                  <th class="cell">Value (inc VAT)</th>
-                  <th class="cell">Paid</th>
                   <th class="cell"></th>
                 </tr>
               </thead>
               <tbody>
-              
-                                   
+
+                @foreach($incomplete as $appt)
+                  <tr>
+                    <td class="cell">{{\Carbon\Carbon::parse($appt->date)->format('d/m/Y')}}</td>
+                    <td class="cell"><a href="/appointments/{{$appt->id}}">{{$appt->client->first_name}} {{$appt->client->surname}}</a></td>
+                    <td class="cell text-end"><a href="/appointments/{{$appt->id}}/edit">Reschedule</a></td>
+                  </tr>
+                @endforeach                                   
                 
               </tbody>
             </table>
@@ -124,7 +127,7 @@
 
         </div>
         <div class="app-card-footer p-4 mt-auto">
-          <a class="btn app-btn-primary" href="/invoices">View invoices</a>
+          
         </div>
       </div>
       <!--//app-card-->

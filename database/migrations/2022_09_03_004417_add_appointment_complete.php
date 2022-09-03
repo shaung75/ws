@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->boolean('complete')->default(0)->nullable();
+            $table->boolean('complete')->nullable();
         });
     }
 
