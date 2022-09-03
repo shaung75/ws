@@ -245,7 +245,7 @@
             <a class="submenu-link" href="/appointments">List appointments</a>
           </li>
           <li class="submenu-item">
-            <a class="submenu-link" href="/appointments">Add appointment</a>
+            <a class="submenu-link" href="/appointments/create">Add appointment</a>
           </li>
         </ul>
       </div>

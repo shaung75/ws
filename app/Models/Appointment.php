@@ -10,6 +10,13 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+			'client_id',
+			'date',
+			'notes',
+            'complete'
+		];
+
     /**
      * Relationship to client
      * @return [type] [description]

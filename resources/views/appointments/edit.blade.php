@@ -2,13 +2,14 @@
 
 @section('content')
 
-  <h1 class="app-page-title">Add Appointment</h1>
+  <h1 class="app-page-title">Edit Appointment</h1>
   
-  <form action="/appointments" method="POST">
+  <form action="/appointments/{{$appointment->id}}" method="POST">
 
 	  <div class="row gy-4">
 		
 			@csrf
+			@method('PUT')
 
 	    <div class="col-12">
 	      <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
@@ -45,7 +46,7 @@
 									<select class="form-select" id="client" name="client_id">
 										<option disabled selected>Select Client</option>
 										@foreach($clients as $client)
-											<option value="{{$client->id}}" {{old('client_id') == $client->id ? 'selected' : ''}}>{{$client->surname}}, {{$client->first_name}}</option>
+											<option value="{{$client->id}}" {{$appointment->client_id == $client->id ? 'selected' : ''}}>{{$client->surname}}, {{$client->first_name}}</option>
 										@endforeach
 									</select>
 
@@ -57,7 +58,7 @@
 
 								</div>
 								<div class="col-4">
-									<small><a href="/clients/create">Create Client</a></small>
+									
 								</div>
 							</div>
 
@@ -66,7 +67,7 @@
 									<label for="model" class="form-label">Date &amp; Time</label>		
 								</div>
 								<div class="col-3">
-									<input type="datetime-local" class="form-control" name="date" value="{{old('date')}}">
+									<input type="datetime-local" class="form-control" name="date" value="{{$appointment->date}}">
 
 									@error('date')
 										<div class="alert alert-danger mt-3" role="alert">
@@ -83,9 +84,26 @@
 									<label for="notes" class="form-label">Notes</label>		
 								</div>
 								<div class="col-9">
-									<textarea class="form-control" id="notes" rows="10" name="notes" style="height:100px;">{{old('notes')}}</textarea>	
+									<textarea class="form-control" id="notes" rows="10" name="notes" style="height:100px;">{{$appointment->notes}}</textarea>	
 
 									@error('notes')
+										<div class="alert alert-danger mt-3" role="alert">
+											<small>{{$message}}</small>
+										</div>
+									@enderror
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-3">
+									<label for="complete" class="form-label">Completed</label>		
+								</div>
+								<div class="col-9">
+									<div class="form-check">
+                    <input class="form-check-input" name="complete" type="checkbox" value="1" id="settings-checkbox-1" {{$appointment->complete == 1 ? 'checked' : ''}}>
+                  </div>	
+
+									@error('ivory_keys')
 										<div class="alert alert-danger mt-3" role="alert">
 											<small>{{$message}}</small>
 										</div>
@@ -97,7 +115,7 @@
 		        </div>
 		        <!--//app-card-body-->
 		        <div class="app-card-footer p-4 mt-auto">
-		          <button type="submit" class="btn app-btn-primary">Create Appointment</button>
+		          <button type="submit" class="btn app-btn-primary">Update Appointment</button>
 		        </div>
 		        <!--//app-card-footer-->
 
