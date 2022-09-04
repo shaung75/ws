@@ -24,7 +24,7 @@
             </div>
             <!--//col-->
             <div class="col-auto">
-              <h4 class="app-card-title">Client Details</h4>
+              <h4 class="app-card-title">{{\Carbon\Carbon::parse($appointment->date)->format('d/m/Y - H:i')}}</h4>
             </div>
             <!--//col-->
           </div>

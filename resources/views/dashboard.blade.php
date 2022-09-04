@@ -45,6 +45,7 @@
                         <td class="cell">{{$keyDay}}/{{$keyMonth}}/{{$keyYear}}</td>
                         <td class="cell">
                           @foreach($day as $appt)
+                            {{\Carbon\Carbon::parse($appt->date)->format('H:i')}}
                             <a href="/appointments/{{$appt->id}}">
                               {{$appt->client->first_name}} {{$appt->client->surname}}
                             </a><br>

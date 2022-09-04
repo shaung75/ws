@@ -55,7 +55,7 @@
                   <td colspan="2">
                     @isset($appointments[$i])
                       @foreach($appointments[$i] as $appointment)
-                        {{\Carbon\Carbon::parse($appointment->date)->format('h:i')}} - 
+                        {{\Carbon\Carbon::parse($appointment->date)->format('H:i')}} - 
                         <a href="/appointments/{{$appointment->id}}">
                           {{$appointment->client->first_name}} {{$appointment->client->surname}}
                         </a><br>
