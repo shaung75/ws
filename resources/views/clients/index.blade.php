@@ -36,6 +36,7 @@
 					<thead>
 						<tr>
 							<th class="cell">Account</th>
+							<th class="cell">Business</th>
 							<th class="cell">Surname</th>
 							<th class="cell">First name</th>
 							<th class="cell">Pianos</th>
@@ -51,8 +52,9 @@
 
 								<tr>
 									<td class="cell" class="text-center">{{$client['id']}}</td>
-									<td class="cell">{{$client['surname']}}</td>
-									<td class="cell">{{$client['first_name']}}</td>
+									<td class="cell">{{$client->business_name}}</td>
+									<td class="cell">{{$client->surname}}</td>
+									<td class="cell">{{$client->first_name}}</td>
 									<td class="cell">{{count($client->pianos)}}</td>
 									<td class="cell"><span class="badge bg-{{$client->service_status()->warning}}">{{$client->service_status()->status}}</span></td>
 									<td class="cell">

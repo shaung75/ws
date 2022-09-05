@@ -47,7 +47,11 @@
                           @foreach($day as $appt)
                             {{\Carbon\Carbon::parse($appt->date)->format('H:i')}}
                             <a href="/appointments/{{$appt->id}}">
-                              {{$appt->client->first_name}} {{$appt->client->surname}}
+                              @if($appt->client->business_name)
+                                {{$appt->client->business_name}}
+                              @else
+                                {{$appt->client->first_name}} {{$appt->client->surname}}
+                              @endif
                             </a><br>
                           @endforeach
                         </td>

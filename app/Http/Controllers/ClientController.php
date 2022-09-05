@@ -61,6 +61,7 @@ class ClientController extends Controller
         ]);
 
         $formFields['notes'] = $request->notes;
+        $formFields['business_name'] = $request->business_name;
         $formFields['telephone_secondary'] = $request->telephone_secondary;
 
         // If check if the postcode or coords have changed
@@ -134,6 +135,7 @@ class ClientController extends Controller
         ]);
 
         $formFields['notes'] = $request->notes;
+        $formFields['business_name'] = $request->business_name;
         $formFields['telephone_secondary'] = $request->telephone_secondary;
 
         // If lat/long values have been set then use those, otherwise geocode postcode

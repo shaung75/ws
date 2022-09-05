@@ -142,9 +142,16 @@
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
                 <div class="item-label">
-                  <a href="/clients/{{$invoice->client->id}}">
-                    <strong>{{$invoice->client->first_name}} {{$invoice->client->surname}}</strong>
-                  </a>
+                  @if($invoice->client->business_name)
+                    <a href="/clients/{{$invoice->client->id}}">
+                      <strong>{{$invoice->client->business_name}}</strong>
+                    </a><br>
+                    {{$invoice->client->first_name}} {{$invoice->client->surname}}
+                  @else
+                    <a href="/clients/{{$invoice->client->id}}">
+                      <strong>{{$invoice->client->first_name}} {{$invoice->client->surname}}</strong>
+                    </a>
+                  @endif
                 </div>
                 <div class="item-data">
                   @if($invoice->client->address1)

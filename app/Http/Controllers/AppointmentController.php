@@ -74,7 +74,7 @@ class AppointmentController extends Controller
 	 */
   public function create() {
     return view('appointments.create', [
-    	'clients' => Client::get()->sortBy('surname')
+    	'clients' => Client::get()->sortBy('surname')->sortBy('business_name')
     ]);
   }
 

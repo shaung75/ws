@@ -30,6 +30,27 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
+                <div class="item-label"><strong>Business Name</strong></div>
+                <div class="item-data">
+                  @if($client->business_name)
+                    {{$client->business_name}}
+                  @else
+                    N/A
+                  @endif
+                </div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
                 <div class="item-label"><strong>Name</strong></div>
                 <div class="item-data">{{$client->first_name}} {{$client->surname}}</div>
               </div>

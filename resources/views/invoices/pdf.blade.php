@@ -37,6 +37,9 @@
                         <td>
                           <address>
                             <strong>Billed To:</strong><br>
+                            @if($invoice->client->business_name)
+                              {{$invoice->client->business_name}}<br>
+                            @endif
                             {{$invoice->client->first_name}} {{$invoice->client->surname}}<br>
                             {{$invoice->client->address1}}<br>
                             {{$invoice->client->address2 != '' ? $invoice->client->address2 .'<br>' : ''}}

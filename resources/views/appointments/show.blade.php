@@ -33,14 +33,39 @@
         <!--//app-card-header-->
         <div class="app-card-body px-4 w-100">
           <!--//item-->
+          @if($appointment->client->business_name)
+            <div class="item border-bottom py-3">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                  <div class="item-label"><strong>Business Name</strong></div>
+                  <div class="item-data">
+                    <a href="/clients/{{$appointment->client->id}}">
+                      {{$appointment->client->business_name}}
+                    </a>
+                  </div>
+                </div>
+                <!--//col-->
+                <div class="col text-end">
+                  <a class="btn-sm app-btn-secondary" href="/appointments/{{$appointment->id}}/edit">Change</a>
+                </div>
+                <!--//col-->
+              </div>
+              <!--//row-->
+            </div>
+            <!--//item-->
+          @endif
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
                 <div class="item-label"><strong>Name</strong></div>
                 <div class="item-data">
-                  <a href="/clients/{{$appointment->client->id}}">
+                  @if($appointment->client->business_name)
                     {{$appointment->client->first_name}} {{$appointment->client->surname}}
-                  </a>
+                  @else
+                    <a href="/clients/{{$appointment->client->id}}">
+                      {{$appointment->client->first_name}} {{$appointment->client->surname}}
+                    </a>
+                  @endif
                 </div>
               </div>
               <!--//col-->

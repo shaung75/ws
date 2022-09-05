@@ -44,9 +44,32 @@
 								<div class="col-5">
 									<select class="form-select" id="client" name="client_id">
 										<option disabled selected>Select Client</option>
-										@foreach($clients as $client)
-											<option value="{{$client->id}}" {{old('client_id') == $client->id ? 'selected' : ''}}>{{$client->surname}}, {{$client->first_name}}</option>
+										
+										@php
+											$prevBus = '';
+										@endphp
+
+										@foreach($clients as $key => $client)
+
+											@if(!$prevBus && $client->business_name)
+												<option disabled>-----</option>	
+											@endif
+
+											<option value="{{$client->id}}" {{old('client_id') == $client->id ? 'selected' : ''}}>
+												
+												@if($client->business_name)
+													{{$client->business_name}}
+												@else
+													{{$client->surname}}, {{$client->first_name}}
+												@endif
+												
+											</option>
+
+											@php
+												$prevBus = $client->business_name;
+											@endphp
 										@endforeach
+
 									</select>
 
 									@error('client_id')

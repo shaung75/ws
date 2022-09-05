@@ -54,7 +54,13 @@
 								<tr>
                   <td class="cell">{{$invoice->id}}</td>
                   <td class="cell">
-                  	<a href="/clients/{{$invoice->client->id}}">{{$invoice->client->first_name}} {{$invoice->client->surname}}</a>
+                  	<a href="/clients/{{$invoice->client->id}}">
+                  		@if($invoice->client->business_name)
+                  			{{$invoice->client->business_name}}
+                  		@else
+                  			{{$invoice->client->first_name}} {{$invoice->client->surname}}
+                  		@endif
+                  	</a>
                   </td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>

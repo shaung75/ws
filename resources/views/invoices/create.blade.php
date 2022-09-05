@@ -50,7 +50,13 @@
 
 										@foreach($clients as $client)
 
-											<option value="{{$client->id}}">#{{$client->id}} - {{$client->first_name}} {{$client->surname}}</option>
+											<option value="{{$client->id}}">#{{$client->id}} - 
+												@if($client->business_name)
+													{{$client->business_name}}
+												@else
+													{{$client->first_name}} {{$client->surname}}
+												@endif
+											</option>
 
 										@endforeach
 

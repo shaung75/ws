@@ -89,7 +89,7 @@ class InvoiceController extends Controller
             'invoice' => $invoice,
             'settings' => $settings->fetch()
         ]);
-        return $pdf->download($invoice->id.'-'.$invoice->client->surname.'-invoice.pdf');
+        return $pdf->download($invoice->id.'-'.($invoice->client->business_name ? $invoice->client->business_name : $invoice->client->surname).'-invoice.pdf');
     }
 
     /**

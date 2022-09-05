@@ -57,7 +57,11 @@
                       @foreach($appointments[$i] as $appointment)
                         {{\Carbon\Carbon::parse($appointment->date)->format('H:i')}} - 
                         <a href="/appointments/{{$appointment->id}}">
-                          {{$appointment->client->first_name}} {{$appointment->client->surname}}
+                          @if($appointment->client->business_name)
+                            {{$appointment->client->business_name}}
+                          @else
+                            {{$appointment->client->first_name}} {{$appointment->client->surname}}
+                          @endif
                         </a><br>
                       @endforeach
                     @endisset
@@ -137,7 +141,14 @@
                 @foreach($incomplete as $appt)
                   <tr>
                     <td class="cell">{{\Carbon\Carbon::parse($appt->date)->format('d/m/Y')}}</td>
-                    <td class="cell"><a href="/appointments/{{$appt->id}}">{{$appt->client->first_name}} {{$appt->client->surname}}</a></td>
+                    <td class="cell">
+                      <a href="/appointments/{{$appt->id}}">
+                        @if($appt->client->business_name)
+                          {{$appt->client->business_name}}
+                        @else
+                          {{$appt->client->first_name}} {{$appt->client->surname}}
+                        @endif
+                      </a></td>
                     <td class="cell text-end"><a href="/appointments/{{$appt->id}}/edit">Reschedule</a></td>
                   </tr>
                 @endforeach                                   

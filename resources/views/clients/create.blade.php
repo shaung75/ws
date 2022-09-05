@@ -61,6 +61,21 @@
 
 						<div class="row mb-3">
 							<div class="col-3">
+								<label for="address1" class="form-label">Business Name</label>		
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control" id="business_name" name="business_name" value="{{old('business_name')}}">		
+
+								@error('business_name')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
 								<label for="address1" class="form-label">Address</label>		
 							</div>
 							<div class="col-9">
