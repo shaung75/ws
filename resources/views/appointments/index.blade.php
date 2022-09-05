@@ -37,7 +37,7 @@
                     </svg>
                   </a>
                 </th>
-                <th class="cell text-center">{{$monthName}} {{$year}}</th>
+                <th class="cell text-center" colspan="2">{{$monthName}} {{$year}}</th>
                 <th class="cell text-end">
                   <a href="/appointments/{{$yearNext}}/{{$monthNext}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -59,6 +59,13 @@
                         <a href="/appointments/{{$appointment->id}}">
                           {{$appointment->client->first_name}} {{$appointment->client->surname}}
                         </a><br>
+                      @endforeach
+                    @endisset
+                  </td>
+                  <td class="cell">
+                    @isset($appointments[$i])
+                      @foreach($appointments[$i] as $appointment)
+                        {{$appointment->client->town}}<br>
                       @endforeach
                     @endisset
                   </td>
