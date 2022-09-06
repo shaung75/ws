@@ -108,7 +108,7 @@
 
   <div class="row g-4 settings-section">
     <div class="col-12 col-md-4">
-      <h3 class="section-title">Invoices</h3>
+      <h3 class="section-title">Accounts</h3>
       <div class="section-intro"></div>
     </div>
     <div class="col-12 col-md-8">
@@ -116,66 +116,33 @@
         <div class="app-card-body">
         
           <div class="mb-3">
-            <label for="tax_rate" class="form-label">
-              Tax rate (%)
-            </label>
-            <input type="number" class="form-control" id="tax_rate" name="tax_rate" value="{{$settings->tax_rate}}" required>
+            @foreach($accounts as $account)
+              <h5><strong>{{$account->account_name}}</strong></h5>
+              <p>
+                <strong>Tax Rate:</strong><br>
+                {{$account->tax_rate}}%
+              </p>
+              <p>
+                <strong>Invoice Prefix:</strong><br>
+                {{$account->invoice_prefix}}
+              </p>
+              <p>
+                <strong>Invoice Suffix:</strong><br>
+                {{$account->invoice_suffix}}
+              </p>              
+              <p>
+                <strong>Payment Details:</strong><br>
+                {{$account->payment_details}}
+              </p>
+              <p>
+                <strong>Invoice Footer:</strong><br>
+                {{$account->invoice_footer}}
+              </p>
 
-            @error('tax_rate')
-              <div class="alert alert-danger mt-3" role="alert">
-                <small>{{$message}}</small>
-              </div>
-            @enderror
-
+              <a href="/accounts/{{$account->id}}/edit" class="btn app-btn-primary" >Edit</a>
+              <hr class="mb-3">
+            @endforeach
           </div>
-          <div class="mb-3">
-            <label for="invoice_prefix" class="form-label">Invoice Prefix</label>
-            <input type="text" class="form-control" id="invoice_prefix" name="invoice_prefix" value="{{$settings->invoice_prefix}}">
-
-            @error('invoice_prefix')
-              <div class="alert alert-danger mt-3" role="alert">
-                <small>{{$message}}</small>
-              </div>
-            @enderror
-
-          </div>
-          <div class="mb-3">
-            <label for="invoice_suffix" class="form-label">Invoice Suffix</label>
-            <input type="text" class="form-control" id="invoice_suffix" name="invoice_suffix" value="{{$settings->invoice_suffix}}">
-
-            @error('invoice_suffix')
-              <div class="alert alert-danger mt-3" role="alert">
-                <small>{{$message}}</small>
-              </div>
-            @enderror
-
-          </div>
-
-          <div class="mb-3">
-            <label for="invoice_payment_details" class="form-label">Payment details</label>
-            <textarea class="form-control" name="invoice_payment_details" style="height:150px;">{{$settings->invoice_payment_details}}</textarea>
-
-            @error('invoice_payment_details')
-              <div class="alert alert-danger mt-3" role="alert">
-                <small>{{$message}}</small>
-              </div>
-            @enderror
-
-          </div>
-
-          <div class="mb-3">
-            <label for="invoice_footer" class="form-label">Invoice footer</label>
-            <textarea class="form-control" name="invoice_footer" style="height:150px;">{{$settings->invoice_footer}}</textarea>
-
-            @error('invoice_footer')
-              <div class="alert alert-danger mt-3" role="alert">
-                <small>{{$message}}</small>
-              </div>
-            @enderror
-
-          </div>
-
-          <button type="submit" class="btn app-btn-primary" >Save Changes</button>
         
         </div>
         <!--//app-card-body-->

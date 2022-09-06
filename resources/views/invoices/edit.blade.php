@@ -40,6 +40,30 @@
           <!--//item-->
           <div class="row mb-3">
             <div class="col-3">
+              <label for="account_id" class="form-label">Billing Account</label>
+            </div>
+            <div class="col-9">
+
+              <select class="form-select" name="account_id">
+
+                @foreach($accounts as $account)
+
+                  <option value="{{$account->id}}" {{$account->id == $invoice->account_id ? 'selected' : ''}}>{{$account->account_name}}</option>
+
+                @endforeach
+
+              </select>
+              @error('account_id')
+                <div class="alert alert-danger mt-3" role="alert">
+                  <small>{{$message}}</small>
+                </div>
+              @enderror
+            </div>
+          </div>
+          <!-- //item-->
+
+          <div class="row mb-3">
+            <div class="col-3">
               <label for="model" class="form-label">Invoice Date</label>    
             </div>
             <div class="col-9">
@@ -65,6 +89,17 @@
                   <small>{{$message}}</small>
                 </div>
               @enderror
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-3">
+              <label for="model" class="form-label">Hide VAT?</label>    
+            </div>
+            <div class="col-9">
+              <div class="form-check">
+                <input class="form-check-input" name="hide_vat" type="checkbox" value="1" id="settings-checkbox-1" {{$invoice->hide_vat == 1 ? 'checked' : ''}}>
+              </div>
             </div>
           </div>
 

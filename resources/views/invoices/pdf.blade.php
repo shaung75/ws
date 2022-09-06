@@ -50,7 +50,7 @@
                         </td>
                         <td class="text-end">
                           <address>
-                            <strong>{{$settings->business_name}}</strong><br>
+                            <strong>{{$invoice->account->account_name}}</strong><br>
                             {{$settings->business_address1}}<br>
                             {{$settings->business_address2}}<br>
                             {{$settings->business_town}}<br>
@@ -70,7 +70,7 @@
                     <tbody>
                       <tr>
                         <td>
-                          <strong>invoice #{{$settings->invoice_prefix}}{{$invoice->id}}</strong>
+                          <strong>Invoice {{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</strong>
                         </td>
                         <td class="text-end">
                           <strong>Invoice Date:</strong> {{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}<br>
@@ -104,8 +104,20 @@
 
                             <td class="text-center">{{$item->qty}}</td>
                             <td>{{$item->description}}</td>
-                            <td class="text-center">&pound;{{$item->unit_price}}</td>
-                            <td class="text-end">&pound;{{$item->unit_price * $item->qty}}</td>
+                            <td class="text-center">
+                              @if($invoice->hide_vat)
+                                &pound;{{$item->unit_price * 1.2}}
+                              @else
+                                &pound;{{$item->unit_price}}
+                              @endif
+                            </td>
+                            <td class="text-end">
+                              @if($invoice->hide_vat)
+                                &pound;{{($item->unit_price * $item->qty)*1.2}}
+                              @else
+                                &pound;{{$item->unit_price * $item->qty}}
+                              @endif
+                            </td>
 
                           </tr>
 
@@ -121,16 +133,18 @@
 
                       @endunless
                       
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-end"><strong>SUB-TOTAL</strong></td>
-                        <td class="text-end"><strong>&pound;{{$invoice->total()->gross}}</strong></td>
-                      </tr>
-                      <tr>
-                        <td colspan="2"></td>
-                        <td class="text-end"><strong>VAT</strong></td>
-                        <td class="text-end"><strong>&pound;{{$invoice->total()->vat}}</strong></td>
-                      </tr>
+                      @if(!$invoice->hide_vat)
+                        <tr>
+                          <td colspan="2"></td>
+                          <td class="text-end"><strong>SUB-TOTAL</strong></td>
+                          <td class="text-end"><strong>&pound;{{$invoice->total()->gross}}</strong></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"></td>
+                          <td class="text-end"><strong>VAT</strong></td>
+                          <td class="text-end"><strong>&pound;{{$invoice->total()->vat}}</strong></td>
+                        </tr>
+                      @endif
                       <tr>
                         <td colspan="2"></td>
                         <td class="text-end"><strong>TOTAL</strong></td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class SettingController extends Controller
  		$settings = Setting::get()->first();
  		
  		return view('settings.show', [
- 			'settings' => $settings
+ 			'settings' => $settings,
+      'accounts' =>Account::get()
  		]);
   }
 

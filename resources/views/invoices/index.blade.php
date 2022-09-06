@@ -37,6 +37,7 @@
 						<tr>
 							<th class="cell">Invoice #</th>
 							<th class="cell">Client</th>
+							<th class="cell">Billing Account</th>
               <th class="cell">Date</th>
               <th class="cell">Due Date</th>
               <th class="cell">Value (inc VAT)</th>
@@ -52,7 +53,7 @@
 							@foreach($invoices as $invoice)
 
 								<tr>
-                  <td class="cell">{{$invoice->id}}</td>
+                  <td class="cell">{{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</td>
                   <td class="cell">
                   	<a href="/clients/{{$invoice->client->id}}">
                   		@if($invoice->client->business_name)
@@ -62,6 +63,7 @@
                   		@endif
                   	</a>
                   </td>
+                  <td class="cell">{{$invoice->account->account_name}}</td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
                   <td class="cell">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>
                   <td class="cell">&pound;{{number_format($invoice->total()->net,2)}}</td>

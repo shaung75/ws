@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Account;
 use App\Models\Client;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,9 @@ class Invoice extends Model
     	'client_id',
     	'invoice_date',
     	'due_date',
-    	'paid'
+    	'paid',
+        'hide_vat',
+        'account_id'
     ];
 
     /**
@@ -24,6 +27,14 @@ class Invoice extends Model
      */
     public function client() {
     	return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    /**
+     * Relationship to billing account
+     * @return [type] [description]
+     */
+    public function account() {
+        return $this->belongsTo(Account::class, 'account_id');
     }
 
     /**

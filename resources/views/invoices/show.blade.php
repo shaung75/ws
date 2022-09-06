@@ -4,7 +4,7 @@
 
 <div class="row g-3 mb-4 align-items-center justify-content-between">
   <div class="col-auto">
-    <h1 class="app-page-title mb-0">Invoice #{{$invoice->id}}</h1>
+    <h1 class="app-page-title mb-0">Invoice {{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</h1>
   </div>
   <div class="col-auto">
     <div class="page-utilities">
@@ -62,6 +62,21 @@
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">
+                <div class="item-label"><strong>Billing Account</strong></div>
+                <div class="item-data">{{$invoice->account->account_name}}</div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
                 <div class="item-label"><strong>Invoice Date</strong></div>
                 <div class="item-data">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</div>
               </div>
@@ -94,6 +109,21 @@
               <div class="col-auto">
                 <div class="item-label"><strong>Paid</strong></div>
                 <div class="item-data">{{$invoice->paid ? 'Paid' : 'Unpaid'}}</div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <div class="item-label"><strong>Hide VAT</strong></div>
+                <div class="item-data">{{$invoice->hide_vat ? 'Yes' : 'No'}}</div>
               </div>
               <!--//col-->
               <div class="col text-end">
@@ -237,8 +267,20 @@
                           <tr>
                             <td class="cell">{{$item->qty}}</td>
                             <td class="cell">{{$item->description}}</td>
-                            <td class="cell">&pound;{{number_format($item->unit_price,2)}}</td>
-                            <td class="cell">&pound;{{number_format($item->unit_price * $item->qty,2)}}</td>
+                            <td class="cell">
+                              @if($invoice->hide_vat)
+                                &pound;{{number_format(($item->unit_price * 1.2),2)}}
+                              @else
+                                &pound;{{number_format($item->unit_price,2)}}
+                              @endif
+                            </td>
+                            <td class="cell">
+                              @if($invoice->hide_vat)
+                                &pound;{{number_format(($item->unit_price * $item->qty) * 1.2,2)}}
+                              @else
+                                &pound;{{number_format($item->unit_price * $item->qty,2)}}
+                              @endif
+                            </td>
                             <td class="cell text-end">
                               <form action="/invoice-items/{{$item->id}}" method="POST">
                                 @csrf
@@ -354,14 +396,16 @@
                         
                   <table class="table app-table-hover mb-0 text-end">
                     <tbody>
-                      <tr>
-                        <th class="cell">SUB-TOTAL</th>
-                        <td class="cell">&pound;{{number_format($invoice->total()->gross,2)}}</td>
-                      </tr>
-                      <tr>
-                        <th class="cell">VAT</th>
-                        <td class="cell">&pound;{{number_format($invoice->total()->vat,2)}}</td>
-                      </tr>
+                      @if(!$invoice->hide_vat)
+                        <tr>
+                          <th class="cell">SUB-TOTAL</th>
+                          <td class="cell">&pound;{{number_format($invoice->total()->gross,2)}}</td>
+                        </tr>
+                        <tr>
+                          <th class="cell">VAT</th>
+                          <td class="cell">&pound;{{number_format($invoice->total()->vat,2)}}</td>
+                        </tr>
+                      @endif
                       <tr>
                         <th class="cell">TOTAL</th>
                         <td class="cell">&pound;{{number_format($invoice->total()->net,2)}}</td>

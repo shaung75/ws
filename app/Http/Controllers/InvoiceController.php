@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Setting;
-use PDF;
-use Mail;
 use Illuminate\Http\Request;
+use Mail;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -54,7 +55,8 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice) {
         return view('invoices.edit', [
             'invoice' => $invoice,
-            'clients' => Client::all()
+            'clients' => Client::all(),
+            'accounts' => Account::all()
         ]);
     }
 
@@ -67,10 +69,12 @@ class InvoiceController extends Controller
     public function update(Request $request, Invoice $invoice) {
         $formFields = $request->validate([
             'invoice_date' => 'required',
-            'due_date' => 'required'
+            'due_date' => 'required',
+            'account_id' => 'required'
         ]);
 
         $formFields['paid'] = $request->paid;
+        $formFields['hide_vat'] = $request->hide_vat;
 
         $invoice->update($formFields);
 
