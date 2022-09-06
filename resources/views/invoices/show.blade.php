@@ -269,14 +269,14 @@
                             <td class="cell">{{$item->description}}</td>
                             <td class="cell">
                               @if($invoice->hide_vat)
-                                &pound;{{number_format(($item->unit_price * 1.2),2)}}
+                                &pound;{{number_format(($item->unit_price * (($invoice->account->tax_rate/100)+1)),2)}}
                               @else
                                 &pound;{{number_format($item->unit_price,2)}}
                               @endif
                             </td>
                             <td class="cell">
                               @if($invoice->hide_vat)
-                                &pound;{{number_format(($item->unit_price * $item->qty) * 1.2,2)}}
+                                &pound;{{number_format(($item->unit_price * $item->qty) * (($invoice->account->tax_rate/100)+1),2)}}
                               @else
                                 &pound;{{number_format($item->unit_price * $item->qty,2)}}
                               @endif

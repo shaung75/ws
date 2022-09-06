@@ -63,7 +63,7 @@ class Invoice extends Model
             $total += $item->qty * $item->unit_price;
         }
 
-        $vat = ($settings->tax_rate / 100) * $total;
+        $vat = ($this->account->tax_rate / 100) * $total;
 
         $totals->gross = $total;
         $totals->vat = $vat;

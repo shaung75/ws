@@ -106,16 +106,16 @@
                             <td>{{$item->description}}</td>
                             <td class="text-center">
                               @if($invoice->hide_vat)
-                                &pound;{{$item->unit_price * 1.2}}
+                                &pound;{{number_format(($item->unit_price * (($invoice->account->tax_rate/100)+1)),2)}}
                               @else
-                                &pound;{{$item->unit_price}}
+                                &pound;{{number_format($item->unit_price,2)}}
                               @endif
                             </td>
                             <td class="text-end">
                               @if($invoice->hide_vat)
-                                &pound;{{($item->unit_price * $item->qty)*1.2}}
+                                &pound;{{number_format(($item->unit_price * $item->qty) * (($invoice->account->tax_rate/100)+1),2)}}
                               @else
-                                &pound;{{$item->unit_price * $item->qty}}
+                                &pound;{{number_format($item->unit_price * $item->qty,2)}}
                               @endif
                             </td>
 

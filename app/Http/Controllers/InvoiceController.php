@@ -42,8 +42,9 @@ class InvoiceController extends Controller
      * @return [type]           [description]
      */
     public function show(Invoice $invoice) {
-    	return view('invoices.show', [
-    		'invoice' => $invoice
+        return view('invoices.show', [
+    		'invoice' => $invoice,
+            'tax-rate' => ($invoice->account->tax_rate / 100) + 1
     	]);
     }
 
@@ -91,7 +92,8 @@ class InvoiceController extends Controller
 
         $pdf = PDF::loadView('invoices.pdf', [
             'invoice' => $invoice,
-            'settings' => $settings->fetch()
+            'settings' => $settings->fetch(),
+            'tax-rate' => ($invoice->account->tax_rate / 100) + 1
         ]);
         return $pdf->download($invoice->id.'-'.($invoice->client->business_name ? $invoice->client->business_name : $invoice->client->surname).'-invoice.pdf');
     }
