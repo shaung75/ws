@@ -43,7 +43,7 @@
               <label for="model" class="form-label">Invoice Date</label>    
             </div>
             <div class="col-9">
-              <input type="text" class="form-control w-25 datePick" name="invoice_date" value="{{$invoice->invoice_date}}"> 
+              <input type="date" class="form-control w-50" name="invoice_date" value="{{$invoice->invoice_date}}"> 
 
               @error('invoice_date')
                 <div class="alert alert-danger mt-3" role="alert">
@@ -58,7 +58,7 @@
               <label for="model" class="form-label">Due Date</label>    
             </div>
             <div class="col-9">
-              <input type="text" class="form-control w-25 datePick" name="due_date" value="{{$invoice->due_date}}"> 
+              <input type="date" class="form-control w-50" name="due_date" value="{{$invoice->due_date}}"> 
 
               @error('due_date')
                 <div class="alert alert-danger mt-3" role="alert">

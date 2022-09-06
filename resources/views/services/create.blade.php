@@ -86,7 +86,7 @@
 									<label for="model" class="form-label">Date</label>		
 								</div>
 								<div class="col-9">
-									<input type="text" class="form-control w-25 datePick" name="service_date" value="{{old('service_date')}}">	
+									<input type="date" class="form-control w-25" name="service_date" value="{{old('service_date')}}">		
 
 									@error('model')
 										<div class="alert alert-danger mt-3" role="alert">
