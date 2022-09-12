@@ -90,7 +90,7 @@ class InvoiceController extends Controller
     public function pdf(Invoice $invoice) {
         $settings = new Setting;
 
-        $pdf = PDF::loadView('invoices.pdf', [
+        $pdf = PDF::loadView('invoices.pdf-new', [
             'invoice' => $invoice,
             'settings' => $settings->fetch(),
             'tax-rate' => ($invoice->account->tax_rate / 100) + 1
