@@ -159,13 +159,13 @@
 
               <div class="row mb-5">
                 <div class="col">
-                  {!! nl2br($settings->invoice_payment_details) !!}
+                  {!! nl2br($invoice->account->payment_details) !!}
                 </div>
               </div>
               
               <div class="row">
                 <div class="col text-center">
-                  {!! nl2br($settings->invoice_footer) !!}
+                  {!! nl2br($invoice->account->invoice_footer) !!}
                 </div>
               </div>
             </div>
