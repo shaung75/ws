@@ -253,7 +253,12 @@
                       <tr>
                         <th class="cell">Qty</th>
                         <th class="cell">Description</th>
-                        <th class="cell">Unit Price</th>
+                        <th class="cell">
+                          Unit Price
+                          @if(!$invoice->hide_vat)
+                            (ex. VAT)
+                          @endif
+                        </th>
                         <th class="cell">Total Price</th>
                         <th class="cell"></th>
                       </tr>
@@ -269,16 +274,16 @@
                             <td class="cell">{{$item->description}}</td>
                             <td class="cell">
                               @if($invoice->hide_vat)
-                                &pound;{{number_format(($item->unit_price * (($invoice->account->tax_rate/100)+1)),2)}}
-                              @else
                                 &pound;{{number_format($item->unit_price,2)}}
+                              @else
+                                &pound;{{number_format(($item->unit_price / (($invoice->account->tax_rate/100)+1)),2)}}
                               @endif
                             </td>
                             <td class="cell">
                               @if($invoice->hide_vat)
-                                &pound;{{number_format(($item->unit_price * $item->qty) * (($invoice->account->tax_rate/100)+1),2)}}
-                              @else
                                 &pound;{{number_format($item->unit_price * $item->qty,2)}}
+                              @else
+                                &pound;{{number_format(($item->unit_price * $item->qty) / (($invoice->account->tax_rate/100)+1),2)}}
                               @endif
                             </td>
                             <td class="cell text-end">
@@ -360,7 +365,7 @@
 
                     <div class="mb-3">
                       <label for="setting-input-1" class="form-label">
-                        <strong>Unit price</strong>
+                        <strong>Unit price (inc. VAT)</strong>
                       </label>
                       <input type="number" min="0" step=".01" class="form-control" id="unit_price" name="unit_price" value="{{old('unit_price')}}" required value="0.00">
 

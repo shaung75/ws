@@ -134,9 +134,9 @@
             <td class="invoice-body">{{$item->description}}</td>
             <td>
               @if($invoice->hide_vat)
-                &pound;{{number_format(($item->unit_price * $item->qty) * (($invoice->account->tax_rate/100)+1),2)}}
-              @else
                 &pound;{{number_format($item->unit_price * $item->qty,2)}}
+              @else
+                &pound;{{number_format(($item->unit_price * $item->qty) / (($invoice->account->tax_rate/100)+1),2)}}
               @endif
             </td>
 
