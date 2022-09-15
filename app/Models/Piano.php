@@ -62,7 +62,9 @@ class Piano extends Model
             
             $status->due = $service->due_date;
 
-            if($datediff > 0 && $datediff <= 30) {
+            if($service->due_date == $service->service_date) {
+                $status->warning = 'success';
+            } elseif($datediff > 0 && $datediff <= 30) {
                 $status->warning = 'warning';
             } elseif ($date > $status->due) {
                 $status->warning = 'danger';
@@ -70,7 +72,12 @@ class Piano extends Model
                 $status->warning = 'success';
             }
             
-            $status->status = $date > $status->due ? 'Overdue' : 'OK';
+            if($service->due_date == $service->service_date) {
+                $status->status = 'N/A';
+            } else {
+                $status->status = $date > $status->due ? 'Overdue' : 'OK';
+            }
+            
         } else {
             $status->due = $date;
             $status->status = 'Overdue';
