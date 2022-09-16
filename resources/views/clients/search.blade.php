@@ -79,7 +79,5 @@
 	    </div><!--//table-responsive--> 
   </div><!--//app-card-body-->		
 </div><!--//app-card-->
-
-{{$clients->links()}}
 			    
 @endsection

@@ -67,9 +67,11 @@
 
                   @if($list == 'assigned')
                     <td class="cell">
-                      <a href="/clients/{{$piano->client->id}}" >
-                        {{$piano->client->first_name}} {{$piano->client->surname}}</td>
-                      </a>
+                      @if(isset($piano->client->id))
+                        <a href="/clients/{{$piano->client->id}}" >
+                          {{$piano->client->first_name}} {{$piano->client->surname}}</td>
+                        </a>
+                      @endif
                   @endif
                   <td class="cell">
                     <a class="btn-sm app-btn-secondary" href="/pianos/{{$piano->id}}/duplicate">Duplicate</a>
@@ -93,7 +95,5 @@
       </div><!--//table-responsive--> 
   </div><!--//app-card-body-->    
 </div><!--//app-card-->
-
-{{$pianos->links()}}
           
 @endsection

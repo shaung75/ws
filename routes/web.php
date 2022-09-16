@@ -8,6 +8,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PianoController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TestController;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function() {
 	// Clients
 	Route::get('/clients', [ClientController::class, 'index']);
 	Route::post('/clients', [ClientController::class, 'store']);
+	Route::post('/clients/search', [ClientController::class, 'search']);
 	Route::get('/clients/create', [ClientController::class, 'create']);
 	Route::get('/clients/{client}', [ClientController::class, 'show']);
 	Route::put('/clients/{client}', [ClientController::class, 'update']);
@@ -64,6 +66,7 @@ Route::middleware('auth')->group(function() {
 	// Pianos
 	Route::get('/pianos', [PianoController::class, 'index']);
 	Route::post('/pianos', [PianoController::class, 'store']);
+	Route::post('/pianos/search', [PianoController::class, 'search']);
 	Route::get('/pianos/assigned', [PianoController::class, 'index']);
 	Route::get('/pianos/unassigned', [PianoController::class, 'index']);
 	Route::get('/pianos/unassign/{piano}', [PianoController::class, 'unassign']);
@@ -103,6 +106,7 @@ Route::middleware('auth')->group(function() {
 	Route::get('/invoices', [InvoiceController::class, 'index']);
 	Route::get('/invoices/create', [InvoiceController::class, 'create']);
 	Route::post('/invoices/add', [InvoiceController::class, 'store']);
+	Route::post('/invoices/search', [InvoiceController::class, 'search']);
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
 	Route::put('/invoices/{invoice}', [InvoiceController::class, 'update']);
 	Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit']);
@@ -124,4 +128,7 @@ Route::middleware('auth')->group(function() {
 	Route::get('/account',[ UserController::class, 'index']);
 	Route::put('/account',[ UserController::class, 'update']);
 	Route::post('/logout', [UserController::class, 'logout']);
+
+	// Search
+	Route::post('/search', [SearchController::class, 'search']);
 });

@@ -21,6 +21,40 @@ class InvoiceController extends Controller
             'invoices' => Invoice::paginate(),
         ]);
     }
+
+    /**
+     * Search Invoices
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function search(Request $request) {
+        $search = $request->search;
+
+        $clients = Client::query()
+                    ->where('business_name', 'LIKE', "%{$search}%")
+                    ->orWhere('surname', 'LIKE', "%{$search}%")
+                    ->orWhere('first_name', 'LIKE', "%{$search}%")
+                    ->get();
+
+        $clientIds = [];
+
+        foreach ($clients as $client) {
+            $clientIds[] = $client->id;    
+        }
+
+        $invoices = Invoice::query()
+                    ->where('id', 'LIKE', "%{$search}%")
+                    ->orWhere(function ($query) use ($clientIds) {
+                        $query->whereIn('client_id', $clientIds);
+                    })
+                    ->get();
+
+        return view('invoices.search', [
+            'invoices' => $invoices,
+            'search' => $search
+        ]);
+    }
+
 	/**
 	 * Stores invoice
 	 * @param  Client $client [description]

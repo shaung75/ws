@@ -22,6 +22,27 @@ class ClientController extends Controller
     }
 
     /**
+     * Search Clients
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function search(Request $request) {
+        $search = $request->search;
+
+        $clients = Client::query()
+                    ->where('business_name', 'LIKE', "%{$search}%")
+                    ->orWhere('surname', 'LIKE', "%{$search}%")
+                    ->orWhere('first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('id', '=', "{$search}")
+                    ->get();
+
+        return view('clients.search', [
+            'clients' => $clients,
+            'search' => $search
+        ]);
+    }
+
+    /**
      * Show single client
      * @param  Client $client [description]
      * @return [type]         [description]

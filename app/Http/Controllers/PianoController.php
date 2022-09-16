@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Manufacturer;
 use App\Models\Piano;
 use Illuminate\Http\Request;
@@ -34,6 +35,56 @@ class PianoController extends Controller
     		'pianos' => $pianos,
     		'list' => $list
     	]);
+    }
+
+    /**
+     * Search Pianos
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function search(Request $request) {
+        $search = $request->search;
+
+        $manufacturer = Manufacturer::query()
+                            ->where('manufacturer', 'LIKE', "%{$search}%")
+                            ->first();
+
+        if(!$manufacturer) {
+            $manufacturerId = 0;
+        } else {
+            $manufacturerId = $manufacturer->id;
+        }
+
+        $clients = Client::query()
+                    ->where('business_name', 'LIKE', "%{$search}%")
+                    ->orWhere('surname', 'LIKE', "%{$search}%")
+                    ->orWhere('first_name', 'LIKE', "%{$search}%")
+                    ->get();
+
+        $clientIds = [];
+
+        foreach ($clients as $client) {
+            $clientIds[] = $client->id;    
+        }        
+
+        $pianos = Piano::query()
+                    ->where('model', 'LIKE', "%{$search}%")
+                    ->orWhere('colour', 'LIKE', "%{$search}%")
+                    ->orWhere('finish', 'LIKE', "%{$search}%")
+                    ->orWhere('serial_number', '=', "{$search}")
+                    ->orWhere('stock_number', '=', "{$search}")
+                    ->orWhere('year_of_manufacture', '=', "{$search}")
+                    ->orWhere('manufacturer_id', '=', "{$manufacturerId}")
+                    ->orWhere(function ($query) use ($clientIds) {
+                        $query->whereIn('client_id', $clientIds);
+                    })
+                    ->get();
+
+        return view('pianos.search', [
+            'pianos' => $pianos,
+            'search' => $search,
+            'list' => 'assigned'
+        ]);
     }
 
     /**
