@@ -100,6 +100,21 @@
 
 						<div class="row mb-3">
 							<div class="col-3">
+								<label for="invoice_start_from" class="form-label">Invoice numbers start from</label>		
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control" id="invoice_start_from" name="invoice_start_from" value="{{$account->invoice_start_from}}">		
+
+								@error('invoice_start_from')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
 								<label for="payment_details" class="form-label">Payment Details</label>		
 							</div>
 							<div class="col-9">

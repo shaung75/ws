@@ -22,6 +22,7 @@ class AccountController extends Controller
   	$formFields = $request->validate([
       'account_name' => 'required',
       'tax_rate' => 'numeric',
+      'invoice_start_from' => 'required'
     ]);
 
     $formFields['invoice_prefix'] = $request->invoice_prefix;

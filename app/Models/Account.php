@@ -15,6 +15,7 @@ class Account extends Model
 			'invoice_prefix', 
 			'invoice_suffix', 
 			'payment_details', 
-			'invoice_footer'
+			'invoice_footer',
+			'invoice_start_from'
 		];
 }

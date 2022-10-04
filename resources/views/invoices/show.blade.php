@@ -4,7 +4,7 @@
 
 <div class="row g-3 mb-4 align-items-center justify-content-between">
   <div class="col-auto">
-    <h1 class="app-page-title mb-0">Invoice {{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</h1>
+    <h1 class="app-page-title mb-0">Invoice {{$invoice->account->invoice_prefix}}{{$invoice->invoice_number}}{{$invoice->account->invoice_suffix}}</h1>
   </div>
   <div class="col-auto">
     <div class="page-utilities">

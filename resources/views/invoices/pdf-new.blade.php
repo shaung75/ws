@@ -108,7 +108,7 @@
       <table>
         <tr>
           <td>Invoice</td>
-          <td>{{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</td>
+          <td>{{$invoice->account->invoice_prefix}}{{$invoice->invoice_number}}{{$invoice->account->invoice_suffix}}</td>
         </tr>
         <tr>
           <td>Date</td>

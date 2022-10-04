@@ -105,15 +105,18 @@ Route::middleware('auth')->group(function() {
 	// Invoices
 	Route::get('/invoices', [InvoiceController::class, 'index']);
 	Route::get('/invoices/create', [InvoiceController::class, 'create']);
+	Route::get('/invoices/create/{client}', [InvoiceController::class, 'create']);
 	Route::post('/invoices/add', [InvoiceController::class, 'store']);
 	Route::post('/invoices/search', [InvoiceController::class, 'search']);
 	Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
 	Route::put('/invoices/{invoice}', [InvoiceController::class, 'update']);
+	Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy']);
 	Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit']);
 	Route::put('/invoices/{invoice}/payment', [InvoiceController::class, 'updatePayment']);
 	Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf']);
 	Route::get('/invoices/{invoice}/mail', [InvoiceController::class, 'sendInvoice']);
-	Route::post('/invoices/create/{client}', [InvoiceController::class, 'store']);
+	Route::get('/invoices/{invoice}/delete', [InvoiceController::class, 'delete']);
+	//Route::post('/invoices/create/{client}', [InvoiceController::class, 'store']);
 
 	// Invoice items
 	Route::delete('/invoice-items/{item}', [ItemController::class, 'destroy']);

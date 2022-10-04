@@ -54,7 +54,7 @@
 							@foreach($invoices as $invoice)
 
 								<tr>
-                  <td class="cell">{{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</td>
+                  <td class="cell">{{$invoice->account->invoice_prefix}}{{$invoice->invoice_number}}{{$invoice->account->invoice_suffix}}</td>
                   <td class="cell">
                   	<a href="/clients/{{$invoice->client->id}}">
                   		@if($invoice->client->business_name)
@@ -98,6 +98,7 @@
                   </td>
                   <td class="cell text-end">
 
+                  	<a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/delete">Delete</a>
                     <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}">View</a>
                     
                   </td>

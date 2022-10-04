@@ -38,6 +38,41 @@
 
 						<div class="row mb-3">
 							<div class="col-3">
+								<label for="id" class="form-label">Billing account</label>		
+							</div>
+							<div class="col-9">
+
+								@unless(count($accounts) == 0)
+
+									<select class="form-select" name="account_id">
+
+										<option value="" disabled selected>Select Account</option>
+
+										@foreach($accounts as $account)
+
+											<option value="{{$account->id}}">{{$account->account_name}}</option>
+
+										@endforeach
+
+									</select>
+									
+									@error('id')
+										<div class="alert alert-danger mt-3" role="alert">
+											<small>{{$message}}</small>
+										</div>
+									@enderror
+
+								@else
+
+									<p>No billing accounts found</p>
+
+								@endunless
+
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
 								<label for="id" class="form-label">Select client</label>		
 							</div>
 							<div class="col-9">
@@ -50,7 +85,7 @@
 
 										@foreach($clients as $client)
 
-											<option value="{{$client->id}}">#{{$client->id}} - 
+											<option value="{{$client->id}}" {{ $client_id == $client->id ? 'selected' : '' }}>#{{$client->id}} - 
 												@if($client->business_name)
 													{{$client->business_name}}
 												@else

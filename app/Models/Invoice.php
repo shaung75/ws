@@ -18,7 +18,8 @@ class Invoice extends Model
     	'due_date',
     	'paid',
         'hide_vat',
-        'account_id'
+        'account_id',
+        'invoice_number'
     ];
 
     /**

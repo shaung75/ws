@@ -381,7 +381,7 @@
                         @foreach($client->invoices as $invoice)
 
                           <tr>
-                            <td class="cell">{{$invoice->id}}</td>
+                            <td class="cell">{{$invoice->account->invoice_prefix}}{{$invoice->invoice_number}}{{$invoice->account->invoice_suffix}}</td>
                             <td class="cell">{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
                             <td class="cell">{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>
                             <td class="cell">{{$invoice->total()->net}}</td>
@@ -415,6 +415,7 @@
                             </td>
 
                             <td class="cell text-end">
+                              <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/delete">Delete</a>
                               <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}">View</a>
                             </td>
                           </tr>
@@ -441,10 +442,7 @@
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
-          <form action="/invoices/create/{{$client->id}}" method="POST">
-            @csrf
-            <button type="submit" class="btn app-btn-primary">Add Invoice</button>
-          </form>
+          <a href="/invoices/create/{{$client->id}}" class="btn app-btn-primary">Add Invoice</a>
         </div>
         <!--//app-card-footer-->
       </div>

@@ -129,6 +129,10 @@
               <p>
                 <strong>Invoice Suffix:</strong><br>
                 {{$account->invoice_suffix}}
+              </p>
+              <p>
+                <strong>Invoices start from:</strong><br>
+                {{$account->invoice_start_from}}
               </p>              
               <p>
                 <strong>Payment Details:</strong><br>

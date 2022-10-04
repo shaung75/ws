@@ -22,7 +22,7 @@ class Setting extends Model
     	'invoice_prefix',
     	'invoice_suffix',
         'invoice_footer',
-        'invoice_payment_details'
+        'invoice_payment_details',
     ];
 
     public function fetch() {
