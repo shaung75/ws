@@ -124,7 +124,7 @@
                   @foreach($overdueInvoices as $invoice)
 
                     <tr>
-                      <td class="cell">{{$invoice->id}}</td>
+                      <td class="cell">{{$invoice->account->invoice_prefix}}{{$invoice->id}}{{$invoice->account->invoice_suffix}}</td>
                       <td class="cell">
                         <a href="/clients/{{$invoice->client->id}}">{{$invoice->client->first_name}} {{$invoice->client->surname}}</a>
                       </td>
