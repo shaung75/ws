@@ -133,11 +133,7 @@
 
             <td class="invoice-body">{{$item->description}}</td>
             <td>
-              @if($invoice->hide_vat)
-                &pound;{{number_format($item->unit_price * $item->qty,2)}}
-              @else
-                &pound;{{number_format(($item->unit_price * $item->qty) / (($invoice->account->tax_rate/100)+1),2)}}
-              @endif
+              &pound;{{number_format($item->unit_price * $item->qty,2)}}
             </td>
 
           </tr>
@@ -155,14 +151,26 @@
       @endunless      
 
       @if(!$invoice->hide_vat)
-        <tr>
-          <td class="text-right"><strong>Goods total</strong></td>
-          <td><strong>&pound;{{number_format($invoice->total()->gross,2)}}</strong></td>
-        </tr>
-        <tr>
-          <td class="text-right"><strong>VAT</strong></td>
-          <td><strong>&pound;{{number_format($invoice->total()->vat,2)}}</strong></td>
-        </tr>
+
+        @if($invoice->override_values)
+          <tr>
+            <td class="text-right"><strong>Goods total</strong></td>
+            <td><strong>&pound;{{number_format($invoice->override_sub_total,2)}}</strong></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>VAT</strong></td>
+            <td><strong>&pound;{{number_format($invoice->override_vat,2)}}</strong></td>
+          </tr>
+        @else
+          <tr>
+            <td class="text-right"><strong>Goods total</strong></td>
+            <td><strong>&pound;{{number_format($invoice->total()->gross,2)}}</strong></td>
+          </tr>
+          <tr>
+            <td class="text-right"><strong>VAT</strong></td>
+            <td><strong>&pound;{{number_format($invoice->total()->vat,2)}}</strong></td>
+          </tr>
+        @endif
       @else
         <tr>
           <td class="text-center">No VAT payable</td>
@@ -179,7 +187,7 @@
       {!! nl2br($invoice->account->payment_details) !!}
     </div>
     <div class="col text-right">
-      All goods remain the property of {{$invoice->account->account_name}} until full payment has been received.
+      All goods remain the property of<br>{{$invoice->account->account_name}} until full payment<br>has been received.
     </div>
 
     <div class="clear"></div>

@@ -19,7 +19,10 @@ class Invoice extends Model
     	'paid',
         'hide_vat',
         'account_id',
-        'invoice_number'
+        'invoice_number',
+        'override_values',
+        'override_sub_total',
+        'override_vat'
     ];
 
     /**

@@ -103,6 +103,57 @@
             </div>
           </div>
 
+          <hr>
+
+          <div class="row mb-3">
+            <div class="col-3">
+              <label for="model" class="form-label">Override Sub Total &amp; VAT?</label>    
+            </div>
+            <div class="col-9">
+              <div class="form-check">
+                <input class="form-check-input" name="override_values" type="checkbox" value="1" id="override_values" {{$invoice->override_values == 1 ? 'checked' : ''}}>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-3">
+              <label for="model" class="form-label">New Sub-total</label>    
+            </div>
+            <div class="col-5">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">&pound;</span>
+                <input type="number" min="0" step=".01" class="form-control" id="override_sub_total" name="override_sub_total" value="{{$invoice->override_sub_total}}">
+              </div>
+
+              @error('override_sub_total')
+                <div class="alert alert-danger mt-3" role="alert">
+                  <small>{{$message}}</small>
+                </div>
+              @enderror
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-3">
+              <label for="model" class="form-label">New VAT</label>    
+            </div>
+            <div class="col-5">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">&pound;</span>
+                <input type="number" min="0" step=".01" class="form-control" id="override_vat" name="override_vat" value="{{$invoice->override_vat}}">
+              </div>
+
+              @error('override_vat')
+                <div class="alert alert-danger mt-3" role="alert">
+                  <small>{{$message}}</small>
+                </div>
+              @enderror
+            </div>
+          </div>
+
+          <hr>
+
           <div class="row mb-3">
             <div class="col-3">
               <label for="model" class="form-label">Paid</label>    

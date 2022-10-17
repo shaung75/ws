@@ -134,6 +134,21 @@
             <!--//row-->
           </div>
           <!--//item-->
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <div class="item-label"><strong>Overridden Sub Total &amp; VAT</strong></div>
+                <div class="item-data">{{$invoice->override_values ? 'Yes' : 'No'}}</div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/invoices/{{$invoice->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
@@ -255,9 +270,6 @@
                         <th class="cell">Description</th>
                         <th class="cell">
                           Unit Price
-                          @if(!$invoice->hide_vat)
-                            (ex. VAT)
-                          @endif
                         </th>
                         <th class="cell">Total Price</th>
                         <th class="cell"></th>
@@ -273,18 +285,10 @@
                             <td class="cell">{{$item->qty}}</td>
                             <td class="cell">{{$item->description}}</td>
                             <td class="cell">
-                              @if($invoice->hide_vat)
-                                &pound;{{number_format($item->unit_price,2)}}
-                              @else
-                                &pound;{{number_format(($item->unit_price / (($invoice->account->tax_rate/100)+1)),2)}}
-                              @endif
+                              &pound;{{number_format($item->unit_price,2)}}
                             </td>
                             <td class="cell">
-                              @if($invoice->hide_vat)
-                                &pound;{{number_format($item->unit_price * $item->qty,2)}}
-                              @else
-                                &pound;{{number_format(($item->unit_price * $item->qty) / (($invoice->account->tax_rate/100)+1),2)}}
-                              @endif
+                              &pound;{{number_format($item->unit_price * $item->qty,2)}}
                             </td>
                             <td class="cell text-end">
                               <form action="/invoice-items/{{$item->id}}" method="POST">
@@ -402,14 +406,37 @@
                   <table class="table app-table-hover mb-0 text-end">
                     <tbody>
                       @if(!$invoice->hide_vat)
-                        <tr>
-                          <th class="cell">SUB-TOTAL</th>
-                          <td class="cell">&pound;{{number_format($invoice->total()->gross,2)}}</td>
-                        </tr>
-                        <tr>
-                          <th class="cell">VAT</th>
-                          <td class="cell">&pound;{{number_format($invoice->total()->vat,2)}}</td>
-                        </tr>
+
+                        @if($invoice->override_values)
+
+                          @if($invoice->total()->net != $invoice->override_sub_total + $invoice->override_vat)
+                            <tr>
+                              <td class="cell text-center" colspan="2">
+                                <div class="alert alert-danger" role="alert">
+                                  Overriden amounts do not match item total!
+                                </div>
+                              </td>
+                            </tr>
+                          @endif
+
+                          <tr>
+                            <th class="cell">SUB-TOTAL</th>
+                            <td class="cell">&pound;{{number_format($invoice->override_sub_total,2)}}</td>
+                          </tr>
+                          <tr>
+                            <th class="cell">VAT</th>
+                            <td class="cell">&pound;{{number_format($invoice->override_vat,2)}}</td>
+                          </tr>
+                        @else
+                          <tr>
+                            <th class="cell">SUB-TOTAL</th>
+                            <td class="cell">&pound;{{number_format($invoice->total()->gross,2)}}</td>
+                          </tr>
+                          <tr>
+                            <th class="cell">VAT</th>
+                            <td class="cell">&pound;{{number_format($invoice->total()->vat,2)}}</td>
+                          </tr>
+                        @endif
                       @endif
                       <tr>
                         <th class="cell">TOTAL</th>

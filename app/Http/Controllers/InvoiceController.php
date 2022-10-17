@@ -133,9 +133,19 @@ class InvoiceController extends Controller
             }   
         }
 
+        // Override subtotal and vat values
+        if($request->override_values) {
+            $formFields['override_sub_total'] = $request->override_sub_total;
+            $formFields['override_vat'] = $request->override_vat;
+        } else {
+            $formFields['override_sub_total'] = null;
+            $formFields['override_vat'] = null;
+        }
+
+        $formFields['override_values'] = $request->override_values;
         $formFields['paid'] = $request->paid;
         $formFields['hide_vat'] = $request->hide_vat;
-
+        
         $invoice->update($formFields);
 
         return redirect('/invoices/'.$invoice->id)->with('message', 'Invoice updated');
