@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Client;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -25,16 +27,19 @@ class AppointmentController extends Controller
   		$monthPrev = $month - 1;
   		$yearNext = $year + 1;
   		$yearPrev = $year;
+      $carriedDate = $yearNext.'-'.$monthNext.'-1';
   	} elseif($month == 1) {
   		$monthNext = $month + 1;
   		$monthPrev = 12;
   		$yearNext = $year;
   		$yearPrev = $year - 1;
+      $carriedDate = $year.'-'.$monthNext.'-1';
   	}	else {
   		$monthNext = $month + 1;
   		$monthPrev = $month - 1;
   		$yearPrev = $year;
   		$yearNext = $year;
+      $carriedDate = $year.'-'.$monthNext.'-1';
   	}
 
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
@@ -54,6 +59,28 @@ class AppointmentController extends Controller
                       ->orderBy('date', 'asc')
                       ->get();
 
+    $carried = DB::select('
+                        SELECT t1.* ,
+                        first_name,
+                        surname,
+                        business_name,
+                        town,
+                        client_id
+                        FROM services t1
+                        INNER JOIN pianos  on t1.piano_id = pianos.id
+                        LEFT JOIN clients on pianos.client_id = clients.id 
+                        WHERE t1.due_date = (
+                          SELECT MAX(t2.due_date) FROM services t2
+                          WHERE t2.piano_id = t1.piano_id
+                          AND t2.service_date <> t2.due_date
+                        )
+                        AND t1.due_date < "'.$carriedDate.'"
+                        AND first_name <> ""
+                        OR business_name <> ""
+                        ORDER BY t1.due_date
+                      ');
+
+
     return view('appointments.index', [
     	'month' => $month,
     	'year' => $year,
@@ -64,7 +91,8 @@ class AppointmentController extends Controller
     	'monthName' => $this->getMonthName($month),
       'daysInMonth' => $daysInMonth,
       'appointments' => $appointments,
-      'incomplete' => $incomplete
+      'incomplete' => $incomplete,
+      'carried' => $carried
     ]);
   }
 
@@ -72,9 +100,10 @@ class AppointmentController extends Controller
 	 * Show the create appointment form
 	 * @return [type] [description]
 	 */
-  public function create() {
+  public function create(Client $client) {
     return view('appointments.create', [
-    	'clients' => Client::get()->sortBy('surname')->sortBy('business_name')
+    	'clients' => Client::get()->sortBy('surname')->sortBy('business_name'),
+      'client_id' => $client->id
     ]);
   }
 

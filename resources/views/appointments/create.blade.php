@@ -55,7 +55,7 @@
 												<option disabled>-----</option>	
 											@endif
 
-											<option value="{{$client->id}}" {{old('client_id') == $client->id ? 'selected' : ''}}>
+											<option value="{{$client->id}}" {{old('client_id') == $client->id || $client_id == $client->id ? 'selected' : ''}}>
 												
 												@if($client->business_name)
 													{{$client->business_name}}
