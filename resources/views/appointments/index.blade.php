@@ -199,7 +199,7 @@
                   <tr>
                     <td class="cell">{{\Carbon\Carbon::parse($carry->due_date)->format('M Y')}}</td>
                     <td class="cell">
-                      <a href="/appointments/{{$carry->id}}">
+                      <a href="/clients/{{$carry->client_id}}">
                         @if($carry->business_name)
                           {{$carry->business_name}}
                         @else
