@@ -59,6 +59,7 @@ class AppointmentController extends Controller
                       ->orderBy('date', 'asc')
                       ->get();
 
+    /*
     $carriedAll = DB::select('
                         SELECT t1.* ,
                         first_name,
@@ -99,6 +100,47 @@ class AppointmentController extends Controller
                         AND (first_name <> "" OR business_name <> "")
                         ORDER BY t1.due_date
                       ');
+
+    */
+   
+    $carriedAll = DB::select('
+                    SELECT t1.* ,
+                    first_name,
+                    surname,
+                    business_name,
+                    town,
+                    client_id
+                    FROM services t1
+                    INNER JOIN pianos  on t1.piano_id = pianos.id
+                    LEFT JOIN clients on pianos.client_id = clients.id 
+                    WHERE t1.due_date = (
+                      SELECT MAX(t2.due_date) FROM services t2
+                      WHERE t2.piano_id = t1.piano_id
+                    )
+                    AND (t1.service_date <> t1.due_date AND t1.due_date < "'.$carriedDate.'")
+                    AND (first_name <> "" OR business_name <> "")
+                    ORDER BY t1.due_date
+                  ');
+
+    $carriedCurrent = DB::select('
+                    SELECT t1.* ,
+                    first_name,
+                    surname,
+                    business_name,
+                    town,
+                    client_id
+                    FROM services t1
+                    INNER JOIN pianos  on t1.piano_id = pianos.id
+                    LEFT JOIN clients on pianos.client_id = clients.id 
+                    WHERE t1.due_date = (
+                      SELECT MAX(t2.due_date) FROM services t2
+                      WHERE t2.piano_id = t1.piano_id
+                    )
+                    AND (t1.service_date <> t1.due_date AND t1.due_date < "'.$carriedDate.'" AND t1.due_date >= "'.$year.'-'.$month.'-01")
+                    AND (first_name <> "" OR business_name <> "")
+                    ORDER BY t1.due_date
+                  ');
+
 
 
     return view('appointments.index', [
