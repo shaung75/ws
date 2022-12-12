@@ -253,35 +253,41 @@
           
           <div class="table-responsive">
             
-            <table class="table app-table-hover mb-0 text-left">
-              <thead>
-                <tr>
-                  <th class="cell">Due</th>
-                  <th class="cell">Client</th>
-                  <th class="cell">Town</th>
-                  <th class="cell"></th>
-                </tr>
-              </thead>
-              <tbody>
+            @foreach($carriedAll as $key => $carried)
+              @if(!empty($carried))
+                <h6>{{$key}}</h6>
+                <table class="table app-table-hover mb-50 text-left">
+                  <thead>
+                    <tr>
+                      <th class="cell" style="width: 25%">Due</th>
+                      <th class="cell" style="width: 25%">Client</th>
+                      <th class="cell" style="width: 25%">Town</th>
+                      <th class="cell" style="width: 25%"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                @foreach($carriedAll as $carryAll)
-                  <tr>
-                    <td class="cell">{{\Carbon\Carbon::parse($carryAll->due_date)->format('M Y')}}</td>
-                    <td class="cell">
-                      <a href="/clients/{{$carryAll->client_id}}">
-                        @if($carryAll->business_name)
-                          {{$carryAll->business_name}}
-                        @else
-                          {{$carryAll->first_name}} {{$carryAll->surname}}
-                        @endif
-                      </a></td>
-                    <td class="cell">{{$carryAll->town}}</td>
-                    <td class="cell text-end"><a href="/appointments/create/{{$carryAll->client_id}}">Book in</a></td>
-                  </tr>
-                @endforeach                                   
-                
-              </tbody>
-            </table>
+                  @foreach($carried as $carryAll)
+                    <tr>
+                      <td class="cell">{{\Carbon\Carbon::parse($carryAll->due_date)->format('M Y')}}</td>
+                      <td class="cell">
+                        <a href="/clients/{{$carryAll->client_id}}">
+                          @if($carryAll->business_name)
+                            {{$carryAll->business_name}}
+                          @else
+                            {{$carryAll->first_name}} {{$carryAll->surname}}
+                          @endif
+                        </a></td>
+                      <td class="cell">{{$carryAll->town}}</td>
+                      <td class="cell text-end"><a href="/appointments/create/{{$carryAll->client_id}}">Book in</a></td>
+                    </tr>
+                  @endforeach                                      
+                    
+                  </tbody>
+                </table>
+              @endif              
+            @endforeach             
+
           </div><!--//table-responsive-->          
 
         </div>
