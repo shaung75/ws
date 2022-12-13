@@ -53,55 +53,17 @@ class AppointmentController extends Controller
                         return Carbon::parse($q->date)->format('j');
                       });
 
+    foreach($appointments as $day => $appts) {
+      foreach($appts as $appt) {
+        $resultA[$year.'-'.$month.'-'.$day][]=$appt;
+      }
+    }
+
     $incomplete = Appointment::query()
                       ->where('complete','=', null)
                       ->whereDate('date', '<', Carbon::today())
                       ->orderBy('date', 'asc')
                       ->get();
-
-    /*
-    $carriedAll = DB::select('
-                        SELECT t1.* ,
-                        first_name,
-                        surname,
-                        business_name,
-                        town,
-                        client_id
-                        FROM services t1
-                        INNER JOIN pianos  on t1.piano_id = pianos.id
-                        LEFT JOIN clients on pianos.client_id = clients.id 
-                        WHERE t1.due_date = (
-                          SELECT MAX(t2.due_date) FROM services t2
-                          WHERE t2.piano_id = t1.piano_id
-                          AND t2.service_date <> t2.due_date
-                        )
-                        AND t1.due_date < "'.$carriedDate.'"
-                        AND (first_name <> "" OR business_name <> "")
-                        ORDER BY t1.due_date
-                      ');
-
-    $carriedCurrent = DB::select('
-                        SELECT t1.* ,
-                        first_name,
-                        surname,
-                        business_name,
-                        town,
-                        client_id
-                        FROM services t1
-                        INNER JOIN pianos  on t1.piano_id = pianos.id
-                        LEFT JOIN clients on pianos.client_id = clients.id 
-                        WHERE t1.due_date = (
-                          SELECT MAX(t2.due_date) FROM services t2
-                          WHERE t2.piano_id = t1.piano_id
-                          AND t2.service_date <> t2.due_date
-                        )
-                        AND t1.due_date < "'.$carriedDate.'"
-                        AND t1.due_date >= "'.$year.'-'.$month.'-01"
-                        AND (first_name <> "" OR business_name <> "")
-                        ORDER BY t1.due_date
-                      ');
-
-    */
     
     $towns = Client::distinct()->orderBy('town')->get(['town']);
 
@@ -146,9 +108,16 @@ class AppointmentController extends Controller
                     AND (first_name <> "" OR business_name <> "")
                     ORDER BY t1.due_date
                   ');
-
-
-
+/*
+$resultA['2022-12-02'][]=17;
+$resultA['2022-12-02'][]=12;
+$resultA['2022-12-02'][]=132;
+$resultA['2022-12-02'][]=15;
+$resultA['2022-12-12'][]=5;
+$resultA['2022-12-13'][]=3;
+$resultA['2022-12-14'][]=15;
+$resultA['2022-12-15'][]=16;
+*/
     return view('appointments.index', [
     	'month' => $month,
     	'year' => $year,
@@ -162,6 +131,7 @@ class AppointmentController extends Controller
       'incomplete' => $incomplete,
       'carriedCurrent' => $carriedCurrent,
       'carriedAll' => $carriedAll,
+      'calendar' => $this->draw_calendar($month,$year,$resultA)
     ]);
   }
 
@@ -260,4 +230,91 @@ class AppointmentController extends Controller
 	{
 		return date("F", mktime(0, 0, 0, $monthNumber, 1));
 	}
+
+private function draw_calendar($month,$year,$resultA)
+{
+
+  /* draw table */
+  $calendar = '<table class="table app-table-hover mb-0 text-left">';
+
+  /* table headings */
+  $headings = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+  $calendar.= '<tr class="calendar-row"><td class="calendar-day-head" style="width: 14%;">'.implode('</td><td class="calendar-day-head" style="width: 14%;">',$headings).'</td></tr>';
+
+  /* days and weeks vars now ... */
+  $running_day = date('w',mktime(0,0,0,$month,1,$year));
+  $days_in_month = date('t',mktime(0,0,0,$month,1,$year));
+  $days_in_this_week = 1;
+  $day_counter = 0;
+
+
+
+  /* row for week one */
+  $calendar.= '<tr class="calendar-row">';
+
+  /* print "blank" days until the first of the current week */
+  for($x = 0; $x < $running_day; $x++):
+    $calendar.= '<td class="calendar-day-np">&nbsp;</td>';
+    $days_in_this_week++;
+  endfor;
+
+  /* keep going with days.... */
+  for($list_day = 1; $list_day <= $days_in_month; $list_day++):
+    $calendar.= '<td class="calendar-day">';
+      /* add in the day number */
+      $calendar.= '<div class="day-number"><strong><u>'.$list_day.'</u></strong></div>';
+
+        $date=date('Y-n-j',mktime(0,0,0,$month,$list_day,$year));
+
+        $tdHTML='';
+        /* list the appt details */        
+        if(isset($resultA[$date])){
+
+          foreach($resultA[$date] as $key => $appt) {
+            $tdHTML.=($appt->complete == 1) ? '<del>' : '';
+            $tdHTML.=\Carbon\Carbon::parse($appt->date)->format('H:i').' ';
+            $tdHTML.='<a href="/appointments/'.$appt->id.'">';
+            if($appt->client->business_name) {
+              $tdHTML.=$appt->client->business_name;
+            } else {
+              $tdHTML.=$appt->client->first_name.' '.$appt->client->surname;
+            }
+            $tdHTML.='</a>';
+            $tdHTML.=($appt->complete == 1) ? '</del>' : '';
+            $tdHTML.='<br>';
+          }
+          
+        } 
+
+      $calendar.=$tdHTML;      
+
+    $calendar.= '</td>';
+
+    if($running_day == 6):
+      $calendar.= '</tr>';
+      if(($day_counter+1) != $days_in_month):
+        $calendar.= '<tr class="calendar-row">';
+      endif;
+      $running_day = -1;
+      $days_in_this_week = 0;
+    endif;
+    $days_in_this_week++; $running_day++; $day_counter++;
+  endfor;
+
+  /* finish the rest of the days in the week */
+  if($days_in_this_week < 8):
+    for($x = 1; $x <= (8 - $days_in_this_week); $x++):
+      $calendar.= '<td class="calendar-day-np">&nbsp;</td>';
+    endfor;
+  endif;
+
+  /* final row */
+  $calendar.= '</tr>';
+
+  /* end the table */
+  $calendar.= '</table>';
+
+  /* all done, return result */
+  return $calendar;
+}  
 }

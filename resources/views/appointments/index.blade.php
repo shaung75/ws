@@ -4,7 +4,7 @@
 
   <h1 class="app-page-title">Appointments</h1>
   <div class="row gy-4">
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-12">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
         <div class="app-card-header p-3 border-bottom-0">
           <div class="row align-items-center gx-3">
@@ -27,70 +27,100 @@
         </div>
         <!--//app-card-header-->
         <div class="app-card-body app-card-orders-table px-4 w-100">
-          <table class="table app-table-hover mb-0 text-left">
-            <thead>
-              <tr>
-                <th class="cell">
-                  <a href="/appointments/{{$yearPrev}}/{{$monthPrev}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                  </a>
-                </th>
-                <th class="cell text-center" colspan="2">{{$monthName}} {{$year}}</th>
-                <th class="cell text-end">
-                  <a href="/appointments/{{$yearNext}}/{{$monthNext}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>                    
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
 
-              @for ($i = 1; $i <= $daysInMonth; $i++)
+          <div class="d-none d-lg-block">
+            <table class="table app-table-hover mb-0 text-left">
+              <thead>
                 <tr>
-                  <td class="cell">{{$i}}</td>
-                  <td class="cell">
-                    @isset($appointments[$i])
-                      @foreach($appointments[$i] as $appointment)
-                        {{\Carbon\Carbon::parse($appointment->date)->format('H:i')}} - 
-                        <a href="/appointments/{{$appointment->id}}">
-                          @if($appointment->client->business_name)
-                            {{$appointment->client->business_name}}
-                          @else
-                            {{$appointment->client->first_name}} {{$appointment->client->surname}}
-                          @endif
-                        </a><br>
-                      @endforeach
-                    @endisset
-                  </td>
-                  <td class="cell">
-                    @isset($appointments[$i])
-                      @foreach($appointments[$i] as $appointment)
-                        {{$appointment->client->town}}<br>
-                      @endforeach
-                    @endisset
-                  </td>
-                  <td class="cell text-end">
-                    @isset($appointments[$i])
-                      @foreach($appointments[$i] as $appointment)
-                        @if($appointment->complete == 1)
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                          </svg>
-                          <br>
-                        @else
-                          &nbsp;<br>
-                        @endif
-                      @endforeach
-                    @endisset
-                  </td>
+                  <th class="cell">
+                    <a href="/appointments/{{$yearPrev}}/{{$monthPrev}}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                      </svg>
+                    </a>
+                  </th>
+                  <th class="cell text-center" colspan="2">{{$monthName}} {{$year}}</th>
+                  <th class="cell text-end">
+                    <a href="/appointments/{{$yearNext}}/{{$monthNext}}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                      </svg>                    
+                    </a>
+                  </th>
                 </tr>
-              @endfor
-            </tbody>
-          </table>
+              </thead>
+            </table>
+
+            {!!$calendar!!}
+          </div>
+
+          <div class="d-lg-none">
+            <table class="table app-table-hover mb-0 text-left">
+              <thead>
+                <tr>
+                  <th class="cell">
+                    <a href="/appointments/{{$yearPrev}}/{{$monthPrev}}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                      </svg>
+                    </a>
+                  </th>
+                  <th class="cell text-center" colspan="2">{{$monthName}} {{$year}}</th>
+                  <th class="cell text-end">
+                    <a href="/appointments/{{$yearNext}}/{{$monthNext}}">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                      </svg>                    
+                    </a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                @for ($i = 1; $i <= $daysInMonth; $i++)
+                  <tr>
+                    <td class="cell">{{$i}}</td>
+                    <td class="cell">
+                      @isset($appointments[$i])
+                        @foreach($appointments[$i] as $appointment)
+                          {{\Carbon\Carbon::parse($appointment->date)->format('H:i')}} - 
+                          <a href="/appointments/{{$appointment->id}}">
+                            @if($appointment->client->business_name)
+                              {{$appointment->client->business_name}}
+                            @else
+                              {{$appointment->client->first_name}} {{$appointment->client->surname}}
+                            @endif
+                          </a><br>
+                        @endforeach
+                      @endisset
+                    </td>
+                    <td class="cell">
+                      @isset($appointments[$i])
+                        @foreach($appointments[$i] as $appointment)
+                          {{$appointment->client->town}}<br>
+                        @endforeach
+                      @endisset
+                    </td>
+                    <td class="cell text-end">
+                      @isset($appointments[$i])
+                        @foreach($appointments[$i] as $appointment)
+                          @if($appointment->complete == 1)
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                            <br>
+                          @else
+                            &nbsp;<br>
+                          @endif
+                        @endforeach
+                      @endisset
+                    </td>
+                  </tr>
+                @endfor
+              </tbody>
+            </table>
+          </div>
+
         </div>
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
@@ -225,7 +255,7 @@
     </div>
     <!--//col-->
 
-    <div class="col-12 col-lg-12">
+    <div class="col-12 col-lg-6">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
         
         <div class="app-card-header p-3 border-bottom-0">
