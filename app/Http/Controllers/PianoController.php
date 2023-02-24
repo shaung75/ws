@@ -24,10 +24,10 @@ class PianoController extends Controller
     		$pianos = $this->paginate(Piano::get()->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos']);
     		$list = 'all';
     	} elseif ($request->route()->uri == 'pianos/assigned') {
-    		$pianos = $this->paginate(Piano::get()->where('client_id', '!=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos/assigned']);
+    		$pianos = $this->paginate(Piano::get()->where('client_id', '!=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'assigned']);
     		$list = 'assigned';
     	} elseif ($request->route()->uri == 'pianos/unassigned') {
-    		$pianos = $this->paginate(Piano::get()->where('client_id', '=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'pianos/assigned']);
+    		$pianos = $this->paginate(Piano::get()->where('client_id', '=', null)->sortBy('stock_number'), 15, $request->page, ['path' => 'unassigned']);
     		$list = 'unassigned';
     	}    	
 
