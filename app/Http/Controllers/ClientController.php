@@ -43,6 +43,21 @@ class ClientController extends Controller
     }
 
     /**
+     * Autocomplete for search
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function autocomplete(Request $request) {
+        $rows = Client::select("surname", "first_name", "id")
+            ->where('surname', 'LIKE', $request->get('query'). '%')
+            ->orWhere('first_name', 'LIKE', $request->get('query'). '%')
+            ->orderBy('surname')
+            ->get();
+
+        return response()->json($rows);
+    }
+
+    /**
      * Show single client
      * @param  Client $client [description]
      * @return [type]         [description]

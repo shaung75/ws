@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function() {
 	// Clients
 	Route::get('/clients', [ClientController::class, 'index']);
 	Route::post('/clients', [ClientController::class, 'store']);
+	Route::get('/clients/autocomplete', [ClientController::class, 'autocomplete'])->name('client-autocomplete');
 	Route::post('/clients/search', [ClientController::class, 'search']);
 	Route::get('/clients/create', [ClientController::class, 'create']);
 	Route::get('/clients/{client}', [ClientController::class, 'show']);

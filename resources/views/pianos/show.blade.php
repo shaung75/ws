@@ -33,7 +33,7 @@
                 <div class="col-auto">
                   <div class="item-label"><strong>Assigned to</strong></div>
                   <div class="item-data">
-                    <a href="/clients/{{$piano->id}}">
+                    <a href="/clients/{{$piano->client_id}}">
                       {{$piano->client->first_name}} {{$piano->client->surname}} (#{{$piano->client->id}})
                     </a>
                   </div>

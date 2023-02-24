@@ -43,6 +43,26 @@
 
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaZwaFP3kfe3w5AG7MgYcgV12PT-Q4JFg&callback=initMap&v=weekly" defer></script>
       <script src="/assets/js/scripts.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
+      <script type="text/javascript">
+          var path = "{{ route('client-autocomplete') }}";
+        
+          $('#search').typeahead({
+              displayText: function (item) { return item.surname + ', ' + item.first_name; },
+              source: function (query, process) {
+                  return $.get(path, {
+                      query: query
+                  }, function (data) {
+                      return process(data);
+                  });
+              },
+              afterSelect: function (data) {
+                $("#client").val(data.id);
+              }
+          });       
+        
+      </script>      
     @endauth
 
 	</body>

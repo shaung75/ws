@@ -37,9 +37,18 @@
 
 	        	@unless(count($clients) == 0)
 
+	        		<div class="row mb-3">
+								<div class="col-3">
+									<label for="model" class="form-label">Search...</label>		
+								</div>
+								<div class="col-3">
+									<input type="text" class="typeahead form-control" id="search" autocomplete="off">
+								</div>
+							</div>
+
 							<div class="row mb-3">
 								<div class="col-3">
-									<label for="client_id" class="form-label">Client</label>
+									<label for="client_id" class="form-label">Select Client</label>
 								</div>
 								<div class="col-5">
 									<select class="form-select" id="client" name="client_id">
