@@ -85,12 +85,18 @@
   <body>
     <div class="text-center header">
       <h1 class="green">{{$invoice->account->account_name}}</h1>
-      <h2 class="green">Piano specialists since 1897</h2>
+      <h2 class="green">Piano specialists since 1867</h2>
       <p>{{$settings->business_address1}}, {{$settings->business_address2}}, {{$settings->business_town}}, {{$settings->business_postcode}}</p>
       <p>T: {{$settings->business_telephone}} E: {{$settings->business_email}}</p>
       <p>www.wspianos.co.uk</p>
       <p class="green">New and used pianos <span>-</span> Restoration <span>-</span> Tuning <span>-</span> Valuations</p>
     </div>
+
+    @if($invoice->paid)
+      <div class="col-12 tex-center">
+        <h2 style="color: #f00;">PAID</h2>
+      </div>
+    @endif
 
     <div class="col">
       @if($invoice->client->business_name)
@@ -100,8 +106,7 @@
       {{$invoice->client->address1}}<br>
       {{$invoice->client->address2 != '' ? $invoice->client->address2 .'<br>' : ''}}
       {{$invoice->client->town}}<br>
-      {{$invoice->client->county}}, {{$invoice->client->postcode}}<br>
-      {{$invoice->client->telephone}}
+      {{$invoice->client->county}}, {{$invoice->client->postcode}}
     </div>
 
     <div class="col invoice-meta">
@@ -112,7 +117,7 @@
         </tr>
         <tr>
           <td>Date</td>
-          <td>{{\Carbon\Carbon::parse($invoice->due_date)->format('d/m/Y')}}</td>
+          <td>{{\Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y')}}</td>
         </tr>
       </table>
     </div>
@@ -172,10 +177,12 @@
           </tr>
         @endif
       @else
-        <tr>
-          <td class="text-center">No VAT payable</td>
-          <td></td>
-        </tr>
+        @if($invoice->account->tax_rate == 0)
+          <tr>
+            <td class="text-center">No VAT payable</td>
+            <td></td>
+          </tr>
+        @endif
       @endif
       <tr>
         <td class="text-right"><strong>Invoice total</strong></td>
