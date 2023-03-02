@@ -2,7 +2,7 @@
 
   <small class="copyright">
 
-    v1.0 <a class="app-link" href="https://www.shaungill.co.uk" target="_blank">Shaun Gill</a>
+    v1.1 <a class="app-link" href="https://www.shaungill.co.uk" target="_blank">Shaun Gill</a>
 
   </small>
   
