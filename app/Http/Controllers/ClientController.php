@@ -96,6 +96,7 @@ class ClientController extends Controller
             'postcode' => 'required'
         ]);
 
+        $formFields['address2'] = $request->address2;
         $formFields['notes'] = $request->notes;
         $formFields['business_name'] = $request->business_name;
         $formFields['telephone_secondary'] = $request->telephone_secondary;
@@ -170,6 +171,7 @@ class ClientController extends Controller
             'postcode' => 'required'
         ]);
 
+        $formFields['address2'] = $request->address2;
         $formFields['notes'] = $request->notes;
         $formFields['business_name'] = $request->business_name;
         $formFields['telephone_secondary'] = $request->telephone_secondary;
