@@ -53,6 +53,8 @@ class AppointmentController extends Controller
                         return Carbon::parse($q->date)->format('j');
                       });
 
+    $resultA = array();
+    
     foreach($appointments as $day => $appts) {
       foreach($appts as $appt) {
         $resultA[$year.'-'.$month.'-'.$day][]=$appt;
