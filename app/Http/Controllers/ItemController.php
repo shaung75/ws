@@ -16,7 +16,7 @@ class ItemController extends Controller
     public function store(Request $request, Invoice $invoice) {
     	$formFields = $request->validate([
         'qty' => 'required',
-        'description' => 'required',
+        'description' => [ 'required', 'max:500' ],
         'unit_price' => 'required',
       ]);
 

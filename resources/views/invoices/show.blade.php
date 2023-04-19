@@ -371,7 +371,7 @@
                       <label for="setting-input-1" class="form-label">
                         <strong>Unit price (inc. VAT)</strong>
                       </label>
-                      <input type="number" min="0" step=".01" class="form-control" id="unit_price" name="unit_price" value="{{old('unit_price')}}" required value="0.00">
+                      <input type="number" step=".01" class="form-control" id="unit_price" name="unit_price" value="{{old('unit_price')}}" required value="0.00">
 
                       @error('unit_price')
                         <div class="alert alert-danger mt-3" role="alert">

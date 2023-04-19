@@ -137,7 +137,7 @@
           <tr>
 
             <td class="invoice-body">{{$item->description}}</td>
-            <td>
+            <td class="text-right">
               &pound;{{number_format($item->unit_price * $item->qty,2)}}
             </td>
 
@@ -160,20 +160,20 @@
         @if($invoice->override_values)
           <tr>
             <td class="text-right"><strong>Goods total</strong></td>
-            <td><strong>&pound;{{number_format($invoice->override_sub_total,2)}}</strong></td>
+            <td class="text-right"><strong>&pound;{{number_format($invoice->override_sub_total,2)}}</strong></td>
           </tr>
           <tr>
             <td class="text-right"><strong>VAT</strong></td>
-            <td><strong>&pound;{{number_format($invoice->override_vat,2)}}</strong></td>
+            <td class="text-right"><strong>&pound;{{number_format($invoice->override_vat,2)}}</strong></td>
           </tr>
         @else
           <tr>
             <td class="text-right"><strong>Goods total</strong></td>
-            <td><strong>&pound;{{number_format($invoice->total()->gross,2)}}</strong></td>
+            <td class="text-right"><strong>&pound;{{number_format($invoice->total()->gross,2)}}</strong></td>
           </tr>
           <tr>
             <td class="text-right"><strong>VAT</strong></td>
-            <td><strong>&pound;{{number_format($invoice->total()->vat,2)}}</strong></td>
+            <td class="text-right"><strong>&pound;{{number_format($invoice->total()->vat,2)}}</strong></td>
           </tr>
         @endif
       @else
@@ -186,7 +186,7 @@
       @endif
       <tr>
         <td class="text-right"><strong>Invoice total</strong></td>
-        <td><strong>&pound;{{number_format($invoice->total()->net,2)}}</strong></td>
+        <td class="text-right"><strong>&pound;{{number_format($invoice->total()->net,2)}}</strong></td>
       </tr>
     </table>
 
