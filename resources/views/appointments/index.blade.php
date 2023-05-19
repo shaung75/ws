@@ -163,6 +163,7 @@
                 <tr>
                   <th class="cell">Date Booked</th>
                   <th class="cell">Client</th>
+                  <th class="cell">Town</th>
                   <th class="cell"></th>
                 </tr>
               </thead>
@@ -178,7 +179,9 @@
                         @else
                           {{$appt->client->first_name}} {{$appt->client->surname}}
                         @endif
-                      </a></td>
+                      </a>
+                    </td>
+                    <td class="cell">{{$appt->client->town}}</td>
                     <td class="cell text-end"><a href="/appointments/{{$appt->id}}/edit">Reschedule</a></td>
                   </tr>
                 @endforeach                                   
