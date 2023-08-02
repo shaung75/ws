@@ -329,6 +329,20 @@
             Add item to invoice
           </button>
 
+          <p class="small"><br>+<a data-bs-toggle="collapse" href="#quickAdd" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Quick Add
+          </a></p>  
+          <div class="collapse" id="quickAdd">
+            
+              <ul class="small">
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#assignItem" onclick="$('#description').val('Tuning upright piano to British Standard Pitch');return false;">Tuning upright piano to British Standard Pitch</a></p></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#assignItem" onclick="$('#description').val('Tuning grand piano to British Standard Pitch');return false;">Tuning grand piano to British Standard Pitch</a></p></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#assignItem" onclick="$('#description').val('Tuning upright piano to pitch as found');return false;">Tuning upright piano to pitch as found</a></p></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#assignItem" onclick="$('#description').val('Tuning grand piano to pitch as found');return false;">Tuning grand piano to pitch as found</a></p></li>
+              </ul>
+            
+          </div>
+
           <!-- Modal -->
           <div class="modal fade" id="assignItem" tabindex="-1" aria-labelledby="assignItemLabel" aria-hidden="true">
             <form action="/invoice-items/create/{{$invoice->id}}" method="POST">
