@@ -32,7 +32,7 @@
               <th class="cell">Piano</th>
               <th class="cell">Stock #</th>
               <th class="cell">Service type</th>
-              <th class="cell">Completed by</th>
+              <th class="cell">Price</th>
               <th class="cell"></th>
             </tr>
           </thead>
@@ -47,7 +47,11 @@
                   <td class="cell">{{$service->piano->manufacturer->manufacturer}} {{$service->piano->model}}</td>
                   <td class="cell">{{$service->piano->stock_number}}</td>
                   <td class="cell">{{$service->type->type}}</td>
-                  <td class="cell">{{$service->technician}}</td>
+                  <td class="cell">
+                    @if($service->price)
+                      &pound;{{$service->price}}
+                    @endif
+                  </td>
                   <td class="cell">
                     <a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}">View</a>
                     <a class="btn-sm app-btn-secondary" href="/services/{{$service->id}}/delete">Delete</a>

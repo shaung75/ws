@@ -210,6 +210,27 @@ $resultA['2022-12-15'][]=16;
   }
 
   /**
+   * Delete the appointment
+   * @param  Client $client [description]
+   * @return [type]         [description]
+   */
+  public function destroy(Appointment $appointment) {
+      $appointment->delete();
+      return redirect('/appointments')->with('message', 'Appointment deleted');
+  }
+
+  /**
+   * Delete appointment confirmation screen
+   * @param  Appointment $appointment [description]
+   * @return [type]                   [description]
+   */
+  public function delete(Appointment $appointment) {
+    return view('appointments.delete', [
+      'appointment' => $appointment
+    ]);
+  }
+
+  /**
    * Mark appointment as complete
    * @param  Request     $request     [description]
    * @param  Appointment $appointment [description]

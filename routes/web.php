@@ -46,10 +46,12 @@ Route::middleware('auth')->group(function() {
 	Route::post('/appointments', [AppointmentController::class, 'store']);
 	Route::get('/appointments/create', [AppointmentController::class, 'create']);
 	Route::get('/appointments/create/{client}', [AppointmentController::class, 'create']);
+	Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy']);
 	Route::get('/appointments/{appointment}', [AppointmentController::class, 'show']);
 	Route::put('/appointments/{appointment}', [AppointmentController::class, 'update']);
 	Route::put('/appointments/{appointment}/complete', [AppointmentController::class, 'updateComplete']);
 	Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit']);
+	Route::get('/appointments/{appointment}/delete', [AppointmentController::class, 'delete']);
 	Route::get('/appointments/{year}/{month}', [AppointmentController::class, 'index']);
 
 	// Clients

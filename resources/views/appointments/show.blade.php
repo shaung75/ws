@@ -2,13 +2,21 @@
 
 @section('content')
 
-  <h1 class="app-page-title">
-    Appointment Details
+  <div class="row">
+    <div class="col-6">
+      <h1 class="app-page-title">
+        Appointment Details
 
-    @if($appointment->complete)
-      <span style="color: #15a362;">(Complete)</span>
-    @endif
-  </h1>
+        @if($appointment->complete)
+          <span style="color: #15a362;">(Complete)</span>
+        @endif
+      </h1>
+    </div>
+    <div class="col-6">
+      <a href="/appointments/{{$appointment->id}}/delete" class="btn btn-danger text-white">Delete Appointment</a>
+    </div>
+  </div>
+
   <div class="row gy-4">
     <div class="col-12 col-lg-6">
       <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
