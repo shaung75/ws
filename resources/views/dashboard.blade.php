@@ -32,7 +32,7 @@
               <thead>
                 <tr>
                   <th class="cell">Date</th>
-                  <th class="cell">Client</th>
+                  <th class="cell">Clients</th>
                   <th class="cell"></th>
                   <th class="cell"></th>
                 </tr>
