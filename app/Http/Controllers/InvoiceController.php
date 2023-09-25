@@ -176,13 +176,30 @@ class InvoiceController extends Controller
         $settings = new Setting;
 
         $data["email"] = $invoice->client->email;
+        //$data["email"] = "shaung75@gmail.com";
         $data["title"] = "Invoice";
         $data["invoice"] = $invoice;
         $data["settings"] = $settings->fetch();
+
+        $abbreviations = array(
+                            'Mr/Mrs',
+                            'Mr',
+                            'Mrs',
+                            'Miss',
+                            'Dr',
+                            'Rev',
+                            'Fr'
+                        );
+
+        if(in_array($invoice->client->first_name, $abbreviations)) {
+            $data["greeting"] = $invoice->client->first_name . " " . $invoice->client->surname;
+        } else {
+            $data["greeting"] = $invoice->client->first_name;
+        }
   
         //$pdf = PDF::loadView('emails.myTestMail', $data);
         
-        $pdf = PDF::loadView('invoices.pdf', $data);
+        $pdf = PDF::loadView('invoices.pdf-new', $data);
   
         Mail::send('emails.invoice', $data, function($message)use($data, $pdf) {
             $message->to($data["email"], $data["email"])
