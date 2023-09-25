@@ -1,7 +1,7 @@
 @extends('layouts.page')
 
 @section('content')
-hello
+
 <div class="row g-3 mb-4 align-items-center justify-content-between">
   <div class="col-auto">
     <h1 class="app-page-title mb-0">Invoice {{$invoice->account->invoice_prefix}}{{$invoice->invoice_number}}{{$invoice->account->invoice_suffix}}</h1>
