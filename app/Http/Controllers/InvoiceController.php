@@ -164,7 +164,7 @@ class InvoiceController extends Controller
             'settings' => $settings->fetch(),
             'tax-rate' => ($invoice->account->tax_rate / 100) + 1
         ]);
-        return $pdf->download($invoice->account->invoice_prefix . $invoice->id . $invoice->account->invoice_suffix . '-'.($invoice->client->business_name ? $invoice->client->business_name : $invoice->client->surname).'-invoice.pdf');
+        return $pdf->download($invoice->account->invoice_prefix . $invoice->invoice_number . $invoice->account->invoice_suffix . '-'.($invoice->client->business_name ? $invoice->client->business_name : $invoice->client->surname).'-invoice.pdf');
     }
 
     /**
@@ -201,10 +201,11 @@ class InvoiceController extends Controller
         
         $pdf = PDF::loadView('invoices.pdf-new', $data);
   
-        Mail::send('emails.invoice', $data, function($message)use($data, $pdf) {
+        Mail::send('emails.invoice', $data, function($message)use($data, $pdf, $invoice) {
             $message->to($data["email"], $data["email"])
                     ->subject($data["title"])
-                    ->attachData($pdf->output(), "invoices.pdf");
+                    //->attachData($pdf->output(), "invoices.pdf");
+                    ->attachData($pdf->output(), $invoice->account->invoice_prefix . $invoice->invoice_number . $invoice->account->invoice_suffix . '-'.($invoice->client->business_name ? $invoice->client->business_name : $invoice->client->surname).'-invoice.pdf');
         });
 
         return redirect('/invoices/'.$invoice->id)->with('message', 'Invoice mailed to customer');
