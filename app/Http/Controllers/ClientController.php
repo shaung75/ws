@@ -48,9 +48,10 @@ class ClientController extends Controller
      * @return [type]           [description]
      */
     public function autocomplete(Request $request) {
-        $rows = Client::select("surname", "first_name", "id")
+        $rows = Client::select("surname", "first_name", "business_name", "id")
             ->where('surname', 'LIKE', $request->get('query'). '%')
             ->orWhere('first_name', 'LIKE', $request->get('query'). '%')
+            ->orWhere('business_name', 'LIKE', $request->get('query'). '%')
             ->orderBy('surname')
             ->get();
 

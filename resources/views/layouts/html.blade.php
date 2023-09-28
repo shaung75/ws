@@ -49,7 +49,13 @@
           var path = "{{ route('client-autocomplete') }}";
         
           $('#search').typeahead({
-              displayText: function (item) { return item.surname + ', ' + item.first_name; },
+              displayText: function (item) { 
+                if(item.business_name != null){
+                  return item.business_name +' ('+item.surname + ', ' + item.first_name +')';
+                } else {
+                  return item.surname + ', ' + item.first_name;
+                }
+              },
               source: function (query, process) {
                   return $.get(path, {
                       query: query
