@@ -65,16 +65,19 @@ class InvoiceController extends Controller
             'account_id' => 'required'
         ]);
 
+        // Load the billing account
+        $account = Account::where('id', '=', $request->account_id)->first();
+
     	$fields['client_id'] = $request->id ? $request->id : $client->id; // If coming from /invoices/create or client screen
     	$fields['invoice_date'] = date("Y-m-d");
     	$fields['due_date'] = date('Y-m-d', strtotime($fields['invoice_date'] . "+1 month" ));
+        $fields['hide_vat'] = true;
 
         $latestInvoice = Invoice::where('account_id', '=', $request->account_id)->orderByDesc('invoice_number')->first();
 
-        if($latestInvoice !== null) {
+        if($latestInvoice !== null && $latestInvoice->invoice_number >= $account->invoice_start_from) {
             $fields['invoice_number'] = $latestInvoice->invoice_number + 1;
         } else {
-            $account = Account::where('id', '=', $request->account_id)->first();
             $fields['invoice_number'] = $account->invoice_start_from;
         }
 
