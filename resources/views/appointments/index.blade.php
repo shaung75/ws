@@ -249,7 +249,14 @@
                         @endif
                       </a></td>
                     <td class="cell">{{$carryCurrent->town}}</td>
-                    <td class="cell text-end"><a href="/appointments/create/{{$carryCurrent->client_id}}">Book in</a></td>
+                    <td class="cell text-end">
+                      @if($carryCurrent->booked)
+                        <a href="/appointments/{{$carryCurrent->booked}}" style="color: #f90;">Booked</a>
+
+                      @else
+                        <a href="/appointments/create/{{$carryCurrent->client_id}}">Book in</a>
+                      @endif
+                    </td>
                   </tr>
                 @endforeach                                   
                 
@@ -321,7 +328,12 @@
                           @endif
                         </a></td>
                       <td class="cell">{{$carryAll->town}}</td>
-                      <td class="cell text-end"><a href="/appointments/create/{{$carryAll->client_id}}">Book in</a></td>
+                      <td class="cell text-end">
+                        @if($carryAll->booked)
+                          <a href="/appointments/{{$carryAll->booked}}" style="color: #f90;">Booked</a>
+                        @else
+                          <a href="/appointments/create/{{$carryAll->client_id}}">Book in</a>
+                        @endif
                     </tr>
                   @endforeach                                      
                     

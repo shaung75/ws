@@ -101,7 +101,7 @@ class AppointmentController extends Controller
                     client_id
                     FROM services t1
                     INNER JOIN pianos  on t1.piano_id = pianos.id
-                    LEFT JOIN clients on pianos.client_id = clients.id 
+                    LEFT JOIN clients on pianos.client_id = clients.id
                     WHERE t1.due_date = (
                       SELECT MAX(t2.due_date) FROM services t2
                       WHERE t2.piano_id = t1.piano_id
@@ -110,6 +110,28 @@ class AppointmentController extends Controller
                     AND (first_name <> "" OR business_name <> "")
                     ORDER BY t1.due_date
                   ');
+    
+    // Check if appointment booked
+    foreach($carriedAll as $town => $carriedTown) {
+      foreach($carriedTown as $key => $carried) {
+        $appointment = Appointment::query()
+                                    ->where('client_id', '=', $carried->client_id)
+                                    ->where('date', '>', date('Y-m-d'))
+                                    ->first();
+        $carriedAll[$town][$key]->booked = $appointment ? $appointment->id : false;  
+      }
+    }
+
+    foreach($carriedCurrent as $key => $carried) {
+      $appointment = Appointment::query()
+                                  ->where('client_id', '=', $carried->client_id)
+                                  ->where('date', '>', date('Y-m-d'))
+                                  ->first();
+      $carriedCurrent[$key]->booked = $appointment ? $appointment->id : false;
+      
+    }
+
+                    
 /*
 $resultA['2022-12-02'][]=17;
 $resultA['2022-12-02'][]=12;
