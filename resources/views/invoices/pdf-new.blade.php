@@ -104,7 +104,9 @@
       @endif
       {{$invoice->client->first_name}} {{$invoice->client->surname}}<br>
       {{$invoice->client->address1}}<br>
-      {{$invoice->client->address2 != '' ? $invoice->client->address2 .'<br>' : ''}}
+      @if($invoice->client->address2 != '')
+        {{$invoice->client->address2}}<br>
+      @endif
       {{$invoice->client->town}}<br>
       {{$invoice->client->county}}, {{$invoice->client->postcode}}
     </div>
