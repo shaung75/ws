@@ -18,14 +18,20 @@ class SearchController extends Controller
     public function search(Request $request) {
     	$search = $request->search;
 
+      // If search begins with 01, 02 or 07, assume telephone
+      if(str_starts_with($search, '01') || str_starts_with($search, '02') || str_starts_with($search, '07')) {
+        $search = str_replace(' ', '', $search);
+      }
+
     	// Clients
       $clients = Client::query()
                   ->where('business_name', 'LIKE', "%{$search}%")
                   ->orWhere('surname', 'LIKE', "%{$search}%")
                   ->orWhere('first_name', 'LIKE', "%{$search}%")
+                  ->orWhereRaw("REPLACE(telephone, ' ', '') LIKE ?", "%{$search}%")
                   ->orWhere('id', '=', "{$search}")
                   ->get();
-
+      
       // Invoices
       $clientIds = [];
 
