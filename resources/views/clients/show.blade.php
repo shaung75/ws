@@ -144,6 +144,7 @@
         <!--//app-card-body-->
         <div class="app-card-footer p-4 mt-auto">
           <a class="btn app-btn-secondary" href="/clients/{{$client->id}}/edit">Edit Client</a>
+          <a class="btn app-btn-primary" href="/appointments/create/{{$client->id}}">Book Appointment</a>
         </div>
         <!--//app-card-footer-->
       </div>
