@@ -150,6 +150,62 @@
 
 						<div class="row mb-3">
 							<div class="col-12">
+								<strong>Billing Contact</strong>
+								<p><small>If used, invoices will be addressed and emailed to this contact instead of the account holder</small></p>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
+								<label for="use_billing" class="form-label">Use billing details</label>		
+							</div>
+							<div class="col-9">
+								<div class="form-check">
+                  <input class="form-check-input" name="use_billing" type="checkbox" value="1" id="settings-checkbox-1" {{$client->use_billing == 1 ? 'checked' : ''}}>
+                </div>	
+
+								@error('use_billing')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
+								<label for="billing_name" class="form-label">Name</label>		
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control" id="billing_name" name="billing_name" value="{{$client->billing_name}}">		
+
+								@error('billing_name')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-3">
+								<label for="billing_name" class="form-label">Email</label>		
+							</div>
+							<div class="col-9">
+								<input type="text" class="form-control" id="billing_email" name="billing_email" value="{{$client->billing_email}}">		
+
+								@error('billing_email')
+									<div class="alert alert-danger mt-3" role="alert">
+										<small>{{$message}}</small>
+									</div>
+								@enderror
+							</div>
+						</div>
+
+						<hr class="mb-3">
+
+						<div class="row mb-3">
+							<div class="col-12">
 								<strong>Telephone</strong>
 							</div>
 						</div>
@@ -168,6 +224,7 @@
 								@enderror
 							</div>
 						</div>
+
 						<div class="row mb-3">
 							<div class="col-3">
 								<label for="telephone_secondary" class="form-label">Secondary</label>		

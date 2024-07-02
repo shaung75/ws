@@ -23,7 +23,10 @@ class Client extends Model
 			'email', 
 			'notes', 
 			'lat', 
-			'long'
+			'long',
+            'use_billing',
+            'billing_name',
+            'billing_email'
 		];
 		
     use HasFactory;

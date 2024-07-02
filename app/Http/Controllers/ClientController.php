@@ -94,13 +94,22 @@ class ClientController extends Controller
             'address1' => 'required',
             'town' => 'required',
             'county' => 'required',
-            'postcode' => 'required'
+            'postcode' => 'required',
+            'billing_name' => ['required_with:use_billing'], 
+            'billing_email' => ['required_with:use_billing'], 
         ]);
 
         $formFields['address2'] = $request->address2;
         $formFields['notes'] = $request->notes;
         $formFields['business_name'] = $request->business_name;
         $formFields['telephone_secondary'] = $request->telephone_secondary;
+
+        // Billing contact
+        $formFields['use_billing'] = $request->use_billing;
+        if($formFields['use_billing'] == false) {
+            $formFields['billing_name'] = null;
+            $formFields['billing_email'] = null;
+        }
 
         // If check if the postcode or coords have changed
         if($request->postcode != $client->postcode) {

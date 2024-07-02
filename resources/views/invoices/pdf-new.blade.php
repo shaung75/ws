@@ -102,7 +102,11 @@
       @if($invoice->client->business_name)
         {{$invoice->client->business_name}}<br>
       @endif
-      {{$invoice->client->first_name}} {{$invoice->client->surname}}<br>
+      @if($invoice->client->use_billing)
+        {{$invoice->client->billing_name}}<br>
+      @else
+        {{$invoice->client->first_name}} {{$invoice->client->surname}}<br>
+      @endif
       {{$invoice->client->address1}}<br>
       @if($invoice->client->address2 != '')
         {{$invoice->client->address2}}<br>

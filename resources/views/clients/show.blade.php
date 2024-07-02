@@ -96,7 +96,7 @@
           <!--//item-->
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
-              <div class="col-auto">
+              <div class="col">
                 <div class="item-label"><strong>Address</strong></div>
                 <div class="item-data">
                   @if($client->address1)
@@ -125,6 +125,30 @@
             <!--//row-->
           </div>
           <!--//item-->
+          @if($client->use_billing)
+          <div class="item border-bottom py-3">
+            <div class="row justify-content-between align-items-center">
+              <div class="col">
+                <div class="item-label align-top"><strong>Billing Contact</strong></div>
+                <div class="item-data">
+                  @if($client->billing_name)
+                    {{$client->billing_name}}<br>
+                  @endif
+                  @if($client->billing_email)
+                    {{$client->billing_email}}<br>
+                  @endif
+                </div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                <a class="btn-sm app-btn-secondary" href="/clients/{{$client->id}}/edit">Change</a>
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+          </div>
+          <!--//item-->
+          @endif
           <div class="item border-bottom py-3">
             <div class="row justify-content-between align-items-center">
               <div class="col-auto">

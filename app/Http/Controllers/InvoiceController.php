@@ -178,27 +178,33 @@ class InvoiceController extends Controller
     public function sendInvoice(Invoice $invoice) {
         $settings = new Setting;
 
-        $data["email"] = $invoice->client->email;
-        //$data["email"] = "shaung75@gmail.com";
         $data["title"] = "Invoice";
         $data["invoice"] = $invoice;
         $data["settings"] = $settings->fetch();
 
-        $abbreviations = array(
-                            'Mr/Mrs',
-                            'Mr',
-                            'Mrs',
-                            'Miss',
-                            'Dr',
-                            'Rev',
-                            'Fr'
-                        );
-
-        if(in_array($invoice->client->first_name, $abbreviations)) {
-            $data["greeting"] = $invoice->client->first_name . " " . $invoice->client->surname;
+        // Send to billing name if exists
+        if($invoice->client->use_billing) {
+            $data["email"] = $invoice->client->billing_email;
+            $data["greeting"] = $invoice->client->billing_name;
         } else {
-            $data["greeting"] = $invoice->client->first_name;
+            $data["email"] = $invoice->client->email;
+            $abbreviations = array(
+                                'Mr/Mrs',
+                                'Mr',
+                                'Mrs',
+                                'Miss',
+                                'Dr',
+                                'Rev',
+                                'Fr'
+                            );
+
+            if(in_array($invoice->client->first_name, $abbreviations)) {
+                $data["greeting"] = $invoice->client->first_name . " " . $invoice->client->surname;
+            } else {
+                $data["greeting"] = $invoice->client->first_name;
+            }    
         }
+        
   
         //$pdf = PDF::loadView('emails.myTestMail', $data);
         

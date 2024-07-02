@@ -223,6 +223,33 @@
               <!--//col-->
             </div>
             <!--//row-->
+
+            @if($invoice->client->use_billing)
+            <div class="app-card-footer p-4 mt-auto">
+          
+            </div>
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <div class="item-label">
+                  <strong>Billed to:</strong>
+                </div>
+                <div class="item-data">
+                  @if($invoice->client->billing_name)
+                    {{$invoice->client->billing_name}}<br>
+                  @endif
+                  @if($invoice->client->billing_email)
+                    {{$invoice->client->billing_email}}<br>
+                  @endif
+                </div>
+              </div>
+              <!--//col-->
+              <div class="col text-end">
+                
+              </div>
+              <!--//col-->
+            </div>
+            <!--//row-->
+            @endif
           </div>
           <!--//item-->
         </div>
