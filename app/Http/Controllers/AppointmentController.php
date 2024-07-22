@@ -43,7 +43,11 @@ class AppointmentController extends Controller
   	}
 
     $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+    $daysInMonthNext = cal_days_in_month(CAL_GREGORIAN, $monthNext, $yearNext);
 
+    /**
+     * This months Appts
+     */
     $appointments = Appointment::query()
                       ->whereYear('date', '=', $year)
                       ->whereMonth('date', '=', $month)
@@ -60,6 +64,31 @@ class AppointmentController extends Controller
         $resultA[$year.'-'.$month.'-'.$day][]=$appt;
       }
     }
+
+    /**
+     * Next months Appts
+     */
+    $nextAppointments = Appointment::query()
+                      ->whereYear('date', '=', $yearNext)
+                      ->whereMonth('date', '=', $monthNext)
+                      ->orderBy('date', 'asc')
+                      ->get()
+                      ->groupBy(function ($q) {
+                        return Carbon::parse($q->date)->format('j');
+                      });
+
+    $resultB = array();
+    
+    foreach($nextAppointments as $day => $appts) {
+      foreach($appts as $appt) {
+        $resultB[$yearNext.'-'.$monthNext.'-'.$day][]=$appt;
+      }
+    }
+
+    /**
+     * End appts
+     */
+    
 
     $incomplete = Appointment::query()
                       ->where('complete','=', null)
@@ -150,12 +179,16 @@ $resultA['2022-12-15'][]=16;
     	'yearNext' => $yearNext,
     	'yearPrev' => $yearPrev,
     	'monthName' => $this->getMonthName($month),
+      'monthNextName' => $this->getMonthName($monthNext),
       'daysInMonth' => $daysInMonth,
+      'daysInMonthNext' => $daysInMonthNext,
       'appointments' => $appointments,
+      'appointmentsNext' => $nextAppointments,
       'incomplete' => $incomplete,
       'carriedCurrent' => $carriedCurrent,
       'carriedAll' => $carriedAll,
-      'calendar' => $this->draw_calendar($month,$year,$resultA)
+      'calendar' => $this->draw_calendar($month,$year,$resultA),
+      'calendarNext' => $this->draw_calendar($monthNext,$yearNext,$resultB),
     ]);
   }
 

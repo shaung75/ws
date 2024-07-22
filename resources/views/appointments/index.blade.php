@@ -52,6 +52,23 @@
             </table>
 
             {!!$calendar!!}
+
+
+            <table class="table app-table-hover mb-0 text-left">
+              <thead>
+                <tr>
+                  <th class="cell">
+                  </th>
+                  <th class="cell text-center" colspan="2">{{$monthNextName}} {{$yearNext}}</th>
+                  <th class="cell text-end">
+                  </th>
+                </tr>
+              </thead>
+            </table>
+
+            {!!$calendarNext!!}
+
+
           </div>
 
           <div class="d-lg-none">
@@ -104,6 +121,61 @@
                     <td class="cell text-end">
                       @isset($appointments[$i])
                         @foreach($appointments[$i] as $appointment)
+                          @if($appointment->complete == 1)
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                            <br>
+                          @else
+                            &nbsp;<br>
+                          @endif
+                        @endforeach
+                      @endisset
+                    </td>
+                  </tr>
+                @endfor
+              </tbody>
+            </table>
+<br><br>
+            <table class="table app-table-hover mb-0 text-left">
+              <thead>
+                <tr>
+                  <th class="cell">
+                  </th>
+                  <th class="cell text-center" colspan="2">{{$monthNextName}} {{$yearNext}}</th>
+                  <th class="cell text-end">
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                @for ($i = 1; $i <= $daysInMonthNext; $i++)
+                  <tr>
+                    <td class="cell">{{$i}}</td>
+                    <td class="cell">
+                      @isset($appointmentsNext[$i])
+                        @foreach($appointmentsNext[$i] as $appointment)
+                          {{\Carbon\Carbon::parse($appointment->date)->format('H:i')}} - 
+                          <a href="/appointments/{{$appointment->id}}">
+                            @if($appointment->client->business_name)
+                              {{$appointment->client->business_name}}
+                            @else
+                              {{$appointment->client->first_name}} {{$appointment->client->surname}}
+                            @endif
+                          </a><br>
+                        @endforeach
+                      @endisset
+                    </td>
+                    <td class="cell">
+                      @isset($appointmentsNext[$i])
+                        @foreach($appointmentsNext[$i] as $appointment)
+                          {{$appointment->client->town}}<br>
+                        @endforeach
+                      @endisset
+                    </td>
+                    <td class="cell text-end">
+                      @isset($appointmentsNext[$i])
+                        @foreach($appointmentsNext[$i] as $appointment)
                           @if($appointment->complete == 1)
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
                               <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
