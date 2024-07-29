@@ -18,7 +18,7 @@ class InvoiceController extends Controller
      */
     public function index() {
         return view('invoices.index', [
-            'invoices' => Invoice::paginate(),
+            'invoices' => Invoice::where('paid', '!=', 1)->paginate(),
         ]);
     }
 
