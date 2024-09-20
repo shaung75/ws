@@ -146,7 +146,13 @@ class InvoiceController extends Controller
         }
 
         $formFields['override_values'] = $request->override_values;
-        $formFields['paid'] = $request->paid;
+        
+        if($request->paid) {
+            $formFields['paid'] = $request->paid;    
+        } else {
+            $formFields['paid'] = 0;
+        }
+
         $formFields['hide_vat'] = $request->hide_vat;
         
         $invoice->update($formFields);
